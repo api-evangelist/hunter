@@ -1,0 +1,107 @@
+name: Hunter API
+description: Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability.
+image: https://hunter.io/images/hunter-logo.png
+url: https://hunter.io
+created: '2024'
+modified: '2024'
+apis:
+- name: Hunter Domain Search API
+  description: Returns all the email addresses found using a given domain name, with sources.
+  image: https://hunter.io/images/hunter-logo.png
+  humanURL: https://hunter.io/domain-search
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Email
+  - Search
+  - Domain
+  - Contact Discovery
+  properties:
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: OpenAPI
+    url: https://api.hunter.io/v2/openapi.json
+  contact:
+  - FN: Hunter Support
+    email: support@hunter.io
+    url: https://hunter.io/contact
+- name: Hunter Email Finder API
+  description: Generates the most likely email address from a domain name, a first name and a last name.
+  image: https://hunter.io/images/hunter-logo.png
+  humanURL: https://hunter.io/email-finder
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Email
+  - Finder
+  - Contact Discovery
+  - Lead Generation
+  properties:
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: OpenAPI
+    url: https://api.hunter.io/v2/openapi.json
+- name: Hunter Email Verifier API
+  description: Verifies the deliverability of a given email address.
+  image: https://hunter.io/images/hunter-logo.png
+  humanURL: https://hunter.io/email-verifier
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Email
+  - Verification
+  - Validation
+  - Data Quality
+  properties:
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: OpenAPI
+    url: https://api.hunter.io/v2/openapi.json
+- name: Hunter Email Count API
+  description: Returns the number of email addresses found for a given domain.
+  image: https://hunter.io/images/hunter-logo.png
+  humanURL: https://hunter.io
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Email
+  - Count
+  - Analytics
+  properties:
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: OpenAPI
+    url: https://api.hunter.io/v2/openapi.json
+- name: Hunter Account API
+  description: Returns information about the account associated with the API key.
+  image: https://hunter.io/images/hunter-logo.png
+  humanURL: https://hunter.io
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Account
+  - Usage
+  - Management
+  properties:
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: OpenAPI
+    url: https://api.hunter.io/v2/openapi.json
+common:
+- type: Authentication
+  url: https://hunter.io/api-documentation/v2#authentication
+- type: Rate Limits
+  url: https://hunter.io/api-documentation/v2#rate-limiting
+- type: Pricing
+  url: https://hunter.io/pricing
+- type: Terms of Service
+  url: https://hunter.io/terms
+- type: Privacy Policy
+  url: https://hunter.io/privacy-policy
+- type: Status
+  url: https://status.hunter.io
+- type: Blog
+  url: https://hunter.io/blog
+- type: Login
+  url: https://hunter.io/users/sign_in
+- type: Sign Up
+  url: https://hunter.io/users/sign_up
+maintainers:
+- FN: Hunter Team
+  email: support@hunter.io
+  url: https://hunter.io
