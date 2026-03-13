@@ -1,0 +1,240 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hunter.io/schemas/lead.json",
+  "title": "Hunter Lead",
+  "description": "A lead record stored in Hunter, representing a professional contact with associated company and verification information.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for the lead."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address of the lead."
+    },
+    "first_name": {
+      "type": ["string", "null"],
+      "description": "First name of the lead."
+    },
+    "last_name": {
+      "type": ["string", "null"],
+      "description": "Last name of the lead."
+    },
+    "position": {
+      "type": ["string", "null"],
+      "description": "Job position or title of the lead."
+    },
+    "company": {
+      "type": ["string", "null"],
+      "description": "Company name where the lead is employed."
+    },
+    "company_industry": {
+      "type": ["string", "null"],
+      "description": "Industry classification of the lead's company."
+    },
+    "company_size": {
+      "type": ["string", "null"],
+      "description": "Size range of the lead's company (e.g., '1-10', '11-50', '51-200')."
+    },
+    "confidence_score": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Confidence score for the email address accuracy, from 0 to 100."
+    },
+    "website": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "Website URL associated with the lead or their company."
+    },
+    "country_code": {
+      "type": ["string", "null"],
+      "pattern": "^[A-Z]{2}$",
+      "description": "ISO 3166-1 alpha-2 country code for the lead's location."
+    },
+    "linkedin_url": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "LinkedIn profile URL for the lead."
+    },
+    "phone_number": {
+      "type": ["string", "null"],
+      "description": "Phone number of the lead."
+    },
+    "twitter": {
+      "type": ["string", "null"],
+      "description": "Twitter handle of the lead."
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Free-text notes about the lead."
+    },
+    "leads_list_id": {
+      "type": ["integer", "null"],
+      "description": "Identifier of the leads list this lead belongs to."
+    },
+    "sync_status": {
+      "type": ["string", "null"],
+      "description": "CRM synchronization status of the lead."
+    },
+    "sending_status": {
+      "type": ["string", "null"],
+      "description": "Email sending status for the lead in active campaigns."
+    },
+    "verification": {
+      "type": "object",
+      "description": "Email verification information for the lead.",
+      "properties": {
+        "date": {
+          "type": ["string", "null"],
+          "format": "date",
+          "description": "Date when the email verification was performed."
+        },
+        "status": {
+          "type": ["string", "null"],
+          "enum": ["valid", "invalid", "accept_all", "webmail", "disposable", "unknown", null],
+          "description": "Verification status of the email address."
+        }
+      }
+    },
+    "last_activity_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Timestamp of the last recorded activity for this lead."
+    },
+    "last_contacted_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Timestamp when the lead was last contacted."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the lead record was created."
+    }
+  },
+  "required": ["id", "email", "created_at"],
+  "additionalProperties": false,
+  "$defs": {
+    "LeadInput": {
+      "title": "Hunter Lead Input",
+      "description": "Input schema for creating or updating a lead in Hunter.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email address of the lead."
+        },
+        "first_name": {
+          "type": "string",
+          "description": "First name of the lead."
+        },
+        "last_name": {
+          "type": "string",
+          "description": "Last name of the lead."
+        },
+        "position": {
+          "type": "string",
+          "description": "Job position or title."
+        },
+        "company": {
+          "type": "string",
+          "description": "Company name."
+        },
+        "company_industry": {
+          "type": "string",
+          "description": "Industry of the company."
+        },
+        "company_size": {
+          "type": "string",
+          "description": "Size range of the company."
+        },
+        "confidence_score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Confidence score for the email."
+        },
+        "website": {
+          "type": "string",
+          "format": "uri",
+          "description": "Website URL."
+        },
+        "country_code": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$",
+          "description": "ISO 3166-1 alpha-2 country code."
+        },
+        "linkedin_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "LinkedIn profile URL."
+        },
+        "phone_number": {
+          "type": "string",
+          "description": "Phone number."
+        },
+        "twitter": {
+          "type": "string",
+          "description": "Twitter handle."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Free-text notes about the lead."
+        },
+        "leads_list_id": {
+          "type": "integer",
+          "description": "Identifier of the leads list to associate this lead with."
+        }
+      },
+      "required": ["email"],
+      "additionalProperties": false
+    },
+    "LeadsList": {
+      "title": "Hunter Leads List",
+      "description": "A leads list collection in Hunter for organizing leads into groups.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Unique identifier for the leads list."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the leads list."
+        },
+        "leads_count": {
+          "type": "integer",
+          "description": "Number of leads in the list."
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the list was created."
+        }
+      },
+      "required": ["id", "name"],
+      "additionalProperties": false
+    },
+    "VerificationStatus": {
+      "title": "Verification Status",
+      "description": "Email verification result from Hunter's verification engine.",
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": ["string", "null"],
+          "format": "date",
+          "description": "Date when verification was performed."
+        },
+        "status": {
+          "type": ["string", "null"],
+          "enum": ["valid", "invalid", "accept_all", "webmail", "disposable", "unknown", null],
+          "description": "Verification status result."
+        }
+      }
+    }
+  }
+}
