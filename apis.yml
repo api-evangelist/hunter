@@ -1,4 +1,4 @@
-name: Hunter API
+name: Hunter
 description: Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability.
 image: https://hunter.io/images/hunter-logo.png
 url: https://hunter.io
