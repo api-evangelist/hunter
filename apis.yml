@@ -3,7 +3,7 @@ description: Hunter is an email finding and verification service that helps find
 image: https://hunter.io/images/hunter-logo.png
 url: https://hunter.io
 created: '2024'
-modified: '2026-03-03'
+modified: '2026-03-16'
 apis:
 - name: Hunter Domain Search API
   description: Returns all the email addresses found using a given domain name, with sources.
