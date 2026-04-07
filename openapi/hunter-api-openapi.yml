@@ -56,7 +56,7 @@ paths:
   /domain-search:
     get:
       operationId: domainSearch
-      summary: Domain Search
+      summary: Hunter Domain Search
       description: >-
         Returns all the email addresses found using a given domain name,
         with sources. You must provide either a domain or a company name.
@@ -144,7 +144,7 @@ paths:
   /email-finder:
     get:
       operationId: emailFinder
-      summary: Email Finder
+      summary: Hunter Email Finder
       description: >-
         Finds the most likely email address from a domain name, a first
         name and a last name. You must provide a domain or company, and
@@ -215,7 +215,7 @@ paths:
   /email-verifier:
     get:
       operationId: emailVerifier
-      summary: Email Verifier
+      summary: Hunter Email Verifier
       description: Verifies the deliverability of a given email address.
       tags:
         - Email Verifier
@@ -261,7 +261,7 @@ paths:
   /email-count:
     get:
       operationId: emailCount
-      summary: Email Count
+      summary: Hunter Email Count
       description: >-
         Returns the number of email addresses found for a given domain
         or company, broken down by type, department, and seniority.
@@ -309,7 +309,7 @@ paths:
   /account:
     get:
       operationId: getAccount
-      summary: Account Information
+      summary: Hunter Account Information
       description: >-
         Returns information about the Hunter account associated with the
         API key, including usage statistics and plan details. This call
@@ -332,7 +332,7 @@ paths:
   /leads:
     get:
       operationId: listLeads
-      summary: List Leads
+      summary: Hunter List Leads
       description: Returns all the leads saved in your account.
       tags:
         - Leads
@@ -408,7 +408,7 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
     post:
       operationId: createLead
-      summary: Create Lead
+      summary: Hunter Create Lead
       description: Creates a new lead in your Hunter account.
       tags:
         - Leads
@@ -436,7 +436,7 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
     put:
       operationId: upsertLead
-      summary: Create or Update Lead
+      summary: Hunter Create or Update Lead
       description: >-
         Creates a new lead or updates an existing one if a lead with the
         same email address already exists in the specified list.
@@ -477,7 +477,7 @@ paths:
   /leads/{id}:
     get:
       operationId: getLead
-      summary: Get Lead
+      summary: Hunter Get Lead
       description: Retrieves a single lead by its identifier.
       tags:
         - Leads
@@ -499,7 +499,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateLead
-      summary: Update Lead
+      summary: Hunter Update Lead
       description: Updates an existing lead by its identifier.
       tags:
         - Leads
@@ -531,7 +531,7 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
     delete:
       operationId: deleteLead
-      summary: Delete Lead
+      summary: Hunter Delete Lead
       description: Deletes a lead by its identifier.
       tags:
         - Leads
@@ -548,7 +548,7 @@ paths:
   /leads_lists:
     get:
       operationId: listLeadsLists
-      summary: List Leads Lists
+      summary: Hunter List Leads Lists
       description: Returns all the leads lists saved in your account.
       tags:
         - Leads Lists
@@ -587,7 +587,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createLeadsList
-      summary: Create Leads List
+      summary: Hunter Create Leads List
       description: Creates a new leads list.
       tags:
         - Leads Lists
@@ -621,7 +621,7 @@ paths:
   /leads_lists/{id}:
     get:
       operationId: getLeadsList
-      summary: Get Leads List
+      summary: Hunter Get Leads List
       description: Retrieves a single leads list by its identifier.
       tags:
         - Leads Lists
@@ -643,7 +643,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateLeadsList
-      summary: Update Leads List
+      summary: Hunter Update Leads List
       description: Updates an existing leads list by its identifier.
       tags:
         - Leads Lists
@@ -679,7 +679,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteLeadsList
-      summary: Delete Leads List
+      summary: Hunter Delete Leads List
       description: Deletes a leads list by its identifier.
       tags:
         - Leads Lists
@@ -696,7 +696,7 @@ paths:
   /campaigns:
     get:
       operationId: listCampaigns
-      summary: List Campaigns
+      summary: Hunter List Campaigns
       description: Returns all the email sequences (campaigns) in your account.
       tags:
         - Campaigns
@@ -747,7 +747,7 @@ paths:
   /campaigns/{id}/recipients:
     get:
       operationId: listCampaignRecipients
-      summary: List Campaign Recipients
+      summary: Hunter List Campaign Recipients
       description: Returns the recipients for a given campaign.
       tags:
         - Campaigns
@@ -789,7 +789,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     post:
       operationId: addCampaignRecipients
-      summary: Add Campaign Recipients
+      summary: Hunter Add Campaign Recipients
       description: Adds recipients to a campaign using email addresses or lead identifiers.
       tags:
         - Campaigns
@@ -825,7 +825,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: cancelCampaignRecipients
-      summary: Cancel Campaign Recipients
+      summary: Hunter Cancel Campaign Recipients
       description: Cancels all scheduled emails for the specified recipients.
       tags:
         - Campaigns
@@ -855,7 +855,7 @@ paths:
   /campaigns/{id}/start:
     post:
       operationId: startCampaign
-      summary: Start Campaign
+      summary: Hunter Start Campaign
       description: Starts an email sequence for the campaign.
       tags:
         - Campaigns
@@ -874,7 +874,7 @@ paths:
   /discover:
     post:
       operationId: discover
-      summary: Discover Companies
+      summary: Hunter Discover Companies
       description: >-
         Returns companies matching a set of criteria using natural language
         queries or robust filters to find companies aligned with your ideal
@@ -917,7 +917,7 @@ paths:
   /people/find:
     get:
       operationId: emailEnrichment
-      summary: Email Enrichment
+      summary: Hunter Email Enrichment
       description: >-
         Returns comprehensive personal information linked to an email
         address or LinkedIn profile. Provides enriched data points about
@@ -965,7 +965,7 @@ paths:
   /companies/find:
     get:
       operationId: companyEnrichment
-      summary: Company Enrichment
+      summary: Hunter Company Enrichment
       description: >-
         Returns detailed organizational data associated with a domain
         name, including company size, industry, location, and other
@@ -1007,7 +1007,7 @@ paths:
   /combined/find:
     get:
       operationId: combinedEnrichment
-      summary: Combined Enrichment
+      summary: Hunter Combined Enrichment
       description: >-
         Merges person and company information for a single email address,
         returning enriched records combining both datasets.
@@ -2322,7 +2322,7 @@ components:
             - webmail
             - disposable
             - unknown
-            - null
+            - 
           description: The verification status.
 
     Source:
