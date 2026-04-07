@@ -27,31 +27,31 @@ security:
   - bearerAuth: []
 
 tags:
+  - name: Account
+    description: Retrieve account information and usage statistics.
+  - name: Campaigns
+    description: Manage email sequences and recipients.
+  - name: Combined Enrichment
+    description: Merge person and company enrichment for a single email address.
+
+  - name: Company Enrichment
+    description: Enrich company information linked to a domain name.
+  - name: Discover
+    description: Find companies matching criteria using natural language or filters.
   - name: Domain Search
     description: Search for email addresses associated with a domain.
+  - name: Email Count
+    description: Count email addresses found for a domain.
+  - name: Email Enrichment
+    description: Enrich personal information linked to an email or LinkedIn profile.
   - name: Email Finder
     description: Find the most likely email address for a person at a company.
   - name: Email Verifier
     description: Verify the deliverability of an email address.
-  - name: Email Count
-    description: Count email addresses found for a domain.
-  - name: Account
-    description: Retrieve account information and usage statistics.
   - name: Leads
     description: Manage leads stored in Hunter.
   - name: Leads Lists
     description: Manage leads list collections in Hunter.
-  - name: Campaigns
-    description: Manage email sequences and recipients.
-  - name: Discover
-    description: Find companies matching criteria using natural language or filters.
-  - name: Email Enrichment
-    description: Enrich personal information linked to an email or LinkedIn profile.
-  - name: Company Enrichment
-    description: Enrich company information linked to a domain name.
-  - name: Combined Enrichment
-    description: Merge person and company enrichment for a single email address.
-
 paths:
   /domain-search:
     get:
