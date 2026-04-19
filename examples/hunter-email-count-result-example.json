@@ -1,0 +1,7 @@
+{
+  "total": 10,
+  "personal_emails": "user@example.com",
+  "generic_emails": "user@example.com",
+  "department": "example_value",
+  "seniority": "example_value"
+}

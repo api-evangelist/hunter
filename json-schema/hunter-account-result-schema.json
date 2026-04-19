@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AccountResult",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": "string",
+      "description": "Account holder first name."
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Account holder last name."
+    },
+    "email": {
+      "type": "string",
+      "description": "Account email address."
+    },
+    "plan_name": {
+      "type": "string",
+      "description": "Name of the current subscription plan."
+    },
+    "plan_level": {
+      "type": "integer",
+      "description": "Level of the current subscription plan."
+    },
+    "reset_date": {
+      "type": "string",
+      "description": "Date when usage counters reset."
+    },
+    "team_id": {
+      "type": "integer",
+      "description": "Team identifier."
+    },
+    "requests": {
+      "type": "object",
+      "description": "Usage breakdown by request type."
+    },
+    "calls": {
+      "type": "object",
+      "description": "Deprecated. Total usage counters."
+    }
+  }
+}

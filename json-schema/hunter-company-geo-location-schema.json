@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CompanyGeoLocation",
+  "type": "object",
+  "properties": {
+    "streetNumber": {
+      "type": "['string', 'null']"
+    },
+    "streetName": {
+      "type": "['string', 'null']"
+    },
+    "subPremise": {
+      "type": "['string', 'null']"
+    },
+    "streetAddress": {
+      "type": "['string', 'null']"
+    },
+    "city": {
+      "type": "['string', 'null']"
+    },
+    "postalCode": {
+      "type": "['string', 'null']"
+    },
+    "state": {
+      "type": "['string', 'null']"
+    },
+    "stateCode": {
+      "type": "['string', 'null']"
+    },
+    "country": {
+      "type": "['string', 'null']"
+    },
+    "countryCode": {
+      "type": "['string', 'null']"
+    },
+    "lat": {
+      "type": "['number', 'null']"
+    },
+    "lng": {
+      "type": "['number', 'null']"
+    }
+  }
+}

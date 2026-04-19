@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "DomainEmail",
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "integer"
+    },
+    "first_name": {
+      "type": "['string', 'null']"
+    },
+    "last_name": {
+      "type": "['string', 'null']"
+    },
+    "position": {
+      "type": "['string', 'null']"
+    },
+    "seniority": {
+      "type": "['string', 'null']"
+    },
+    "department": {
+      "type": "['string', 'null']"
+    },
+    "linkedin": {
+      "type": "['string', 'null']"
+    },
+    "twitter": {
+      "type": "['string', 'null']"
+    },
+    "phone_number": {
+      "type": "['string', 'null']"
+    },
+    "sources": {
+      "type": "array"
+    }
+  }
+}

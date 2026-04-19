@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CompanyEnrichment",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the company record."
+    },
+    "name": {
+      "type": "['string', 'null']",
+      "description": "Company name."
+    },
+    "legalName": {
+      "type": "['string', 'null']",
+      "description": "Legal name of the company."
+    },
+    "domain": {
+      "type": "string",
+      "description": "Company domain name."
+    },
+    "domainAliases": {
+      "type": "array",
+      "description": "Alternate domain names."
+    },
+    "site": {
+      "type": "object"
+    },
+    "category": {
+      "type": "object",
+      "description": "Industry classification."
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags associated with the company."
+    },
+    "description": {
+      "type": "['string', 'null']",
+      "description": "Company description."
+    },
+    "foundedYear": {
+      "type": "['integer', 'null']",
+      "description": "Year the company was founded."
+    },
+    "location": {
+      "type": "['string', 'null']",
+      "description": "Location description."
+    },
+    "timeZone": {
+      "type": "['string', 'null']",
+      "description": "Time zone name."
+    },
+    "utcOffset": {
+      "type": "['number', 'null']",
+      "description": "UTC offset in hours."
+    },
+    "logo": {
+      "type": "['string', 'null']",
+      "description": "Company logo URL."
+    },
+    "facebook": {
+      "type": "object"
+    },
+    "linkedin": {
+      "type": "object"
+    },
+    "twitter": {
+      "type": "object"
+    },
+    "crunchbase": {
+      "type": "object"
+    },
+    "emailProvider": {
+      "type": "['string', 'null']",
+      "description": "Email service provider."
+    },
+    "type": {
+      "type": "['string', 'null']",
+      "description": "Company type."
+    },
+    "company_type": {
+      "type": "['string', 'null']",
+      "description": "Entity type classification."
+    },
+    "ticker": {
+      "type": "['string', 'null']",
+      "description": "Stock ticker symbol."
+    },
+    "identifiers": {
+      "type": "object"
+    },
+    "phone": {
+      "type": "['string', 'null']",
+      "description": "Primary phone number."
+    },
+    "metrics": {
+      "type": "object"
+    },
+    "indexedAt": {
+      "type": "['string', 'null']",
+      "description": "Date when the record was last indexed."
+    },
+    "tech": {
+      "type": "array",
+      "description": "Technologies used by the company."
+    },
+    "techCategories": {
+      "type": "array",
+      "description": "Categories of technologies used."
+    },
+    "parent": {
+      "type": "object"
+    },
+    "ultimateParent": {
+      "type": "object"
+    }
+  }
+}

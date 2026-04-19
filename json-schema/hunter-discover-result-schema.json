@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DiscoverResult",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "Domain name of the discovered company."
+    },
+    "organization": {
+      "type": "string",
+      "description": "Name of the organization."
+    },
+    "emails_count": {
+      "type": "object"
+    }
+  }
+}

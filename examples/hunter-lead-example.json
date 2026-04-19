@@ -1,0 +1,23 @@
+{
+  "id": "abc123",
+  "email": "user@example.com",
+  "first_name": "example_value",
+  "last_name": "example_value",
+  "position": "example_value",
+  "company": "example_value",
+  "company_industry": "example_value",
+  "company_size": "example_value",
+  "confidence_score": "example_value",
+  "website": "example_value",
+  "country_code": "example_value",
+  "linkedin_url": "https://www.example.com",
+  "phone_number": "example_value",
+  "twitter": "example_value",
+  "notes": "example_value",
+  "leads_list_id": "500123",
+  "sync_status": "example_value",
+  "sending_status": "example_value",
+  "last_activity_at": "2026-01-15T10:30:00Z",
+  "last_contacted_at": "2026-01-15T10:30:00Z",
+  "created_at": "2026-01-15T10:30:00Z"
+}

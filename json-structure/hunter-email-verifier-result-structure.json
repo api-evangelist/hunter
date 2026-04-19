@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "EmailVerifierResult",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string"
+    },
+    "result": {
+      "type": "string"
+    },
+    "score": {
+      "type": "integer"
+    },
+    "email": {
+      "type": "string"
+    },
+    "regexp": {
+      "type": "boolean"
+    },
+    "gibberish": {
+      "type": "boolean"
+    },
+    "disposable": {
+      "type": "boolean"
+    },
+    "webmail": {
+      "type": "boolean"
+    },
+    "mx_records": {
+      "type": "boolean"
+    },
+    "smtp_server": {
+      "type": "boolean"
+    },
+    "smtp_check": {
+      "type": "boolean"
+    },
+    "accept_all": {
+      "type": "boolean"
+    },
+    "block": {
+      "type": "boolean"
+    },
+    "sources": {
+      "type": "array"
+    }
+  }
+}

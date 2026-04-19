@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EmailVerifierResult",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "description": "The verification status of the email address."
+    },
+    "result": {
+      "type": "string",
+      "description": "Deprecated. The deliverability result."
+    },
+    "score": {
+      "type": "integer",
+      "description": "Deliverability score."
+    },
+    "email": {
+      "type": "string",
+      "description": "The email address that was verified."
+    },
+    "regexp": {
+      "type": "boolean",
+      "description": "Whether the email matches a valid format."
+    },
+    "gibberish": {
+      "type": "boolean",
+      "description": "Whether the email appears to be gibberish."
+    },
+    "disposable": {
+      "type": "boolean",
+      "description": "Whether the email uses a disposable provider."
+    },
+    "webmail": {
+      "type": "boolean",
+      "description": "Whether the email is a webmail address."
+    },
+    "mx_records": {
+      "type": "boolean",
+      "description": "Whether MX records exist for the domain."
+    },
+    "smtp_server": {
+      "type": "boolean",
+      "description": "Whether an SMTP server was found."
+    },
+    "smtp_check": {
+      "type": "boolean",
+      "description": "Whether the SMTP check passed."
+    },
+    "accept_all": {
+      "type": "boolean",
+      "description": "Whether the mail server accepts all addresses."
+    },
+    "block": {
+      "type": "boolean",
+      "description": "Whether the email is blocked."
+    },
+    "sources": {
+      "type": "array"
+    }
+  }
+}

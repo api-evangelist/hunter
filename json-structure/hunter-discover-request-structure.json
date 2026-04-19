@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "DiscoverRequest",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string"
+    },
+    "organization": {
+      "type": "object"
+    },
+    "headquarters_location": {
+      "type": "object"
+    },
+    "industry": {
+      "type": "object"
+    },
+    "headcount": {
+      "type": "array"
+    },
+    "company_type": {
+      "type": "object"
+    },
+    "year_founded": {
+      "type": "object"
+    },
+    "technology": {
+      "type": "object"
+    },
+    "keywords": {
+      "type": "object"
+    },
+    "funding": {
+      "type": "object"
+    },
+    "limit": {
+      "type": "integer"
+    },
+    "offset": {
+      "type": "integer"
+    }
+  }
+}

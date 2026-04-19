@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DomainEmail",
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string",
+      "description": "The email address."
+    },
+    "type": {
+      "type": "string",
+      "description": "Whether the email is personal or generic."
+    },
+    "confidence": {
+      "type": "integer",
+      "description": "Confidence score for the email address."
+    },
+    "first_name": {
+      "type": "['string', 'null']",
+      "description": "First name of the person."
+    },
+    "last_name": {
+      "type": "['string', 'null']",
+      "description": "Last name of the person."
+    },
+    "position": {
+      "type": "['string', 'null']",
+      "description": "Job position or title."
+    },
+    "seniority": {
+      "type": "['string', 'null']",
+      "description": "Seniority level."
+    },
+    "department": {
+      "type": "['string', 'null']",
+      "description": "Department within the organization."
+    },
+    "linkedin": {
+      "type": "['string', 'null']",
+      "description": "LinkedIn profile URL."
+    },
+    "twitter": {
+      "type": "['string', 'null']",
+      "description": "Twitter handle."
+    },
+    "phone_number": {
+      "type": "['string', 'null']",
+      "description": "Phone number."
+    },
+    "sources": {
+      "type": "array"
+    }
+  }
+}

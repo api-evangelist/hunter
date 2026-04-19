@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "EmailCountResult",
+  "type": "object",
+  "properties": {
+    "total": {
+      "type": "integer"
+    },
+    "personal_emails": {
+      "type": "integer"
+    },
+    "generic_emails": {
+      "type": "integer"
+    },
+    "department": {
+      "type": "object"
+    },
+    "seniority": {
+      "type": "object"
+    }
+  }
+}

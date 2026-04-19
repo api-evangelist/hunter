@@ -1,0 +1,14 @@
+{
+  "value": "example_value",
+  "type": "example_value",
+  "confidence": 10,
+  "first_name": "example_value",
+  "last_name": "example_value",
+  "position": "example_value",
+  "seniority": "example_value",
+  "department": "example_value",
+  "linkedin": "example_value",
+  "twitter": "example_value",
+  "phone_number": "example_value",
+  "sources": []
+}

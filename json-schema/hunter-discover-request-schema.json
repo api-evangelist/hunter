@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DiscoverRequest",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "Natural language search query to find matching companies."
+    },
+    "organization": {
+      "type": "object",
+      "description": "Filter by organization attributes."
+    },
+    "headquarters_location": {
+      "type": "object",
+      "description": "Filter by geographic location of headquarters."
+    },
+    "industry": {
+      "type": "object",
+      "description": "Filter by industry classification."
+    },
+    "headcount": {
+      "type": "array",
+      "description": "Filter by company headcount ranges."
+    },
+    "company_type": {
+      "type": "object",
+      "description": "Filter by company entity type."
+    },
+    "year_founded": {
+      "type": "object",
+      "description": "Filter by year the company was founded."
+    },
+    "technology": {
+      "type": "object",
+      "description": "Filter by technologies used by the company."
+    },
+    "keywords": {
+      "type": "object",
+      "description": "Filter by business keywords."
+    },
+    "funding": {
+      "type": "object",
+      "description": "Filter by funding information."
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Maximum number of results to return."
+    },
+    "offset": {
+      "type": "integer",
+      "description": "Number of results to skip for pagination."
+    }
+  }
+}

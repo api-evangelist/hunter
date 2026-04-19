@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "EmailFinderResult",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "score": {
+      "type": "integer"
+    },
+    "domain": {
+      "type": "string"
+    },
+    "position": {
+      "type": "['string', 'null']"
+    },
+    "company": {
+      "type": "['string', 'null']"
+    },
+    "twitter": {
+      "type": "['string', 'null']"
+    },
+    "linkedin_url": {
+      "type": "['string', 'null']"
+    },
+    "phone_number": {
+      "type": "['string', 'null']"
+    },
+    "sources": {
+      "type": "array"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VerificationStatus",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "['string', 'null']",
+      "description": "Date the verification was performed."
+    },
+    "status": {
+      "type": "['string', 'null']",
+      "description": "The verification status."
+    }
+  }
+}

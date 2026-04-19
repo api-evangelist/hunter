@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Lead",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "email": {
+      "type": "string"
+    },
+    "first_name": {
+      "type": "['string', 'null']"
+    },
+    "last_name": {
+      "type": "['string', 'null']"
+    },
+    "position": {
+      "type": "['string', 'null']"
+    },
+    "company": {
+      "type": "['string', 'null']"
+    },
+    "company_industry": {
+      "type": "['string', 'null']"
+    },
+    "company_size": {
+      "type": "['string', 'null']"
+    },
+    "confidence_score": {
+      "type": "['integer', 'null']"
+    },
+    "website": {
+      "type": "['string', 'null']"
+    },
+    "country_code": {
+      "type": "['string', 'null']"
+    },
+    "linkedin_url": {
+      "type": "['string', 'null']"
+    },
+    "phone_number": {
+      "type": "['string', 'null']"
+    },
+    "twitter": {
+      "type": "['string', 'null']"
+    },
+    "notes": {
+      "type": "['string', 'null']"
+    },
+    "leads_list_id": {
+      "type": "['integer', 'null']"
+    },
+    "sync_status": {
+      "type": "['string', 'null']"
+    },
+    "sending_status": {
+      "type": "['string', 'null']"
+    },
+    "last_activity_at": {
+      "type": "['string', 'null']"
+    },
+    "last_contacted_at": {
+      "type": "['string', 'null']"
+    },
+    "created_at": {
+      "type": "string"
+    }
+  }
+}

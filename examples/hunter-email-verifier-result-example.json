@@ -1,0 +1,16 @@
+{
+  "status": "example_value",
+  "result": "example_value",
+  "score": 10,
+  "email": "user@example.com",
+  "regexp": true,
+  "gibberish": true,
+  "disposable": true,
+  "webmail": true,
+  "mx_records": true,
+  "smtp_server": true,
+  "smtp_check": true,
+  "accept_all": true,
+  "block": true,
+  "sources": []
+}

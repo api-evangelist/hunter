@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EmailFinderResult",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": "string",
+      "description": "First name of the person."
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Last name of the person."
+    },
+    "email": {
+      "type": "string",
+      "description": "The found email address."
+    },
+    "score": {
+      "type": "integer",
+      "description": "Confidence score for the email."
+    },
+    "domain": {
+      "type": "string",
+      "description": "The domain name used for the search."
+    },
+    "position": {
+      "type": "['string', 'null']",
+      "description": "Job position or title."
+    },
+    "company": {
+      "type": "['string', 'null']",
+      "description": "Company name."
+    },
+    "twitter": {
+      "type": "['string', 'null']",
+      "description": "Twitter handle."
+    },
+    "linkedin_url": {
+      "type": "['string', 'null']",
+      "description": "LinkedIn profile URL."
+    },
+    "phone_number": {
+      "type": "['string', 'null']",
+      "description": "Phone number."
+    },
+    "sources": {
+      "type": "array"
+    }
+  }
+}

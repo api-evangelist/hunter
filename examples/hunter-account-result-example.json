@@ -1,0 +1,11 @@
+{
+  "first_name": "example_value",
+  "last_name": "example_value",
+  "email": "user@example.com",
+  "plan_name": "example_value",
+  "plan_level": 10,
+  "reset_date": "example_value",
+  "team_id": "500123",
+  "requests": "example_value",
+  "calls": "example_value"
+}

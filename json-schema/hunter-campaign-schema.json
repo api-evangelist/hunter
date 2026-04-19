@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Campaign",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for the campaign."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the campaign."
+    },
+    "recipients_count": {
+      "type": "integer",
+      "description": "Number of recipients in the campaign."
+    },
+    "editable": {
+      "type": "boolean",
+      "description": "Whether the campaign can be edited."
+    },
+    "started": {
+      "type": "boolean",
+      "description": "Whether the campaign has been started."
+    },
+    "archived": {
+      "type": "boolean",
+      "description": "Whether the campaign has been archived."
+    },
+    "paused": {
+      "type": "boolean",
+      "description": "Whether the campaign is paused."
+    },
+    "sending_status": {
+      "type": "['string', 'null']",
+      "description": "Current sending status of the campaign."
+    },
+    "created_at": {
+      "type": "string",
+      "description": "Timestamp when the campaign was created."
+    }
+  }
+}

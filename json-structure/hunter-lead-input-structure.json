@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "LeadInput",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string"
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string"
+    },
+    "company": {
+      "type": "string"
+    },
+    "company_industry": {
+      "type": "string"
+    },
+    "company_size": {
+      "type": "string"
+    },
+    "confidence_score": {
+      "type": "integer"
+    },
+    "website": {
+      "type": "string"
+    },
+    "country_code": {
+      "type": "string"
+    },
+    "linkedin_url": {
+      "type": "string"
+    },
+    "phone_number": {
+      "type": "string"
+    },
+    "twitter": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "leads_list_id": {
+      "type": "integer"
+    }
+  }
+}

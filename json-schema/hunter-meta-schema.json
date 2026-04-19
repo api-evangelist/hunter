@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Meta",
+  "type": "object",
+  "properties": {
+    "params": {
+      "type": "object",
+      "description": "The parameters used in the request."
+    }
+  }
+}

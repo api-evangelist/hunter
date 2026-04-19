@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "PersonEnrichment",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "object"
+    },
+    "email": {
+      "type": "string"
+    },
+    "location": {
+      "type": "['string', 'null']"
+    },
+    "timeZone": {
+      "type": "['string', 'null']"
+    },
+    "utcOffset": {
+      "type": "['number', 'null']"
+    },
+    "bio": {
+      "type": "['string', 'null']"
+    },
+    "site": {
+      "type": "['string', 'null']"
+    },
+    "avatar": {
+      "type": "['string', 'null']"
+    },
+    "employment": {
+      "type": "object"
+    },
+    "facebook": {
+      "type": "object"
+    },
+    "github": {
+      "type": "object"
+    },
+    "twitter": {
+      "type": "object"
+    },
+    "linkedin": {
+      "type": "object"
+    },
+    "fuzzy": {
+      "type": "boolean"
+    },
+    "emailProvider": {
+      "type": "['string', 'null']"
+    },
+    "indexedAt": {
+      "type": "['string', 'null']"
+    },
+    "phone": {
+      "type": "['string', 'null']"
+    },
+    "activeAt": {
+      "type": "['string', 'null']"
+    },
+    "inactiveAt": {
+      "type": "['string', 'null']"
+    }
+  }
+}

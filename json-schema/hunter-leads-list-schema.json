@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LeadsList",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for the leads list."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the leads list."
+    },
+    "leads_count": {
+      "type": "integer",
+      "description": "Number of leads in the list."
+    },
+    "created_at": {
+      "type": "string",
+      "description": "Timestamp when the list was created."
+    }
+  }
+}

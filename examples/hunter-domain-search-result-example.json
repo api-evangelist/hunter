@@ -1,0 +1,9 @@
+{
+  "domain": "example_value",
+  "disposable": true,
+  "webmail": true,
+  "accept_all": true,
+  "pattern": "example_value",
+  "organization": "example_value",
+  "emails": "user@example.com"
+}

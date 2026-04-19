@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CampaignRecipient",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "Recipient email address."
+    },
+    "lead_id": {
+      "type": "['integer', 'null']",
+      "description": "Associated lead identifier."
+    },
+    "sending_status": {
+      "type": "string",
+      "description": "Current sending status for this recipient."
+    }
+  }
+}

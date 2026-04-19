@@ -1,0 +1,14 @@
+{
+  "streetNumber": "example_value",
+  "streetName": "example_value",
+  "subPremise": "example_value",
+  "streetAddress": "example_value",
+  "city": "example_value",
+  "postalCode": "example_value",
+  "state": "example_value",
+  "stateCode": "example_value",
+  "country": "example_value",
+  "countryCode": "example_value",
+  "lat": "example_value",
+  "lng": "example_value"
+}

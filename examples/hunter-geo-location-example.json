@@ -1,0 +1,9 @@
+{
+  "city": "example_value",
+  "state": "example_value",
+  "stateCode": "example_value",
+  "country": "example_value",
+  "countryCode": "example_value",
+  "lat": "example_value",
+  "lng": "example_value"
+}

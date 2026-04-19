@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "AccountResult",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "plan_name": {
+      "type": "string"
+    },
+    "plan_level": {
+      "type": "integer"
+    },
+    "reset_date": {
+      "type": "string"
+    },
+    "team_id": {
+      "type": "integer"
+    },
+    "requests": {
+      "type": "object"
+    },
+    "calls": {
+      "type": "object"
+    }
+  }
+}

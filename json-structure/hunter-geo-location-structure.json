@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "GeoLocation",
+  "type": "object",
+  "properties": {
+    "city": {
+      "type": "['string', 'null']"
+    },
+    "state": {
+      "type": "['string', 'null']"
+    },
+    "stateCode": {
+      "type": "['string', 'null']"
+    },
+    "country": {
+      "type": "['string', 'null']"
+    },
+    "countryCode": {
+      "type": "['string', 'null']"
+    },
+    "lat": {
+      "type": "['number', 'null']"
+    },
+    "lng": {
+      "type": "['number', 'null']"
+    }
+  }
+}

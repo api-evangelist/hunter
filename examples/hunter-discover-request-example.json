@@ -1,0 +1,14 @@
+{
+  "query": "example_value",
+  "organization": "example_value",
+  "headquarters_location": "example_value",
+  "industry": "example_value",
+  "headcount": [],
+  "company_type": "example_value",
+  "year_founded": "example_value",
+  "technology": "example_value",
+  "keywords": "example_value",
+  "funding": "example_value",
+  "limit": 10,
+  "offset": 10
+}

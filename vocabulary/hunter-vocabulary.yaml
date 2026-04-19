@@ -1,0 +1,19 @@
+name: hunter API Vocabulary
+provider: hunter
+created: '2026-04-18'
+modified: '2026-04-18'
+operations: 25
+schemas: 23
+tags:
+- Account
+- Campaigns
+- Combined Enrichment
+- Company Enrichment
+- Discover
+- Domain Search
+- Email Count
+- Email Enrichment
+- Email Finder
+- Email Verifier
+- Leads
+- Leads Lists

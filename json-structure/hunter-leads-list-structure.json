@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "LeadsList",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "leads_count": {
+      "type": "integer"
+    },
+    "created_at": {
+      "type": "string"
+    }
+  }
+}

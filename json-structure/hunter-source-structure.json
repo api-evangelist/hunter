@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Source",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string"
+    },
+    "uri": {
+      "type": "string"
+    },
+    "extracted_on": {
+      "type": "string"
+    },
+    "last_seen_on": {
+      "type": "string"
+    },
+    "still_on_page": {
+      "type": "boolean"
+    }
+  }
+}

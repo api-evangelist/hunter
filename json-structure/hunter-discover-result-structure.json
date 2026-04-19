@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "DiscoverResult",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string"
+    },
+    "organization": {
+      "type": "string"
+    },
+    "emails_count": {
+      "type": "object"
+    }
+  }
+}

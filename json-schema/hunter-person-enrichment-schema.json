@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PersonEnrichment",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the person record."
+    },
+    "name": {
+      "type": "object"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address."
+    },
+    "location": {
+      "type": "['string', 'null']",
+      "description": "Location description."
+    },
+    "timeZone": {
+      "type": "['string', 'null']",
+      "description": "Time zone name."
+    },
+    "utcOffset": {
+      "type": "['number', 'null']",
+      "description": "UTC offset in hours."
+    },
+    "bio": {
+      "type": "['string', 'null']",
+      "description": "Short biography."
+    },
+    "site": {
+      "type": "['string', 'null']",
+      "description": "Personal website URL."
+    },
+    "avatar": {
+      "type": "['string', 'null']",
+      "description": "Avatar image URL."
+    },
+    "employment": {
+      "type": "object"
+    },
+    "facebook": {
+      "type": "object"
+    },
+    "github": {
+      "type": "object"
+    },
+    "twitter": {
+      "type": "object"
+    },
+    "linkedin": {
+      "type": "object"
+    },
+    "fuzzy": {
+      "type": "boolean",
+      "description": "Whether the match was fuzzy."
+    },
+    "emailProvider": {
+      "type": "['string', 'null']",
+      "description": "Email service provider."
+    },
+    "indexedAt": {
+      "type": "['string', 'null']",
+      "description": "Date when the record was last indexed."
+    },
+    "phone": {
+      "type": "['string', 'null']",
+      "description": "Phone number."
+    },
+    "activeAt": {
+      "type": "['string', 'null']",
+      "description": "Date when the person was last active."
+    },
+    "inactiveAt": {
+      "type": "['string', 'null']",
+      "description": "Date when the person became inactive."
+    }
+  }
+}

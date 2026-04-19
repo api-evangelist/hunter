@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LeadInput",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "Email address of the lead."
+    },
+    "first_name": {
+      "type": "string",
+      "description": "First name of the lead."
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Last name of the lead."
+    },
+    "position": {
+      "type": "string",
+      "description": "Job position or title."
+    },
+    "company": {
+      "type": "string",
+      "description": "Company name."
+    },
+    "company_industry": {
+      "type": "string",
+      "description": "Industry of the company."
+    },
+    "company_size": {
+      "type": "string",
+      "description": "Size range of the company."
+    },
+    "confidence_score": {
+      "type": "integer",
+      "description": "Confidence score for the lead email."
+    },
+    "website": {
+      "type": "string",
+      "description": "Website URL associated with the lead."
+    },
+    "country_code": {
+      "type": "string",
+      "description": "ISO 3166-1 alpha-2 country code."
+    },
+    "linkedin_url": {
+      "type": "string",
+      "description": "LinkedIn profile URL."
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "Phone number."
+    },
+    "twitter": {
+      "type": "string",
+      "description": "Twitter handle."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Free-text notes about the lead."
+    },
+    "leads_list_id": {
+      "type": "integer",
+      "description": "Identifier of the leads list to add the lead to."
+    }
+  }
+}

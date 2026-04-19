@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "CampaignRecipient",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string"
+    },
+    "lead_id": {
+      "type": "['integer', 'null']"
+    },
+    "sending_status": {
+      "type": "string"
+    }
+  }
+}

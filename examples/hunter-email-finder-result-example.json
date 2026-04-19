@@ -1,0 +1,13 @@
+{
+  "first_name": "example_value",
+  "last_name": "example_value",
+  "email": "user@example.com",
+  "score": 10,
+  "domain": "example_value",
+  "position": "example_value",
+  "company": "example_value",
+  "twitter": "example_value",
+  "linkedin_url": "https://www.example.com",
+  "phone_number": "example_value",
+  "sources": []
+}

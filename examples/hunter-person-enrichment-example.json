@@ -1,0 +1,22 @@
+{
+  "id": "abc123",
+  "name": "Example Title",
+  "email": "user@example.com",
+  "location": "example_value",
+  "timeZone": "example_value",
+  "utcOffset": "example_value",
+  "bio": "example_value",
+  "site": "example_value",
+  "avatar": "example_value",
+  "employment": "example_value",
+  "facebook": "example_value",
+  "github": "example_value",
+  "twitter": "example_value",
+  "linkedin": "example_value",
+  "fuzzy": true,
+  "emailProvider": "user@example.com",
+  "indexedAt": "example_value",
+  "phone": "example_value",
+  "activeAt": "example_value",
+  "inactiveAt": "example_value"
+}
