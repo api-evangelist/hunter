@@ -1,241 +1,96 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Hunter
+providerId: hunter
+created: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
+tags:
+  - FinOps
+  - FOCUS
+  - Sales Intelligence
+  - Email
+description: 'FOCUS-aligned FinOps for Hunter: tiered subscription with monthly credit pools and
+  fixed credit-consumption rates per API operation.'
+sources:
+  - https://hunter.io/pricing
+  - https://hunter.io/api-documentation/v2
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
   dataSpec: FOCUS
   dataSpecVersion: '1.3'
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
-provider: Hunter
-providerId: hunter
-publisherName: Hunter
-serviceCategory: API
-created: '2026-05-04'
-modified: '2026-05-04'
-tags:
-  - Contact Discovery
-  - Email
-  - Email Verification
-  - Lead Generation
-  - Prospecting
-  - Sales Intelligence
-  - FinOps
-  - Cost Management
-  - FOCUS
-description: FinOps framework definition for the Hunter API surface. Provides a FOCUS-aligned mapping
-  for cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+publisherName: Hunter.io (Hunter SAS)
+serviceCategory: Sales Intelligence
 billingModel:
-  pricingCategory: Usage-Based
+  pricingCategory: Tiered Subscription
   billingFrequency: Monthly
   billingCurrency: USD
   chargeCategories:
-    - Usage
     - Purchase
-    - Tax
+    - Usage
     - Credit
     - Adjustment
-  chargeFrequency: Recurring
 focusColumns:
   ServiceName: Hunter
-  ServiceCategory: Developer Tools / API
+  ServiceCategory: Sales Intelligence
   ProviderName: Hunter
-  PublisherName: Hunter
-  InvoiceIssuerName: Hunter
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  PublisherName: Hunter SAS
+  InvoiceIssuerName: Hunter SAS
   BillingCurrency: USD
-  ChargeCategory: Usage
+  ChargeCategory: Purchase
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
+  - name: subscription_fee
+    description: Flat monthly subscription per plan tier (Starter $49, Growth $149, Scale $299, Enterprise
+      custom).
+    unit: month
+    aggregation: max
+    dimensions:
+      - plan
+  - name: credits_consumed
+    description: Credits consumed by API operations within the monthly allotment.
+    unit: credit
     aggregation: sum
     dimensions:
-      - api
       - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
+      - team_member
+  - name: domain_search_credits
+    description: Domain Search and Email Finder API calls; 1 credit per email returned.
+    unit: credit
     aggregation: sum
     dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
       - endpoint
-      - tier
-apis:
-  - name: Hunter Domain Search API
-    baseURL: https://api.hunter.io/v2
-    tags:
-      - Contact Discovery
-      - Domain
-      - Email
-      - Search
-    serviceName: Hunter Domain Search API
-    serviceCategory: API
-  - name: Hunter Email Finder API
-    baseURL: https://api.hunter.io/v2
-    tags:
-      - Contact Discovery
-      - Email
-      - Finder
-      - Lead Generation
-    serviceName: Hunter Email Finder API
-    serviceCategory: API
-  - name: Hunter Email Verifier API
-    baseURL: https://api.hunter.io/v2
-    tags:
-      - Data Quality
-      - Email
-      - Validation
-      - Verification
-    serviceName: Hunter Email Verifier API
-    serviceCategory: API
-  - name: Hunter Email Count API
-    baseURL: https://api.hunter.io/v2
-    tags:
-      - Analytics
-      - Count
-      - Email
-    serviceName: Hunter Email Count API
-    serviceCategory: API
-  - name: Hunter Account API
-    baseURL: https://api.hunter.io/v2
-    tags:
-      - Account
-      - Management
-      - Usage
-    serviceName: Hunter Account API
-    serviceCategory: API
-  - name: Hunter Discover API
-    baseURL: https://api.hunter.io/v2
-    tags:
-      - Companies
-      - Discover
-      - Lead Generation
-      - Prospecting
-    serviceName: Hunter Discover API
-    serviceCategory: API
-  - name: Hunter Email Enrichment API
-    baseURL: https://api.hunter.io/v2
-    tags:
-      - Data
-      - Email
-      - Enrichment
-      - People
-    serviceName: Hunter Email Enrichment API
-    serviceCategory: API
-  - name: Hunter Company Enrichment API
-    baseURL: https://api.hunter.io/v2
-    tags:
-      - Company
-      - Data
-      - Enrichment
-      - Firmographic
-    serviceName: Hunter Company Enrichment API
-    serviceCategory: API
-  - name: Hunter Combined Enrichment API
-    baseURL: https://api.hunter.io/v2
-    tags:
-      - Combined
-      - Company
-      - Enrichment
-      - People
-    serviceName: Hunter Combined Enrichment API
-    serviceCategory: API
-  - name: Hunter Leads API
-    baseURL: https://api.hunter.io/v2
-    tags:
-      - Contacts
-      - CRM
-      - Leads
-      - Management
-    serviceName: Hunter Leads API
-    serviceCategory: API
-  - name: Hunter Leads Lists API
-    baseURL: https://api.hunter.io/v2
-    tags:
-      - Leads
-      - Lists
-      - Management
-      - Organization
-    serviceName: Hunter Leads Lists API
-    serviceCategory: API
-  - name: Hunter Campaigns API
-    baseURL: https://api.hunter.io/v2
-    tags:
-      - Automation
-      - Campaigns
-      - Email Outreach
-      - Sequences
-    serviceName: Hunter Campaigns API
-    serviceCategory: API
-  - name: Hunter Logo API
-    baseURL: https://logos.hunter.io
-    tags:
-      - Branding
-      - Company
-      - Images
-      - Logo
-    serviceName: Hunter Logo API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+  - name: verifier_credits
+    description: Email Verifier API calls; 0.5 credit per verified email.
+    unit: credit
+    aggregation: sum
+    dimensions:
+      - endpoint
+  - name: ai_searches
+    description: AI Assistant searches consumed against the monthly allotment.
+    unit: search
+    aggregation: sum
+  - name: signals_consumed
+    description: Sales Signals consumed against the monthly allotment.
+    unit: signal
+    aggregation: sum
+principles:
+  - name: Visibility
+    description: Use GET /v2/account to track credits used vs available, searches used vs available,
+      and verifications used vs available in real time. Reconcile against the dashboard usage view.
+  - name: Allocation
+    description: Hunter tracks usage at the account/API-key level. Issue separate API keys per integration
+      (CRM, outreach tool, internal app) for chargeback and to isolate consumption per workflow.
+  - name: Optimization
+    description: Use Bulk Domain Search (1 credit per 10 emails) instead of repeated Email Finder
+      calls for high-volume prospecting. Verifier costs only 0.5 credit per email; cache verification
+      results to avoid re-verifying. Annual billing yields a 30% discount.
+  - name: Accountability
+    description: Failed lookups do not consume credits, so monitor the success rate per API key as
+      a quality and cost-control signal. When approaching plan ceiling, choose between upgrading
+      tier vs annual billing for the better unit economics.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
-    url: https://apievangelist.com

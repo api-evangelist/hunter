@@ -4,148 +4,112 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Hunter
 providerId: hunter
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
-  - Contact Discovery
-  - Email
-  - Email Verification
-  - Lead Generation
-  - Prospecting
-  - Sales Intelligence
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Hunter API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  - Email
+  - Sales Intelligence
+description: Hunter applies per-endpoint rate limits enforced per API key, distinct from monthly
+  credit quotas. Most endpoints are limited to 15 requests/second and 500 requests/minute, with
+  Email Verifier (10/sec, 300/min) and Discover (5/sec, 50/min) operating at lower limits. Throttling
+  uses 403 (rate limit reached) and 429 (usage limit / plan exceeded). Credits are tracked separately
+  via the Account Information endpoint.
+sources:
+  - https://hunter.io/api-documentation/v2
+  - https://hunter.io/api-documentation/v2#rate-limiting
 responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+  rateLimitReached: 403
+  usageLimitReached: 429
 limits:
-  - tier: free
-    name: Free Tier Default
+  - name: Domain Search API
+    scope: api-key
+    metric: requests_per_second
+    limit: 15
+    timeFrame: second
+  - name: Domain Search API (per minute)
     scope: api-key
     metric: requests_per_minute
+    limit: 500
+    timeFrame: minute
+  - name: Email Finder API
+    scope: api-key
+    metric: requests_per_second
+    limit: 15
+    timeFrame: second
+  - name: Email Finder API (per minute)
+    scope: api-key
+    metric: requests_per_minute
+    limit: 500
+    timeFrame: minute
+  - name: Email Verifier API
+    scope: api-key
+    metric: requests_per_second
     limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Hunter Domain Search API
-      - Hunter Email Finder API
-      - Hunter Email Verifier API
-      - Hunter Email Count API
-      - Hunter Account API
-      - Hunter Discover API
-      - Hunter Email Enrichment API
-      - Hunter Company Enrichment API
-      - Hunter Combined Enrichment API
-      - Hunter Leads API
-      - Hunter Leads Lists API
-      - Hunter Campaigns API
-      - Hunter Logo API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Hunter Domain Search API
-      - Hunter Email Finder API
-      - Hunter Email Verifier API
-      - Hunter Email Count API
-      - Hunter Account API
-      - Hunter Discover API
-      - Hunter Email Enrichment API
-      - Hunter Company Enrichment API
-      - Hunter Combined Enrichment API
-      - Hunter Leads API
-      - Hunter Leads Lists API
-      - Hunter Campaigns API
-      - Hunter Logo API
-  - tier: professional
-    name: Professional Tier Default
+    timeFrame: second
+  - name: Email Verifier API (per minute)
     scope: api-key
     metric: requests_per_minute
-    limit: 100
-    burst: 200
+    limit: 300
     timeFrame: minute
-    applies:
-      - Hunter Domain Search API
-      - Hunter Email Finder API
-      - Hunter Email Verifier API
-      - Hunter Email Count API
-      - Hunter Account API
-      - Hunter Discover API
-      - Hunter Email Enrichment API
-      - Hunter Company Enrichment API
-      - Hunter Combined Enrichment API
-      - Hunter Leads API
-      - Hunter Leads Lists API
-      - Hunter Campaigns API
-      - Hunter Logo API
-  - tier: professional
-    name: Professional Tier Monthly Quota
+  - name: Enrichment endpoints (Email / Company / Combined)
     scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Hunter Domain Search API
-      - Hunter Email Finder API
-      - Hunter Email Verifier API
-      - Hunter Email Count API
-      - Hunter Account API
-      - Hunter Discover API
-      - Hunter Email Enrichment API
-      - Hunter Company Enrichment API
-      - Hunter Combined Enrichment API
-      - Hunter Leads API
-      - Hunter Leads Lists API
-      - Hunter Campaigns API
-      - Hunter Logo API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
+    metric: requests_per_second
+    limit: 15
+    timeFrame: second
+  - name: Enrichment endpoints (per minute)
+    scope: api-key
     metric: requests_per_minute
-    limit: 1000
-    burst: 5000
+    limit: 500
     timeFrame: minute
-    applies:
-      - Hunter Domain Search API
-      - Hunter Email Finder API
-      - Hunter Email Verifier API
-      - Hunter Email Count API
-      - Hunter Account API
-      - Hunter Discover API
-      - Hunter Email Enrichment API
-      - Hunter Company Enrichment API
-      - Hunter Combined Enrichment API
-      - Hunter Leads API
-      - Hunter Leads Lists API
-      - Hunter Campaigns API
-      - Hunter Logo API
+  - name: Email Count API
+    scope: api-key
+    metric: requests_per_second
+    limit: 15
+    timeFrame: second
+  - name: Discover API
+    scope: api-key
+    metric: requests_per_second
+    limit: 5
+    timeFrame: second
+  - name: Discover API (per minute)
+    scope: api-key
+    metric: requests_per_minute
+    limit: 50
+    timeFrame: minute
+  - name: Free plan monthly credits
+    scope: account
+    metric: credits_per_month
+    limit: 50
+    timeFrame: month
+  - name: Starter plan monthly credits
+    scope: account
+    metric: credits_per_month
+    limit: 2000
+    timeFrame: month
+  - name: Growth plan monthly credits
+    scope: account
+    metric: credits_per_month
+    limit: 10000
+    timeFrame: month
+  - name: Scale plan monthly credits
+    scope: account
+    metric: credits_per_month
+    limit: 25000
+    timeFrame: month
 policies:
+  - name: 403 vs 429 distinction
+    description: 403 indicates the per-second/per-minute rate limit was hit and clients should slow
+      down. 429 indicates the monthly usage / credit allotment is exhausted and requires a plan
+      upgrade or waiting until the next billing cycle.
   - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+    description: Use exponential backoff on 403 responses. Hunter does not document Retry-After or
+      X-RateLimit headers; pace clients to stay under documented per-endpoint limits.
+  - name: Failed lookups are free
+    description: When emails cannot be found or verifications fail, no credits are consumed.
+  - name: Account usage tracking
+    description: Use the GET /v2/account endpoint to track remaining credits, searches, and verifications
+      programmatically rather than relying on response headers.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
-    url: https://apievangelist.com
