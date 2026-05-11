@@ -369,6 +369,16 @@ common:
         description: Export domain search results and verified emails directly to Google Sheets for analysis.
       - name: Zoho CRM
         description: Integrate lead data with Zoho CRM for end-to-end sales pipeline management.
+integrations:
+  - name: HubSpot
+  - name: Salesforce
+  - name: Pipedrive
+  - name: Zoho CRM
+  - name: Gmail
+  - name: Outlook
+  - name: SMTP/IMAP
+  - name: Zapier
+  - name: Clay
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
