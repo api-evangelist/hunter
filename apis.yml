@@ -4,7 +4,7 @@ description: Hunter is an email finding and verification service that helps find
 image: https://hunter.io/images/hunter-logo.png
 url: https://raw.githubusercontent.com/api-evangelist/hunter/refs/heads/main/apis.yml
 created: '2024-01-01'
-modified: '2026-04-18'
+modified: '2026-05-19'
 specificationVersion: '0.19'
 type: Index
 access: 3rd-Party
@@ -369,6 +369,9 @@ common:
         description: Export domain search results and verified emails directly to Google Sheets for analysis.
       - name: Zoho CRM
         description: Integrate lead data with Zoho CRM for end-to-end sales pipeline management.
+  - name: MCP Server
+    url: https://github.com/hunter-io/hunter-mcp
+    type: MCPServer
 integrations:
   - name: HubSpot
   - name: Salesforce
