@@ -1,0 +1,289 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Hunter API — Leads
+  description: 'Hunter API — Leads. 6 operations. Lead operation: Hunter List Leads. Self-contained Naftiko capability covering
+    one Hunter business surface.'
+  tags:
+  - Hunter
+  - Leads
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    HUNTER_API_KEY: HUNTER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: hunter-leads
+    baseUri: https://api.hunter.io/v2
+    description: Hunter API — Leads business capability. Self-contained, no shared references.
+    resources:
+    - name: leads
+      path: /leads
+      operations:
+      - name: listleads
+        method: GET
+        description: Hunter List Leads
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of leads to return. Default is 20, max is 100.
+        - name: offset
+          in: query
+          type: integer
+          description: Number of leads to skip for pagination.
+        - name: leads_list_id
+          in: query
+          type: integer
+          description: Filter leads by list identifier.
+        - name: first_name
+          in: query
+          type: string
+          description: Filter by first name.
+        - name: last_name
+          in: query
+          type: string
+          description: Filter by last name.
+        - name: email
+          in: query
+          type: string
+          description: Filter by email address.
+        - name: company
+          in: query
+          type: string
+          description: Filter by company name.
+        - name: phone_number
+          in: query
+          type: string
+          description: Filter by phone number.
+        - name: twitter
+          in: query
+          type: string
+          description: Filter by Twitter handle.
+      - name: createlead
+        method: POST
+        description: Hunter Create Lead
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: upsertlead
+        method: PUT
+        description: Hunter Create or Update Lead
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: leads-id
+      path: /leads/{id}
+      operations:
+      - name: getlead
+        method: GET
+        description: Hunter Get Lead
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatelead
+        method: PUT
+        description: Hunter Update Lead
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletelead
+        method: DELETE
+        description: Hunter Delete Lead
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.HUNTER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: hunter-leads-rest
+    port: 8080
+    description: REST adapter for Hunter API — Leads. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/leads
+      name: leads
+      description: REST surface for leads.
+      operations:
+      - method: GET
+        name: listleads
+        description: Hunter List Leads
+        call: hunter-leads.listleads
+        with:
+          limit: rest.limit
+          offset: rest.offset
+          leads_list_id: rest.leads_list_id
+          first_name: rest.first_name
+          last_name: rest.last_name
+          email: rest.email
+          company: rest.company
+          phone_number: rest.phone_number
+          twitter: rest.twitter
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createlead
+        description: Hunter Create Lead
+        call: hunter-leads.createlead
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: upsertlead
+        description: Hunter Create or Update Lead
+        call: hunter-leads.upsertlead
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/leads/{id}
+      name: leads-id
+      description: REST surface for leads-id.
+      operations:
+      - method: GET
+        name: getlead
+        description: Hunter Get Lead
+        call: hunter-leads.getlead
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatelead
+        description: Hunter Update Lead
+        call: hunter-leads.updatelead
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletelead
+        description: Hunter Delete Lead
+        call: hunter-leads.deletelead
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: hunter-leads-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Hunter API — Leads. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: hunter-list-leads
+      description: Hunter List Leads
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: hunter-leads.listleads
+      with:
+        limit: tools.limit
+        offset: tools.offset
+        leads_list_id: tools.leads_list_id
+        first_name: tools.first_name
+        last_name: tools.last_name
+        email: tools.email
+        company: tools.company
+        phone_number: tools.phone_number
+        twitter: tools.twitter
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: hunter-create-lead
+      description: Hunter Create Lead
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: hunter-leads.createlead
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: hunter-create-update-lead
+      description: Hunter Create or Update Lead
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: hunter-leads.upsertlead
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: hunter-get-lead
+      description: Hunter Get Lead
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: hunter-leads.getlead
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: hunter-update-lead
+      description: Hunter Update Lead
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: hunter-leads.updatelead
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: hunter-delete-lead
+      description: Hunter Delete Lead
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: hunter-leads.deletelead
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,115 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Hunter API — Email Finder
+  description: 'Hunter API — Email Finder. 1 operations. Lead operation: Hunter Email Finder. Self-contained Naftiko capability
+    covering one Hunter business surface.'
+  tags:
+  - Hunter
+  - Email Finder
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    HUNTER_API_KEY: HUNTER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: hunter-email-finder
+    baseUri: https://api.hunter.io/v2
+    description: Hunter API — Email Finder business capability. Self-contained, no shared references.
+    resources:
+    - name: email-finder
+      path: /email-finder
+      operations:
+      - name: emailfinder
+        method: GET
+        description: Hunter Email Finder
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: domain
+          in: query
+          type: string
+          description: Domain name of the company. Required if company is not provided.
+        - name: company
+          in: query
+          type: string
+          description: Company name. Required if domain is not provided.
+        - name: first_name
+          in: query
+          type: string
+          description: First name of the person. Required with last_name if full_name not provided.
+        - name: last_name
+          in: query
+          type: string
+          description: Last name of the person. Required with first_name if full_name not provided.
+        - name: full_name
+          in: query
+          type: string
+          description: Full name of the person. Required if first_name and last_name not provided.
+        - name: linkedin_handle
+          in: query
+          type: string
+          description: LinkedIn profile handle for the person.
+        - name: max_duration
+          in: query
+          type: integer
+          description: Maximum duration for the request in seconds. Between 3 and 20, default is 10.
+    authentication:
+      type: bearer
+      token: '{{env.HUNTER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: hunter-email-finder-rest
+    port: 8080
+    description: REST adapter for Hunter API — Email Finder. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/email-finder
+      name: email-finder
+      description: REST surface for email-finder.
+      operations:
+      - method: GET
+        name: emailfinder
+        description: Hunter Email Finder
+        call: hunter-email-finder.emailfinder
+        with:
+          domain: rest.domain
+          company: rest.company
+          first_name: rest.first_name
+          last_name: rest.last_name
+          full_name: rest.full_name
+          linkedin_handle: rest.linkedin_handle
+          max_duration: rest.max_duration
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: hunter-email-finder-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Hunter API — Email Finder. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: hunter-email-finder
+      description: Hunter Email Finder
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: hunter-email-finder.emailfinder
+      with:
+        domain: tools.domain
+        company: tools.company
+        first_name: tools.first_name
+        last_name: tools.last_name
+        full_name: tools.full_name
+        linkedin_handle: tools.linkedin_handle
+        max_duration: tools.max_duration
+      outputParameters:
+      - type: object
+        mapping: $.

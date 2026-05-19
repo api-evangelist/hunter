@@ -1,0 +1,91 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Hunter API — Email Enrichment
+  description: 'Hunter API — Email Enrichment. 1 operations. Lead operation: Hunter Email Enrichment. Self-contained Naftiko
+    capability covering one Hunter business surface.'
+  tags:
+  - Hunter
+  - Email Enrichment
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    HUNTER_API_KEY: HUNTER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: hunter-email-enrichment
+    baseUri: https://api.hunter.io/v2
+    description: Hunter API — Email Enrichment business capability. Self-contained, no shared references.
+    resources:
+    - name: people-find
+      path: /people/find
+      operations:
+      - name: emailenrichment
+        method: GET
+        description: Hunter Email Enrichment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email
+          in: query
+          type: string
+          description: Email address to enrich. Required if linkedin_handle is not provided.
+        - name: linkedin_handle
+          in: query
+          type: string
+          description: LinkedIn profile handle. Required if email is not provided.
+        - name: clearbit_format
+          in: query
+          type: boolean
+          description: Format response to match the Clearbit schema.
+    authentication:
+      type: bearer
+      token: '{{env.HUNTER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: hunter-email-enrichment-rest
+    port: 8080
+    description: REST adapter for Hunter API — Email Enrichment. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/people/find
+      name: people-find
+      description: REST surface for people-find.
+      operations:
+      - method: GET
+        name: emailenrichment
+        description: Hunter Email Enrichment
+        call: hunter-email-enrichment.emailenrichment
+        with:
+          email: rest.email
+          linkedin_handle: rest.linkedin_handle
+          clearbit_format: rest.clearbit_format
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: hunter-email-enrichment-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Hunter API — Email Enrichment. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: hunter-email-enrichment
+      description: Hunter Email Enrichment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: hunter-email-enrichment.emailenrichment
+      with:
+        email: tools.email
+        linkedin_handle: tools.linkedin_handle
+        clearbit_format: tools.clearbit_format
+      outputParameters:
+      - type: object
+        mapping: $.

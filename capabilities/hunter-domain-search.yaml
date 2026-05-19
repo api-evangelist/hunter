@@ -1,0 +1,121 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Hunter API — Domain Search
+  description: 'Hunter API — Domain Search. 1 operations. Lead operation: Hunter Domain Search. Self-contained Naftiko capability
+    covering one Hunter business surface.'
+  tags:
+  - Hunter
+  - Domain Search
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    HUNTER_API_KEY: HUNTER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: hunter-domain-search
+    baseUri: https://api.hunter.io/v2
+    description: Hunter API — Domain Search business capability. Self-contained, no shared references.
+    resources:
+    - name: domain-search
+      path: /domain-search
+      operations:
+      - name: domainsearch
+        method: GET
+        description: Hunter Domain Search
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: domain
+          in: query
+          type: string
+          description: Domain name from which you want to find the email addresses. Required if company is not provided.
+        - name: company
+          in: query
+          type: string
+          description: Company name from which you want to find the email addresses. Required if domain is not provided.
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of email addresses to return. Default is 10.
+        - name: offset
+          in: query
+          type: integer
+          description: Number of email addresses to skip for pagination. Default is 0.
+        - name: type
+          in: query
+          type: string
+          description: Filter by email address type.
+        - name: seniority
+          in: query
+          type: string
+          description: Filter by seniority level.
+        - name: department
+          in: query
+          type: string
+          description: Filter by department.
+        - name: verification_status
+          in: query
+          type: string
+          description: Filter by verification status.
+    authentication:
+      type: bearer
+      token: '{{env.HUNTER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: hunter-domain-search-rest
+    port: 8080
+    description: REST adapter for Hunter API — Domain Search. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/domain-search
+      name: domain-search
+      description: REST surface for domain-search.
+      operations:
+      - method: GET
+        name: domainsearch
+        description: Hunter Domain Search
+        call: hunter-domain-search.domainsearch
+        with:
+          domain: rest.domain
+          company: rest.company
+          limit: rest.limit
+          offset: rest.offset
+          type: rest.type
+          seniority: rest.seniority
+          department: rest.department
+          verification_status: rest.verification_status
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: hunter-domain-search-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Hunter API — Domain Search. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: hunter-domain-search
+      description: Hunter Domain Search
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: hunter-domain-search.domainsearch
+      with:
+        domain: tools.domain
+        company: tools.company
+        limit: tools.limit
+        offset: tools.offset
+        type: tools.type
+        seniority: tools.seniority
+        department: tools.department
+        verification_status: tools.verification_status
+      outputParameters:
+      - type: object
+        mapping: $.

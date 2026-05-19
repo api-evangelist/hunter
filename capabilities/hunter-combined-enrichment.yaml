@@ -1,0 +1,86 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Hunter API — Combined Enrichment
+  description: 'Hunter API — Combined Enrichment. 1 operations. Lead operation: Hunter Combined Enrichment. Self-contained
+    Naftiko capability covering one Hunter business surface.'
+  tags:
+  - Hunter
+  - Combined Enrichment
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    HUNTER_API_KEY: HUNTER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: hunter-combined-enrichment
+    baseUri: https://api.hunter.io/v2
+    description: Hunter API — Combined Enrichment business capability. Self-contained, no shared references.
+    resources:
+    - name: combined-find
+      path: /combined/find
+      operations:
+      - name: combinedenrichment
+        method: GET
+        description: Hunter Combined Enrichment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email
+          in: query
+          type: string
+          description: Email address to enrich with both person and company data.
+          required: true
+        - name: clearbit_format
+          in: query
+          type: boolean
+          description: Format response to match the Clearbit schema.
+    authentication:
+      type: bearer
+      token: '{{env.HUNTER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: hunter-combined-enrichment-rest
+    port: 8080
+    description: REST adapter for Hunter API — Combined Enrichment. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/combined/find
+      name: combined-find
+      description: REST surface for combined-find.
+      operations:
+      - method: GET
+        name: combinedenrichment
+        description: Hunter Combined Enrichment
+        call: hunter-combined-enrichment.combinedenrichment
+        with:
+          email: rest.email
+          clearbit_format: rest.clearbit_format
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: hunter-combined-enrichment-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Hunter API — Combined Enrichment. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: hunter-combined-enrichment
+      description: Hunter Combined Enrichment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: hunter-combined-enrichment.combinedenrichment
+      with:
+        email: tools.email
+        clearbit_format: tools.clearbit_format
+      outputParameters:
+      - type: object
+        mapping: $.

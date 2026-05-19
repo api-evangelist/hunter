@@ -1,0 +1,86 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Hunter API — Company Enrichment
+  description: 'Hunter API — Company Enrichment. 1 operations. Lead operation: Hunter Company Enrichment. Self-contained Naftiko
+    capability covering one Hunter business surface.'
+  tags:
+  - Hunter
+  - Company Enrichment
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    HUNTER_API_KEY: HUNTER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: hunter-company-enrichment
+    baseUri: https://api.hunter.io/v2
+    description: Hunter API — Company Enrichment business capability. Self-contained, no shared references.
+    resources:
+    - name: companies-find
+      path: /companies/find
+      operations:
+      - name: companyenrichment
+        method: GET
+        description: Hunter Company Enrichment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: domain
+          in: query
+          type: string
+          description: Domain name of the company to enrich.
+          required: true
+        - name: clearbit_format
+          in: query
+          type: boolean
+          description: Format response to match the Clearbit schema.
+    authentication:
+      type: bearer
+      token: '{{env.HUNTER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: hunter-company-enrichment-rest
+    port: 8080
+    description: REST adapter for Hunter API — Company Enrichment. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/companies/find
+      name: companies-find
+      description: REST surface for companies-find.
+      operations:
+      - method: GET
+        name: companyenrichment
+        description: Hunter Company Enrichment
+        call: hunter-company-enrichment.companyenrichment
+        with:
+          domain: rest.domain
+          clearbit_format: rest.clearbit_format
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: hunter-company-enrichment-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Hunter API — Company Enrichment. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: hunter-company-enrichment
+      description: Hunter Company Enrichment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: hunter-company-enrichment.companyenrichment
+      with:
+        domain: tools.domain
+        clearbit_format: tools.clearbit_format
+      outputParameters:
+      - type: object
+        mapping: $.
