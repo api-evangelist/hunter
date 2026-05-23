@@ -1,0 +1,447 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CompanyEnrichment",
+  "title": "CompanyEnrichment",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the company record.",
+      "example": "abc123"
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Company name.",
+      "example": "Example Title"
+    },
+    "legalName": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Legal name of the company.",
+      "example": "example_value"
+    },
+    "domain": {
+      "type": "string",
+      "description": "Company domain name.",
+      "example": "example_value"
+    },
+    "domainAliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Alternate domain names.",
+      "example": []
+    },
+    "site": {
+      "type": "object",
+      "properties": {
+        "phoneNumbers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "emailAddresses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "example": "example_value"
+    },
+    "category": {
+      "type": "object",
+      "description": "Industry classification.",
+      "properties": {
+        "sector": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "industryGroup": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "industry": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subIndustry": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "gicsCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sicCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sic4Codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "naicsCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "naics6Codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "naics6Codes2022": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "example": "example_value"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags associated with the company.",
+      "example": []
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Company description.",
+      "example": "A sample description."
+    },
+    "foundedYear": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Year the company was founded.",
+      "example": "example_value"
+    },
+    "location": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Location description.",
+      "example": "example_value"
+    },
+    "timeZone": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Time zone name.",
+      "example": "example_value"
+    },
+    "utcOffset": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "UTC offset in hours.",
+      "example": "example_value"
+    },
+    "geo": {
+      "$ref": "#/components/schemas/CompanyGeoLocation"
+    },
+    "logo": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri",
+      "description": "Company logo URL.",
+      "example": "https://www.example.com"
+    },
+    "facebook": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "likes": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "example": "example_value"
+    },
+    "linkedin": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "example": "example_value"
+    },
+    "twitter": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "id": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "bio": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "followers": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "following": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "site": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "avatar": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "example": "example_value"
+    },
+    "crunchbase": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "example": "example_value"
+    },
+    "emailProvider": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Email service provider.",
+      "example": "user@example.com"
+    },
+    "type": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Company type.",
+      "example": "example_value"
+    },
+    "company_type": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Entity type classification.",
+      "example": "example_value"
+    },
+    "ticker": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Stock ticker symbol.",
+      "example": "example_value"
+    },
+    "identifiers": {
+      "type": "object",
+      "properties": {
+        "usEIN": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "US Employer Identification Number."
+        }
+      },
+      "example": "example_value"
+    },
+    "phone": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Primary phone number.",
+      "example": "example_value"
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "alexaUsRank": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "alexaGlobalRank": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "trafficRank": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "employees": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Estimated employee count or range."
+        },
+        "marketCap": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "raised": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Total funding raised."
+        },
+        "annualRevenue": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "estimatedAnnualRevenue": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "fiscalYearEnd": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "example": "example_value"
+    },
+    "indexedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "description": "Date when the record was last indexed.",
+      "example": "2026-01-15"
+    },
+    "tech": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Technologies used by the company.",
+      "example": []
+    },
+    "techCategories": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Categories of technologies used.",
+      "example": []
+    },
+    "parent": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "example": "example_value"
+    },
+    "ultimateParent": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

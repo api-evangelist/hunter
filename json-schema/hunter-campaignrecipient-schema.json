@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CampaignRecipient",
+  "title": "CampaignRecipient",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Recipient email address.",
+      "example": "user@example.com"
+    },
+    "lead_id": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Associated lead identifier.",
+      "example": "500123"
+    },
+    "sending_status": {
+      "type": "string",
+      "description": "Current sending status for this recipient.",
+      "example": "example_value"
+    }
+  }
+}

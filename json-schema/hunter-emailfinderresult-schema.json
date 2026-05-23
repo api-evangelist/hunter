@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EmailFinderResult",
+  "title": "EmailFinderResult",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": "string",
+      "description": "First name of the person.",
+      "example": "example_value"
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Last name of the person.",
+      "example": "example_value"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "The found email address.",
+      "example": "user@example.com"
+    },
+    "score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Confidence score for the email.",
+      "example": 10
+    },
+    "domain": {
+      "type": "string",
+      "description": "The domain name used for the search.",
+      "example": "example_value"
+    },
+    "position": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Job position or title.",
+      "example": "example_value"
+    },
+    "company": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Company name.",
+      "example": "example_value"
+    },
+    "twitter": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Twitter handle.",
+      "example": "example_value"
+    },
+    "linkedin_url": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "LinkedIn profile URL.",
+      "example": "https://www.example.com"
+    },
+    "phone_number": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Phone number.",
+      "example": "example_value"
+    },
+    "verification": {
+      "$ref": "#/components/schemas/VerificationStatus"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Source"
+      },
+      "example": []
+    }
+  }
+}

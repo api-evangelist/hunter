@@ -1,0 +1,375 @@
+{
+  "provider": "Hunter",
+  "providerId": "hunter",
+  "kind": "json-structure",
+  "description": "Structural overview of the Hunter API surface; extracted from openapi/.",
+  "schemaCount": 23,
+  "operationCount": 25,
+  "schemas": [
+    {
+      "name": "DomainSearchResult",
+      "type": "object",
+      "propertyCount": 7,
+      "required": []
+    },
+    {
+      "name": "DomainEmail",
+      "type": "object",
+      "propertyCount": 13,
+      "required": []
+    },
+    {
+      "name": "EmailFinderResult",
+      "type": "object",
+      "propertyCount": 12,
+      "required": []
+    },
+    {
+      "name": "EmailVerifierResult",
+      "type": "object",
+      "propertyCount": 14,
+      "required": []
+    },
+    {
+      "name": "EmailCountResult",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "AccountResult",
+      "type": "object",
+      "propertyCount": 9,
+      "required": []
+    },
+    {
+      "name": "UsageCounter",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "Lead",
+      "type": "object",
+      "propertyCount": 22,
+      "required": []
+    },
+    {
+      "name": "LeadInput",
+      "type": "object",
+      "propertyCount": 15,
+      "required": []
+    },
+    {
+      "name": "LeadsList",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "Campaign",
+      "type": "object",
+      "propertyCount": 9,
+      "required": []
+    },
+    {
+      "name": "CampaignRecipient",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "DiscoverRequest",
+      "type": "object",
+      "propertyCount": 12,
+      "required": []
+    },
+    {
+      "name": "DiscoverResult",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "PersonEnrichment",
+      "type": "object",
+      "propertyCount": 21,
+      "required": []
+    },
+    {
+      "name": "CompanyEnrichment",
+      "type": "object",
+      "propertyCount": 31,
+      "required": []
+    },
+    {
+      "name": "GeoLocation",
+      "type": "object",
+      "propertyCount": 7,
+      "required": []
+    },
+    {
+      "name": "CompanyGeoLocation",
+      "type": "object",
+      "propertyCount": 12,
+      "required": []
+    },
+    {
+      "name": "VerificationStatus",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "Source",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "PaginationMeta",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "Meta",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "Error",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/domain-search",
+      "operationId": "domainSearch",
+      "summary": "Hunter Domain Search",
+      "tags": [
+        "Domain Search"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/email-finder",
+      "operationId": "emailFinder",
+      "summary": "Hunter Email Finder",
+      "tags": [
+        "Email Finder"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/email-verifier",
+      "operationId": "emailVerifier",
+      "summary": "Hunter Email Verifier",
+      "tags": [
+        "Email Verifier"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/email-count",
+      "operationId": "emailCount",
+      "summary": "Hunter Email Count",
+      "tags": [
+        "Email Count"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/account",
+      "operationId": "getAccount",
+      "summary": "Hunter Account Information",
+      "tags": [
+        "Account"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/leads",
+      "operationId": "listLeads",
+      "summary": "Hunter List Leads",
+      "tags": [
+        "Leads"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/leads",
+      "operationId": "createLead",
+      "summary": "Hunter Create Lead",
+      "tags": [
+        "Leads"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/leads",
+      "operationId": "upsertLead",
+      "summary": "Hunter Create or Update Lead",
+      "tags": [
+        "Leads"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/leads/{id}",
+      "operationId": "getLead",
+      "summary": "Hunter Get Lead",
+      "tags": [
+        "Leads"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/leads/{id}",
+      "operationId": "updateLead",
+      "summary": "Hunter Update Lead",
+      "tags": [
+        "Leads"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/leads/{id}",
+      "operationId": "deleteLead",
+      "summary": "Hunter Delete Lead",
+      "tags": [
+        "Leads"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/leads_lists",
+      "operationId": "listLeadsLists",
+      "summary": "Hunter List Leads Lists",
+      "tags": [
+        "Leads Lists"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/leads_lists",
+      "operationId": "createLeadsList",
+      "summary": "Hunter Create Leads List",
+      "tags": [
+        "Leads Lists"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/leads_lists/{id}",
+      "operationId": "getLeadsList",
+      "summary": "Hunter Get Leads List",
+      "tags": [
+        "Leads Lists"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/leads_lists/{id}",
+      "operationId": "updateLeadsList",
+      "summary": "Hunter Update Leads List",
+      "tags": [
+        "Leads Lists"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/leads_lists/{id}",
+      "operationId": "deleteLeadsList",
+      "summary": "Hunter Delete Leads List",
+      "tags": [
+        "Leads Lists"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/campaigns",
+      "operationId": "listCampaigns",
+      "summary": "Hunter List Campaigns",
+      "tags": [
+        "Campaigns"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/campaigns/{id}/recipients",
+      "operationId": "listCampaignRecipients",
+      "summary": "Hunter List Campaign Recipients",
+      "tags": [
+        "Campaigns"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/campaigns/{id}/recipients",
+      "operationId": "addCampaignRecipients",
+      "summary": "Hunter Add Campaign Recipients",
+      "tags": [
+        "Campaigns"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/campaigns/{id}/recipients",
+      "operationId": "cancelCampaignRecipients",
+      "summary": "Hunter Cancel Campaign Recipients",
+      "tags": [
+        "Campaigns"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/campaigns/{id}/start",
+      "operationId": "startCampaign",
+      "summary": "Hunter Start Campaign",
+      "tags": [
+        "Campaigns"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/discover",
+      "operationId": "discover",
+      "summary": "Hunter Discover Companies",
+      "tags": [
+        "Discover"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/people/find",
+      "operationId": "emailEnrichment",
+      "summary": "Hunter Email Enrichment",
+      "tags": [
+        "Email Enrichment"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/companies/find",
+      "operationId": "companyEnrichment",
+      "summary": "Hunter Company Enrichment",
+      "tags": [
+        "Company Enrichment"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/combined/find",
+      "operationId": "combinedEnrichment",
+      "summary": "Hunter Combined Enrichment",
+      "tags": [
+        "Combined Enrichment"
+      ]
+    }
+  ]
+}

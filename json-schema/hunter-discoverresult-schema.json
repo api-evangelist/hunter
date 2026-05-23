@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DiscoverResult",
+  "title": "DiscoverResult",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "Domain name of the discovered company.",
+      "example": "example_value"
+    },
+    "organization": {
+      "type": "string",
+      "description": "Name of the organization.",
+      "example": "example_value"
+    },
+    "emails_count": {
+      "type": "object",
+      "properties": {
+        "personal": {
+          "type": "integer",
+          "description": "Number of personal emails found."
+        },
+        "generic": {
+          "type": "integer",
+          "description": "Number of generic emails found."
+        },
+        "total": {
+          "type": "integer",
+          "description": "Total emails found."
+        }
+      },
+      "example": "user@example.com"
+    }
+  }
+}

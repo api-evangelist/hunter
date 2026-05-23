@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EmailVerifierResult",
+  "title": "EmailVerifierResult",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "valid",
+        "invalid",
+        "accept_all",
+        "webmail",
+        "disposable",
+        "unknown"
+      ],
+      "description": "The verification status of the email address.",
+      "example": "valid"
+    },
+    "result": {
+      "type": "string",
+      "enum": [
+        "deliverable",
+        "undeliverable",
+        "risky"
+      ],
+      "description": "Deprecated. The deliverability result.",
+      "deprecated": true,
+      "example": "deliverable"
+    },
+    "score": {
+      "type": "integer",
+      "description": "Deliverability score.",
+      "example": 10
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "The email address that was verified.",
+      "example": "user@example.com"
+    },
+    "regexp": {
+      "type": "boolean",
+      "description": "Whether the email matches a valid format.",
+      "example": true
+    },
+    "gibberish": {
+      "type": "boolean",
+      "description": "Whether the email appears to be gibberish.",
+      "example": true
+    },
+    "disposable": {
+      "type": "boolean",
+      "description": "Whether the email uses a disposable provider.",
+      "example": true
+    },
+    "webmail": {
+      "type": "boolean",
+      "description": "Whether the email is a webmail address.",
+      "example": true
+    },
+    "mx_records": {
+      "type": "boolean",
+      "description": "Whether MX records exist for the domain.",
+      "example": true
+    },
+    "smtp_server": {
+      "type": "boolean",
+      "description": "Whether an SMTP server was found.",
+      "example": true
+    },
+    "smtp_check": {
+      "type": "boolean",
+      "description": "Whether the SMTP check passed.",
+      "example": true
+    },
+    "accept_all": {
+      "type": "boolean",
+      "description": "Whether the mail server accepts all addresses.",
+      "example": true
+    },
+    "block": {
+      "type": "boolean",
+      "description": "Whether the email is blocked.",
+      "example": true
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Source"
+      },
+      "example": []
+    }
+  }
+}

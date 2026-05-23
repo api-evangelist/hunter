@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PaginationMeta",
+  "title": "PaginationMeta",
+  "type": "object",
+  "properties": {
+    "results": {
+      "type": "integer",
+      "description": "Total number of results available.",
+      "example": 10
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Number of results per page.",
+      "example": 10
+    },
+    "offset": {
+      "type": "integer",
+      "description": "Current offset position.",
+      "example": 10
+    }
+  }
+}

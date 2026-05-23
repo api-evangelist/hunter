@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DomainSearchResult",
+  "title": "DomainSearchResult",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "The domain name searched.",
+      "example": "example_value"
+    },
+    "disposable": {
+      "type": "boolean",
+      "description": "Whether the domain is a disposable email service.",
+      "example": true
+    },
+    "webmail": {
+      "type": "boolean",
+      "description": "Whether the domain is a webmail provider.",
+      "example": true
+    },
+    "accept_all": {
+      "type": "boolean",
+      "description": "Whether the mail server accepts all email addresses.",
+      "example": true
+    },
+    "pattern": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The email address pattern detected for the domain.",
+      "example": "example_value"
+    },
+    "organization": {
+      "type": "string",
+      "description": "The name of the organization associated with the domain.",
+      "example": "example_value"
+    },
+    "emails": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DomainEmail"
+      },
+      "example": "user@example.com"
+    }
+  }
+}

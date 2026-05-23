@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EmailCountResult",
+  "title": "EmailCountResult",
+  "type": "object",
+  "properties": {
+    "total": {
+      "type": "integer",
+      "description": "Total number of email addresses found.",
+      "example": 10
+    },
+    "personal_emails": {
+      "type": "integer",
+      "description": "Number of personal email addresses.",
+      "example": "user@example.com"
+    },
+    "generic_emails": {
+      "type": "integer",
+      "description": "Number of generic email addresses.",
+      "example": "user@example.com"
+    },
+    "department": {
+      "type": "object",
+      "description": "Breakdown of email count by department.",
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "example": "example_value"
+    },
+    "seniority": {
+      "type": "object",
+      "description": "Breakdown of email count by seniority level.",
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "example": "example_value"
+    }
+  }
+}

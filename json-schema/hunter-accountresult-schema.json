@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AccountResult",
+  "title": "AccountResult",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": "string",
+      "description": "Account holder first name.",
+      "example": "example_value"
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Account holder last name.",
+      "example": "example_value"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Account email address.",
+      "example": "user@example.com"
+    },
+    "plan_name": {
+      "type": "string",
+      "description": "Name of the current subscription plan.",
+      "example": "example_value"
+    },
+    "plan_level": {
+      "type": "integer",
+      "description": "Level of the current subscription plan.",
+      "example": 10
+    },
+    "reset_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when usage counters reset.",
+      "example": "2026-01-15"
+    },
+    "team_id": {
+      "type": "integer",
+      "description": "Team identifier.",
+      "example": "500123"
+    },
+    "requests": {
+      "type": "object",
+      "description": "Usage breakdown by request type.",
+      "properties": {
+        "searches": {
+          "$ref": "#/components/schemas/UsageCounter"
+        },
+        "verifications": {
+          "$ref": "#/components/schemas/UsageCounter"
+        }
+      },
+      "example": "example_value"
+    },
+    "calls": {
+      "type": "object",
+      "description": "Deprecated. Total usage counters.",
+      "deprecated": true,
+      "properties": {
+        "used": {
+          "type": "integer"
+        },
+        "available": {
+          "type": "integer"
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

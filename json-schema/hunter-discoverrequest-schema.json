@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DiscoverRequest",
+  "title": "DiscoverRequest",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "Natural language search query to find matching companies.",
+      "example": "example_value"
+    },
+    "organization": {
+      "type": "object",
+      "description": "Filter by organization attributes.",
+      "properties": {
+        "domain": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "example": "example_value"
+    },
+    "headquarters_location": {
+      "type": "object",
+      "description": "Filter by geographic location of headquarters.",
+      "properties": {
+        "country": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        }
+      },
+      "example": "example_value"
+    },
+    "industry": {
+      "type": "object",
+      "description": "Filter by industry classification.",
+      "properties": {
+        "include": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "example": "example_value"
+    },
+    "headcount": {
+      "type": "array",
+      "description": "Filter by company headcount ranges.",
+      "items": {
+        "type": "string"
+      },
+      "example": []
+    },
+    "company_type": {
+      "type": "object",
+      "description": "Filter by company entity type.",
+      "properties": {
+        "include": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "example": "example_value"
+    },
+    "year_founded": {
+      "type": "object",
+      "description": "Filter by year the company was founded.",
+      "properties": {
+        "min": {
+          "type": "integer"
+        },
+        "max": {
+          "type": "integer"
+        }
+      },
+      "example": "example_value"
+    },
+    "technology": {
+      "type": "object",
+      "description": "Filter by technologies used by the company.",
+      "properties": {
+        "include": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "example": "example_value"
+    },
+    "keywords": {
+      "type": "object",
+      "description": "Filter by business keywords.",
+      "properties": {
+        "include": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "example": "example_value"
+    },
+    "funding": {
+      "type": "object",
+      "description": "Filter by funding information.",
+      "properties": {
+        "stage": {
+          "type": "string"
+        },
+        "min_amount": {
+          "type": "number"
+        },
+        "max_amount": {
+          "type": "number"
+        }
+      },
+      "example": "example_value"
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Maximum number of results to return.",
+      "example": 10
+    },
+    "offset": {
+      "type": "integer",
+      "description": "Number of results to skip for pagination.",
+      "example": 10
+    }
+  }
+}

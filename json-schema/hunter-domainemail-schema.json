@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DomainEmail",
+  "title": "DomainEmail",
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string",
+      "format": "email",
+      "description": "The email address.",
+      "example": "example_value"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "personal",
+        "generic"
+      ],
+      "description": "Whether the email is personal or generic.",
+      "example": "personal"
+    },
+    "confidence": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Confidence score for the email address.",
+      "example": 10
+    },
+    "first_name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "First name of the person.",
+      "example": "example_value"
+    },
+    "last_name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Last name of the person.",
+      "example": "example_value"
+    },
+    "position": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Job position or title.",
+      "example": "example_value"
+    },
+    "seniority": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Seniority level.",
+      "example": "example_value"
+    },
+    "department": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Department within the organization.",
+      "example": "example_value"
+    },
+    "linkedin": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "LinkedIn profile URL.",
+      "example": "example_value"
+    },
+    "twitter": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Twitter handle.",
+      "example": "example_value"
+    },
+    "phone_number": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Phone number.",
+      "example": "example_value"
+    },
+    "verification": {
+      "$ref": "#/components/schemas/VerificationStatus"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Source"
+      },
+      "example": []
+    }
+  }
+}

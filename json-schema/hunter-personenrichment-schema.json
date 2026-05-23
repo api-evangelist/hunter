@@ -1,0 +1,322 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PersonEnrichment",
+  "title": "PersonEnrichment",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the person record.",
+      "example": "abc123"
+    },
+    "name": {
+      "type": "object",
+      "properties": {
+        "fullName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "givenName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "familyName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "example": "Example Title"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address.",
+      "example": "user@example.com"
+    },
+    "location": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Location description.",
+      "example": "example_value"
+    },
+    "timeZone": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Time zone name.",
+      "example": "example_value"
+    },
+    "utcOffset": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "UTC offset in hours.",
+      "example": "example_value"
+    },
+    "geo": {
+      "$ref": "#/components/schemas/GeoLocation"
+    },
+    "bio": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Short biography.",
+      "example": "example_value"
+    },
+    "site": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Personal website URL.",
+      "example": "example_value"
+    },
+    "avatar": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Avatar image URL.",
+      "example": "example_value"
+    },
+    "employment": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "role": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subRole": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "seniority": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "example": "example_value"
+    },
+    "facebook": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "example": "example_value"
+    },
+    "github": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "id": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "avatar": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "company": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "blog": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "followers": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "following": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "example": "example_value"
+    },
+    "twitter": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "id": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "bio": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "followers": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "following": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "statuses": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "favorites": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "site": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "avatar": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "example": "example_value"
+    },
+    "linkedin": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "example": "example_value"
+    },
+    "fuzzy": {
+      "type": "boolean",
+      "description": "Whether the match was fuzzy.",
+      "example": true
+    },
+    "emailProvider": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Email service provider.",
+      "example": "user@example.com"
+    },
+    "indexedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "description": "Date when the record was last indexed.",
+      "example": "2026-01-15"
+    },
+    "phone": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Phone number.",
+      "example": "example_value"
+    },
+    "activeAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "description": "Date when the person was last active.",
+      "example": "2026-01-15"
+    },
+    "inactiveAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "description": "Date when the person became inactive.",
+      "example": "2026-01-15"
+    }
+  }
+}

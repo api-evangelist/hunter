@@ -1,0 +1,29 @@
+name: Hunter Domain Vocabulary
+provider: Hunter
+providerId: hunter
+description: Tag-derived vocabulary for the Hunter API surface; sourced from openapi/ tags.
+terms:
+- term: Account
+  description: Retrieve account information and usage statistics.
+- term: Campaigns
+  description: Manage email sequences and recipients.
+- term: Combined Enrichment
+  description: Merge person and company enrichment for a single email address.
+- term: Company Enrichment
+  description: Enrich company information linked to a domain name.
+- term: Discover
+  description: Find companies matching criteria using natural language or filters.
+- term: Domain Search
+  description: Search for email addresses associated with a domain.
+- term: Email Count
+  description: Count email addresses found for a domain.
+- term: Email Enrichment
+  description: Enrich personal information linked to an email or LinkedIn profile.
+- term: Email Finder
+  description: Find the most likely email address for a person at a company.
+- term: Email Verifier
+  description: Verify the deliverability of an email address.
+- term: Leads
+  description: Manage leads stored in Hunter.
+- term: Leads Lists
+  description: Manage leads list collections in Hunter.

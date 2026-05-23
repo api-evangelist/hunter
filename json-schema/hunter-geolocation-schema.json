@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GeoLocation",
+  "title": "GeoLocation",
+  "type": "object",
+  "properties": {
+    "city": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "example": "example_value"
+    },
+    "state": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "example": "example_value"
+    },
+    "stateCode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "example": "example_value"
+    },
+    "country": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "example": "example_value"
+    },
+    "countryCode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "example": "example_value"
+    },
+    "lat": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "example": "example_value"
+    },
+    "lng": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "example": "example_value"
+    }
+  }
+}

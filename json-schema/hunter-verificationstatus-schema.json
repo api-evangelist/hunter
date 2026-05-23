@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/VerificationStatus",
+  "title": "VerificationStatus",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "description": "Date the verification was performed.",
+      "example": "2026-01-15"
+    },
+    "status": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "valid",
+        "invalid",
+        "accept_all",
+        "webmail",
+        "disposable",
+        "unknown",
+        null
+      ],
+      "description": "The verification status.",
+      "example": "valid"
+    }
+  }
+}
