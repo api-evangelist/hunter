@@ -1,0 +1,129 @@
+arazzo: 1.0.1
+info:
+  title: Hunter Find, Verify, and Create Lead
+  summary: Find a person's email, verify it, and only save a lead when it is valid.
+  description: >-
+    Turns a name and company domain into a saved, verified Hunter lead. The
+    flow finds the most likely email address for the person, verifies its
+    deliverability, and branches: a valid status creates a lead while any other
+    status ends the flow without saving. Each step spells out its request
+    inline, including the api_key query parameter, so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: hunterApi
+  url: ../openapi/hunter-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: find-verify-create-lead
+  summary: Find and verify an email, then create a lead when verification passes.
+  description: >-
+    Finds an email for a named person at a domain, verifies it, and creates a
+    lead in the account only when the verification status is valid.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - domain
+    - firstName
+    - lastName
+    properties:
+      apiKey:
+        type: string
+        description: Hunter API key passed as the api_key query parameter.
+      domain:
+        type: string
+        description: Domain name to find the person's email at.
+      firstName:
+        type: string
+        description: First name of the person.
+      lastName:
+        type: string
+        description: Last name of the person.
+      company:
+        type: string
+        description: Optional company name to attach to the created lead.
+      leadsListId:
+        type: integer
+        description: Optional leads list identifier to add the created lead to.
+  steps:
+  - stepId: findEmail
+    description: >-
+      Find the most likely email address for the named person at the domain
+      along with a confidence score.
+    operationId: emailFinder
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: domain
+      in: query
+      value: $inputs.domain
+    - name: first_name
+      in: query
+      value: $inputs.firstName
+    - name: last_name
+      in: query
+      value: $inputs.lastName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      email: $response.body#/data/email
+      score: $response.body#/data/score
+  - stepId: verifyEmail
+    description: >-
+      Verify the deliverability of the found email and branch on the result:
+      create a lead when valid, otherwise end without saving.
+    operationId: emailVerifier
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: email
+      in: query
+      value: $steps.findEmail.outputs.email
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/status
+    onSuccess:
+    - name: emailValid
+      type: goto
+      stepId: createLeadStep
+      criteria:
+      - context: $response.body
+        condition: $.data.status == "valid"
+        type: jsonpath
+    - name: emailNotValid
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.status != "valid"
+        type: jsonpath
+  - stepId: createLeadStep
+    description: >-
+      Create a lead in the account using the found and verified email address
+      along with the person and company details.
+    operationId: createLead
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $steps.findEmail.outputs.email
+        first_name: $inputs.firstName
+        last_name: $inputs.lastName
+        company: $inputs.company
+        confidence_score: $steps.findEmail.outputs.score
+        leads_list_id: $inputs.leadsListId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      leadId: $response.body#/data/id
+      leadEmail: $response.body#/data/email
+  outputs:
+    email: $steps.findEmail.outputs.email
+    verificationStatus: $steps.verifyEmail.outputs.status
+    leadId: $steps.createLeadStep.outputs.leadId

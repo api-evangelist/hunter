@@ -1,0 +1,103 @@
+arazzo: 1.0.1
+info:
+  title: Hunter Verify and Add to Campaign
+  summary: Verify an email, add it to a campaign when valid, then start the campaign.
+  description: >-
+    Protects an outreach sequence from bad addresses by verifying an email
+    before it is ever added to a campaign. The flow branches on the
+    verification status: a valid address is added as a campaign recipient and
+    the campaign is started, while any other status ends the flow. Each step
+    spells out its request inline, including the api_key query parameter, so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: hunterApi
+  url: ../openapi/hunter-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: verify-add-to-campaign
+  summary: Verify an email, add it to a campaign when valid, and start the campaign.
+  description: >-
+    Verifies an email address, adds it as a recipient to the specified campaign
+    only when the address is valid, and then starts the campaign sequence.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - campaignId
+    - email
+    properties:
+      apiKey:
+        type: string
+        description: Hunter API key passed as the api_key query parameter.
+      campaignId:
+        type: integer
+        description: The identifier of the campaign to add the recipient to and start.
+      email:
+        type: string
+        description: Email address to verify and add to the campaign.
+  steps:
+  - stepId: verifyEmail
+    description: >-
+      Verify the deliverability of the email and branch: add it to the
+      campaign when valid, otherwise end without touching the campaign.
+    operationId: emailVerifier
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: email
+      in: query
+      value: $inputs.email
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/status
+    onSuccess:
+    - name: emailValid
+      type: goto
+      stepId: addRecipient
+      criteria:
+      - context: $response.body
+        condition: $.data.status == "valid"
+        type: jsonpath
+    - name: emailNotValid
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.status != "valid"
+        type: jsonpath
+  - stepId: addRecipient
+    description: >-
+      Add the verified email address as a recipient of the specified campaign.
+    operationId: addCampaignRecipients
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: id
+      in: path
+      value: $inputs.campaignId
+    requestBody:
+      contentType: application/json
+      payload:
+        emails: $inputs.email
+    successCriteria:
+    - condition: $statusCode == 201
+  - stepId: startCampaignStep
+    description: >-
+      Start the email sequence for the campaign now that the verified
+      recipient has been added.
+    operationId: startCampaign
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: id
+      in: path
+      value: $inputs.campaignId
+    successCriteria:
+    - condition: $statusCode == 200
+  outputs:
+    verificationStatus: $steps.verifyEmail.outputs.status

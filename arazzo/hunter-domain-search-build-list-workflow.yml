@@ -1,0 +1,127 @@
+arazzo: 1.0.1
+info:
+  title: Hunter Domain Search to Build a Verified List
+  summary: Search a domain, create a list, verify the top email, and upsert it as a lead.
+  description: >-
+    Seeds a new prospect list from a domain search. The flow searches a domain
+    for email addresses, creates a leads list named for that domain, verifies
+    the first discovered email, and branches: a valid email is upserted into
+    the new list while any other status ends the flow. Each step spells out its
+    request inline, including the api_key query parameter, so the flow can be
+    read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: hunterApi
+  url: ../openapi/hunter-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: domain-search-build-list
+  summary: Domain search, create a list, verify the top email, and upsert it as a lead.
+  description: >-
+    Searches a domain, creates a leads list, verifies the first email found,
+    and upserts that email into the new list when verification passes.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - domain
+    - listName
+    properties:
+      apiKey:
+        type: string
+        description: Hunter API key passed as the api_key query parameter.
+      domain:
+        type: string
+        description: Domain name to search for email addresses.
+      listName:
+        type: string
+        description: Name of the leads list to create for the discovered emails.
+  steps:
+  - stepId: searchDomain
+    description: >-
+      Search the domain and capture the first discovered email address along
+      with the detected pattern.
+    operationId: domainSearch
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: domain
+      in: query
+      value: $inputs.domain
+    - name: limit
+      in: query
+      value: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      firstEmail: $response.body#/data/emails/0/value
+      pattern: $response.body#/data/pattern
+  - stepId: createList
+    description: >-
+      Create a leads list to hold the leads discovered for this domain.
+    operationId: createLeadsList
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.listName
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      listId: $response.body#/data/id
+  - stepId: verifyEmail
+    description: >-
+      Verify the first discovered email and branch: upsert it as a lead when
+      valid, otherwise end without saving.
+    operationId: emailVerifier
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: email
+      in: query
+      value: $steps.searchDomain.outputs.firstEmail
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/status
+    onSuccess:
+    - name: emailValid
+      type: goto
+      stepId: upsertLeadStep
+      criteria:
+      - context: $response.body
+        condition: $.data.status == "valid"
+        type: jsonpath
+    - name: emailNotValid
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.status != "valid"
+        type: jsonpath
+  - stepId: upsertLeadStep
+    description: >-
+      Upsert the verified email into the newly created list, creating the lead
+      when new or updating it when it already exists.
+    operationId: upsertLead
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $steps.searchDomain.outputs.firstEmail
+        leads_list_id: $steps.createList.outputs.listId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      leadId: $response.body#/data/id
+  outputs:
+    listId: $steps.createList.outputs.listId
+    verifiedEmail: $steps.searchDomain.outputs.firstEmail
+    leadId: $steps.upsertLeadStep.outputs.leadId

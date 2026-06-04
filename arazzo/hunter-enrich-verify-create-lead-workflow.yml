@@ -1,0 +1,114 @@
+arazzo: 1.0.1
+info:
+  title: Hunter Enrich, Verify, and Create Lead
+  summary: Enrich a person from an email, verify the address, and save a verified lead.
+  description: >-
+    Adapts an author/person discovery flow to the endpoints Hunter actually
+    exposes. Hunter has no dedicated author finder operation, so this workflow
+    uses the email enrichment endpoint to resolve a person's identity and
+    employer from an email address, verifies the address, and creates a lead
+    enriched with the discovered name and company when the email is valid. Each
+    step spells out its request inline, including the api_key query parameter,
+    so the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: hunterApi
+  url: ../openapi/hunter-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: enrich-verify-create-lead
+  summary: Enrich a person by email, verify it, and create an enriched lead when valid.
+  description: >-
+    Resolves a person's name and employer from an email via enrichment,
+    verifies the email, and creates a lead populated with the enriched fields
+    only when the verification status is valid.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - email
+    properties:
+      apiKey:
+        type: string
+        description: Hunter API key passed as the api_key query parameter.
+      email:
+        type: string
+        description: Email address of the person to enrich and verify.
+      leadsListId:
+        type: integer
+        description: Optional leads list identifier to add the created lead to.
+  steps:
+  - stepId: enrichPerson
+    description: >-
+      Enrich the email address into a person record, capturing the discovered
+      name and employer for use when building the lead.
+    operationId: emailEnrichment
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: email
+      in: query
+      value: $inputs.email
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      givenName: $response.body#/data/name/givenName
+      familyName: $response.body#/data/name/familyName
+      company: $response.body#/data/employment/name
+  - stepId: verifyEmail
+    description: >-
+      Verify the deliverability of the email and branch: create an enriched
+      lead when valid, otherwise end without saving.
+    operationId: emailVerifier
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: email
+      in: query
+      value: $inputs.email
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/status
+    onSuccess:
+    - name: emailValid
+      type: goto
+      stepId: createLeadStep
+      criteria:
+      - context: $response.body
+        condition: $.data.status == "valid"
+        type: jsonpath
+    - name: emailNotValid
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.status != "valid"
+        type: jsonpath
+  - stepId: createLeadStep
+    description: >-
+      Create a lead populated with the enriched name and company for the
+      verified email address.
+    operationId: createLead
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+        first_name: $steps.enrichPerson.outputs.givenName
+        last_name: $steps.enrichPerson.outputs.familyName
+        company: $steps.enrichPerson.outputs.company
+        leads_list_id: $inputs.leadsListId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      leadId: $response.body#/data/id
+      leadEmail: $response.body#/data/email
+  outputs:
+    verificationStatus: $steps.verifyEmail.outputs.status
+    leadId: $steps.createLeadStep.outputs.leadId

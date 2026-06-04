@@ -316,6 +316,39 @@ apis:
     email: support@hunter.io
     url: https://hunter.io/contact
 common:
+- type: ArazzoWorkflows
+  url: arazzo/
+  workflows:
+  - url: arazzo/hunter-account-guarded-domain-search-workflow.yml
+    name: Hunter Account-Guarded Domain Search
+    summary: Check remaining search quota before running a domain search.
+  - url: arazzo/hunter-combined-enrich-upsert-lead-workflow.yml
+    name: Hunter Combined Enrich and Upsert Lead
+    summary: Combine person and company enrichment for an email, then upsert it as a lead.
+  - url: arazzo/hunter-create-list-add-lead-workflow.yml
+    name: Hunter Create List and Add Lead
+    summary: Create a new leads list and upsert a lead into it in one flow.
+  - url: arazzo/hunter-discover-search-count-workflow.yml
+    name: Hunter Discover, Search, and Count
+    summary: Discover a target company, search its domain, and count its emails.
+  - url: arazzo/hunter-domain-search-build-list-workflow.yml
+    name: Hunter Domain Search to Build a Verified List
+    summary: Search a domain, create a list, verify the top email, and upsert it as a lead.
+  - url: arazzo/hunter-domain-search-find-verify-workflow.yml
+    name: Hunter Domain Search, Find, and Verify
+    summary: Search a domain for emails, find a named person's address, then verify it.
+  - url: arazzo/hunter-enrich-verify-create-lead-workflow.yml
+    name: Hunter Enrich, Verify, and Create Lead
+    summary: Enrich a person from an email, verify the address, and save a verified lead.
+  - url: arazzo/hunter-find-verify-add-recipient-workflow.yml
+    name: Hunter Find, Verify, and Add Campaign Recipient
+    summary: Find a person's email, verify it, and add it to a campaign when valid.
+  - url: arazzo/hunter-find-verify-create-lead-workflow.yml
+    name: Hunter Find, Verify, and Create Lead
+    summary: Find a person's email, verify it, and only save a lead when it is valid.
+  - url: arazzo/hunter-verify-add-to-campaign-workflow.yml
+    name: Hunter Verify and Add to Campaign
+    summary: Verify an email, add it to a campaign when valid, then start the campaign.
 - type: LinkedIn
   url: https://www.linkedin.com/company/hunterny
 - type: Portal

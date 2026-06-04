@@ -1,0 +1,91 @@
+arazzo: 1.0.1
+info:
+  title: Hunter Create List and Add Lead
+  summary: Create a new leads list and upsert a lead into it in one flow.
+  description: >-
+    Bootstraps a new prospect segment by creating a leads list and then
+    upserting a lead into that freshly created list. Using upsert means the
+    lead is created when new and updated when an address already exists in the
+    list. Each step spells out its request inline, including the api_key query
+    parameter, so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: hunterApi
+  url: ../openapi/hunter-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-list-add-lead
+  summary: Create a leads list, then upsert a lead into the new list.
+  description: >-
+    Creates a named leads list and adds a lead to it by email, attaching the
+    new list identifier so the lead lands in the right segment.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - listName
+    - email
+    properties:
+      apiKey:
+        type: string
+        description: Hunter API key passed as the api_key query parameter.
+      listName:
+        type: string
+        description: The name of the leads list to create.
+      email:
+        type: string
+        description: Email address of the lead to add to the new list.
+      firstName:
+        type: string
+        description: Optional first name of the lead.
+      lastName:
+        type: string
+        description: Optional last name of the lead.
+      company:
+        type: string
+        description: Optional company name for the lead.
+  steps:
+  - stepId: createList
+    description: >-
+      Create a new leads list with the supplied name and capture its
+      identifier for use when adding the lead.
+    operationId: createLeadsList
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.listName
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      listId: $response.body#/data/id
+      listName: $response.body#/data/name
+  - stepId: addLead
+    description: >-
+      Upsert a lead into the new list: create it when the email is new or
+      update the existing lead when the email already exists in the list.
+    operationId: upsertLead
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+        first_name: $inputs.firstName
+        last_name: $inputs.lastName
+        company: $inputs.company
+        leads_list_id: $steps.createList.outputs.listId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      leadId: $response.body#/data/id
+      leadEmail: $response.body#/data/email
+  outputs:
+    listId: $steps.createList.outputs.listId
+    leadId: $steps.addLead.outputs.leadId

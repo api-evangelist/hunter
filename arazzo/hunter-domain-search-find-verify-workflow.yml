@@ -1,0 +1,105 @@
+arazzo: 1.0.1
+info:
+  title: Hunter Domain Search, Find, and Verify
+  summary: Search a domain for emails, find a named person's address, then verify it.
+  description: >-
+    A core prospecting flow built entirely on Hunter email intelligence
+    endpoints. It searches a domain for known email addresses and patterns,
+    finds the most likely address for a specific person at that domain, and
+    then verifies the deliverability of the found address. Each step spells out
+    its request inline, including the api_key query parameter, so the flow can
+    be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: hunterApi
+  url: ../openapi/hunter-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: domain-search-find-verify
+  summary: Domain search a company, find a person's email, and verify it.
+  description: >-
+    Resolves the email landscape of a domain, then narrows to a single person
+    by first and last name, and confirms the found address is deliverable.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - domain
+    - firstName
+    - lastName
+    properties:
+      apiKey:
+        type: string
+        description: Hunter API key passed as the api_key query parameter.
+      domain:
+        type: string
+        description: Domain name to search and to find the person's email at (e.g. stripe.com).
+      firstName:
+        type: string
+        description: First name of the person to find.
+      lastName:
+        type: string
+        description: Last name of the person to find.
+  steps:
+  - stepId: searchDomain
+    description: >-
+      Return the email addresses and detected pattern found for the domain so
+      the caller understands the email landscape before targeting a person.
+    operationId: domainSearch
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: domain
+      in: query
+      value: $inputs.domain
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      pattern: $response.body#/data/pattern
+      organization: $response.body#/data/organization
+      emails: $response.body#/data/emails
+  - stepId: findEmail
+    description: >-
+      Find the most likely email address for the named person at the domain,
+      returning a confidence score and the address itself.
+    operationId: emailFinder
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: domain
+      in: query
+      value: $inputs.domain
+    - name: first_name
+      in: query
+      value: $inputs.firstName
+    - name: last_name
+      in: query
+      value: $inputs.lastName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      email: $response.body#/data/email
+      score: $response.body#/data/score
+  - stepId: verifyEmail
+    description: >-
+      Verify the deliverability of the found email address, returning the
+      verification status and deliverability score.
+    operationId: emailVerifier
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: email
+      in: query
+      value: $steps.findEmail.outputs.email
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/status
+      score: $response.body#/data/score
+  outputs:
+    pattern: $steps.searchDomain.outputs.pattern
+    email: $steps.findEmail.outputs.email
+    verificationStatus: $steps.verifyEmail.outputs.status

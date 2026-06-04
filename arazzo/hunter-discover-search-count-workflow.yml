@@ -1,0 +1,91 @@
+arazzo: 1.0.1
+info:
+  title: Hunter Discover, Search, and Count
+  summary: Discover a target company, search its domain, and count its emails.
+  description: >-
+    Builds a top-of-funnel research flow from Hunter discovery and email
+    intelligence endpoints. It discovers companies matching an ideal customer
+    profile query, searches the first matched company's domain for email
+    addresses, and counts the emails available for that domain broken down by
+    type and department. Each step spells out its request inline, including the
+    api_key query parameter, so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: hunterApi
+  url: ../openapi/hunter-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: discover-search-count
+  summary: Discover a company, search its domain, and count available emails.
+  description: >-
+    Runs a discover query to find a matching company, then uses that company's
+    domain to run a domain search and an email count.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - query
+    properties:
+      apiKey:
+        type: string
+        description: Hunter API key passed as the api_key query parameter.
+      query:
+        type: string
+        description: Natural language query describing the companies to discover.
+  steps:
+  - stepId: discoverCompanies
+    description: >-
+      Discover companies matching the supplied natural language query and
+      capture the domain of the first matched result.
+    operationId: discover
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        query: $inputs.query
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      firstDomain: $response.body#/data/results/0/domain
+      results: $response.body#/data/results
+  - stepId: searchDomain
+    description: >-
+      Search the discovered company's domain for email addresses and the
+      detected address pattern.
+    operationId: domainSearch
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: domain
+      in: query
+      value: $steps.discoverCompanies.outputs.firstDomain
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      pattern: $response.body#/data/pattern
+      organization: $response.body#/data/organization
+  - stepId: countEmails
+    description: >-
+      Count the email addresses available for the discovered domain, broken
+      down by type, department, and seniority.
+    operationId: emailCount
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: domain
+      in: query
+      value: $steps.discoverCompanies.outputs.firstDomain
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      total: $response.body#/data/total
+  outputs:
+    domain: $steps.discoverCompanies.outputs.firstDomain
+    pattern: $steps.searchDomain.outputs.pattern
+    totalEmails: $steps.countEmails.outputs.total

@@ -1,0 +1,120 @@
+arazzo: 1.0.1
+info:
+  title: Hunter Find, Verify, and Add Campaign Recipient
+  summary: Find a person's email, verify it, and add it to a campaign when valid.
+  description: >-
+    Feeds an outreach campaign with freshly found and verified contacts. The
+    flow finds the most likely email for a named person at a domain, verifies
+    its deliverability, and branches: a valid address is added as a recipient
+    to the campaign while any other status ends the flow. Each step spells out
+    its request inline, including the api_key query parameter, so the flow can
+    be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: hunterApi
+  url: ../openapi/hunter-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: find-verify-add-recipient
+  summary: Find an email, verify it, and add it as a campaign recipient when valid.
+  description: >-
+    Finds a person's email at a domain, verifies it, and adds the verified
+    address as a recipient of the specified campaign only when it is valid.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - campaignId
+    - domain
+    - firstName
+    - lastName
+    properties:
+      apiKey:
+        type: string
+        description: Hunter API key passed as the api_key query parameter.
+      campaignId:
+        type: integer
+        description: Identifier of the campaign to add the recipient to.
+      domain:
+        type: string
+        description: Domain name to find the person's email at.
+      firstName:
+        type: string
+        description: First name of the person.
+      lastName:
+        type: string
+        description: Last name of the person.
+  steps:
+  - stepId: findEmail
+    description: >-
+      Find the most likely email for the named person at the domain along with
+      a confidence score.
+    operationId: emailFinder
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: domain
+      in: query
+      value: $inputs.domain
+    - name: first_name
+      in: query
+      value: $inputs.firstName
+    - name: last_name
+      in: query
+      value: $inputs.lastName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      email: $response.body#/data/email
+      score: $response.body#/data/score
+  - stepId: verifyEmail
+    description: >-
+      Verify the deliverability of the found email and branch: add it to the
+      campaign when valid, otherwise end without adding.
+    operationId: emailVerifier
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: email
+      in: query
+      value: $steps.findEmail.outputs.email
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/status
+    onSuccess:
+    - name: emailValid
+      type: goto
+      stepId: addRecipient
+      criteria:
+      - context: $response.body
+        condition: $.data.status == "valid"
+        type: jsonpath
+    - name: emailNotValid
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.status != "valid"
+        type: jsonpath
+  - stepId: addRecipient
+    description: >-
+      Add the verified email address as a recipient of the specified campaign.
+    operationId: addCampaignRecipients
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: id
+      in: path
+      value: $inputs.campaignId
+    requestBody:
+      contentType: application/json
+      payload:
+        emails: $steps.findEmail.outputs.email
+    successCriteria:
+    - condition: $statusCode == 201
+  outputs:
+    email: $steps.findEmail.outputs.email
+    verificationStatus: $steps.verifyEmail.outputs.status

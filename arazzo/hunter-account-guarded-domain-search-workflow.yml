@@ -1,0 +1,85 @@
+arazzo: 1.0.1
+info:
+  title: Hunter Account-Guarded Domain Search
+  summary: Check remaining search quota before running a domain search.
+  description: >-
+    Avoids burning a paid search request when the account is out of quota. The
+    flow reads the free account endpoint to compare used versus available
+    searches and branches: when searches remain it runs a domain search,
+    otherwise it ends without consuming quota. Each step spells out its request
+    inline, including the api_key query parameter, so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: hunterApi
+  url: ../openapi/hunter-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: account-guarded-domain-search
+  summary: Verify remaining search quota, then run a domain search only if quota remains.
+  description: >-
+    Reads the account usage counters and runs a domain search only when the
+    number of used searches is below the available limit.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - domain
+    properties:
+      apiKey:
+        type: string
+        description: Hunter API key passed as the api_key query parameter.
+      domain:
+        type: string
+        description: Domain name to search once quota is confirmed.
+  steps:
+  - stepId: checkAccount
+    description: >-
+      Read the free account endpoint and branch on remaining search quota:
+      proceed to the domain search when used is below available, otherwise end.
+    operationId: getAccount
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      searchesUsed: $response.body#/data/requests/searches/used
+      searchesAvailable: $response.body#/data/requests/searches/available
+    onSuccess:
+    - name: quotaRemaining
+      type: goto
+      stepId: searchDomain
+      criteria:
+      - context: $response.body
+        condition: $.data.requests.searches.used < $.data.requests.searches.available
+        type: jsonpath
+    - name: quotaExhausted
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.requests.searches.used >= $.data.requests.searches.available
+        type: jsonpath
+  - stepId: searchDomain
+    description: >-
+      Run the domain search now that remaining search quota has been
+      confirmed.
+    operationId: domainSearch
+    parameters:
+    - name: api_key
+      in: query
+      value: $inputs.apiKey
+    - name: domain
+      in: query
+      value: $inputs.domain
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      pattern: $response.body#/data/pattern
+      organization: $response.body#/data/organization
+      emails: $response.body#/data/emails
+  outputs:
+    searchesUsed: $steps.checkAccount.outputs.searchesUsed
+    searchesAvailable: $steps.checkAccount.outputs.searchesAvailable
+    pattern: $steps.searchDomain.outputs.pattern
