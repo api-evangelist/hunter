@@ -1,0 +1,779 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hunter API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Domain Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Domain Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/domain-search",
+            "params": [
+              {
+                "name": "domain",
+                "value": "stripe.com",
+                "type": "query",
+                "description": "Domain name from which you want to find the email addresses. Required if company is not provided."
+              },
+              {
+                "name": "company",
+                "value": "Stripe",
+                "type": "query",
+                "description": "Company name from which you want to find the email addresses. Required if domain is not provided."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of email addresses to return. Default is 10."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of email addresses to skip for pagination. Default is 0."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by email address type."
+              },
+              {
+                "name": "seniority",
+                "value": "",
+                "type": "query",
+                "description": "Filter by seniority level."
+              },
+              {
+                "name": "department",
+                "value": "",
+                "type": "query",
+                "description": "Filter by department."
+              },
+              {
+                "name": "verification_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by verification status."
+              }
+            ]
+          },
+          "docs": "Returns all the email addresses found using a given domain name, with sources. You must provide either a domain or a company name."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Email Finder",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Email Finder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/email-finder",
+            "params": [
+              {
+                "name": "domain",
+                "value": "stripe.com",
+                "type": "query",
+                "description": "Domain name of the company. Required if company is not provided."
+              },
+              {
+                "name": "company",
+                "value": "",
+                "type": "query",
+                "description": "Company name. Required if domain is not provided."
+              },
+              {
+                "name": "first_name",
+                "value": "John",
+                "type": "query",
+                "description": "First name of the person. Required with last_name if full_name not provided."
+              },
+              {
+                "name": "last_name",
+                "value": "Collison",
+                "type": "query",
+                "description": "Last name of the person. Required with first_name if full_name not provided."
+              },
+              {
+                "name": "full_name",
+                "value": "",
+                "type": "query",
+                "description": "Full name of the person. Required if first_name and last_name not provided."
+              },
+              {
+                "name": "linkedin_handle",
+                "value": "",
+                "type": "query",
+                "description": "LinkedIn profile handle for the person."
+              },
+              {
+                "name": "max_duration",
+                "value": "",
+                "type": "query",
+                "description": "Maximum duration for the request in seconds. Between 3 and 20, default is 10."
+              }
+            ]
+          },
+          "docs": "Finds the most likely email address from a domain name, a first name and a last name. You must provide a domain or company, and a name (first/last or full) or LinkedIn handle."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Email Verifier",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Email Verifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/email-verifier",
+            "params": [
+              {
+                "name": "email",
+                "value": "john@stripe.com",
+                "type": "query",
+                "description": "The email address to verify."
+              }
+            ]
+          },
+          "docs": "Verifies the deliverability of a given email address."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Email Count",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Email Count",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/email-count",
+            "params": [
+              {
+                "name": "domain",
+                "value": "stripe.com",
+                "type": "query",
+                "description": "Domain name to count emails for. Required if company is not provided."
+              },
+              {
+                "name": "company",
+                "value": "",
+                "type": "query",
+                "description": "Company name to count emails for. Required if domain is not provided."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter count by email type."
+              }
+            ]
+          },
+          "docs": "Returns the number of email addresses found for a given domain or company, broken down by type, department, and seniority."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Account Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/account"
+          },
+          "docs": "Returns information about the Hunter account associated with the API key, including usage statistics and plan details. This call is free and does not count toward usage limits."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Leads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter List Leads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/leads",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of leads to return. Default is 20, max is 100."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of leads to skip for pagination."
+              },
+              {
+                "name": "leads_list_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter leads by list identifier."
+              },
+              {
+                "name": "first_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by first name."
+              },
+              {
+                "name": "last_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by last name."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter by email address."
+              },
+              {
+                "name": "company",
+                "value": "",
+                "type": "query",
+                "description": "Filter by company name."
+              },
+              {
+                "name": "phone_number",
+                "value": "",
+                "type": "query",
+                "description": "Filter by phone number."
+              },
+              {
+                "name": "twitter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Twitter handle."
+              }
+            ]
+          },
+          "docs": "Returns all the leads saved in your account."
+        },
+        {
+          "info": {
+            "name": "Hunter Create Lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.hunter.io/v2/leads",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new lead in your Hunter account."
+        },
+        {
+          "info": {
+            "name": "Hunter Create or Update Lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.hunter.io/v2/leads",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new lead or updates an existing one if a lead with the same email address already exists in the specified list."
+        },
+        {
+          "info": {
+            "name": "Hunter Get Lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/leads/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the lead."
+              }
+            ]
+          },
+          "docs": "Retrieves a single lead by its identifier."
+        },
+        {
+          "info": {
+            "name": "Hunter Update Lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.hunter.io/v2/leads/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the lead."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing lead by its identifier."
+        },
+        {
+          "info": {
+            "name": "Hunter Delete Lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.hunter.io/v2/leads/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the lead."
+              }
+            ]
+          },
+          "docs": "Deletes a lead by its identifier."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Leads Lists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter List Leads Lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/leads_lists",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of lists to return. Default is 20, max is 100."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of lists to skip for pagination."
+              }
+            ]
+          },
+          "docs": "Returns all the leads lists saved in your account."
+        },
+        {
+          "info": {
+            "name": "Hunter Create Leads List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.hunter.io/v2/leads_lists",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new leads list."
+        },
+        {
+          "info": {
+            "name": "Hunter Get Leads List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/leads_lists/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the leads list."
+              }
+            ]
+          },
+          "docs": "Retrieves a single leads list by its identifier."
+        },
+        {
+          "info": {
+            "name": "Hunter Update Leads List",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.hunter.io/v2/leads_lists/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the leads list."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing leads list by its identifier."
+        },
+        {
+          "info": {
+            "name": "Hunter Delete Leads List",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.hunter.io/v2/leads_lists/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the leads list."
+              }
+            ]
+          },
+          "docs": "Deletes a leads list by its identifier."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter List Campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/campaigns",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of campaigns to return. Default is 20, max is 100."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of campaigns to skip for pagination."
+              },
+              {
+                "name": "started",
+                "value": "",
+                "type": "query",
+                "description": "Filter by whether the campaign has been started."
+              },
+              {
+                "name": "archived",
+                "value": "",
+                "type": "query",
+                "description": "Filter by whether the campaign has been archived."
+              }
+            ]
+          },
+          "docs": "Returns all the email sequences (campaigns) in your account."
+        },
+        {
+          "info": {
+            "name": "Hunter List Campaign Recipients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/campaigns/:id/recipients",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the campaign."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of recipients to return."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of recipients to skip for pagination."
+              }
+            ]
+          },
+          "docs": "Returns the recipients for a given campaign."
+        },
+        {
+          "info": {
+            "name": "Hunter Add Campaign Recipients",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.hunter.io/v2/campaigns/:id/recipients",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the campaign."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds recipients to a campaign using email addresses or lead identifiers."
+        },
+        {
+          "info": {
+            "name": "Hunter Cancel Campaign Recipients",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.hunter.io/v2/campaigns/:id/recipients",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the campaign."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancels all scheduled emails for the specified recipients."
+        },
+        {
+          "info": {
+            "name": "Hunter Start Campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.hunter.io/v2/campaigns/:id/start",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the campaign."
+              }
+            ]
+          },
+          "docs": "Starts an email sequence for the campaign."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Discover",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Discover Companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.hunter.io/v2/discover",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns companies matching a set of criteria using natural language queries or robust filters to find companies aligned with your ideal customer profile."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Email Enrichment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Email Enrichment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/people/find",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Email address to enrich. Required if linkedin_handle is not provided."
+              },
+              {
+                "name": "linkedin_handle",
+                "value": "",
+                "type": "query",
+                "description": "LinkedIn profile handle. Required if email is not provided."
+              },
+              {
+                "name": "clearbit_format",
+                "value": "",
+                "type": "query",
+                "description": "Format response to match the Clearbit schema."
+              }
+            ]
+          },
+          "docs": "Returns comprehensive personal information linked to an email address or LinkedIn profile. Provides enriched data points about the person including employment, social profiles, and location."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Company Enrichment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Company Enrichment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/companies/find",
+            "params": [
+              {
+                "name": "domain",
+                "value": "stripe.com",
+                "type": "query",
+                "description": "Domain name of the company to enrich."
+              },
+              {
+                "name": "clearbit_format",
+                "value": "",
+                "type": "query",
+                "description": "Format response to match the Clearbit schema."
+              }
+            ]
+          },
+          "docs": "Returns detailed organizational data associated with a domain name, including company size, industry, location, and other firmographic information."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Combined Enrichment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Combined Enrichment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/combined/find",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Email address to enrich with both person and company data."
+              },
+              {
+                "name": "clearbit_format",
+                "value": "",
+                "type": "query",
+                "description": "Format response to match the Clearbit schema."
+              }
+            ]
+          },
+          "docs": "Merges person and company information for a single email address, returning enriched records combining both datasets."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
