@@ -301,6 +301,10 @@ apis:
         email: support@hunter.io
         url: https://hunter.io/contact
 common:
+  - type: DomainSecurity
+    url: security/hunter-domain-security.yml
+  - type: Authentication
+    url: authentication/hunter-authentication.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/hunter/overview
   - type: Arazzo

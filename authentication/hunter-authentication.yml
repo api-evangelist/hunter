@@ -1,0 +1,31 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/hunter-api-openapi.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+  - query
+schemes:
+- name: apiKeyQuery
+  type: apiKey
+  in: query
+  parameter: api_key
+  description: API key passed as a query parameter.
+  sources:
+  - openapi/hunter-api-openapi.yml
+- name: apiKeyHeader
+  type: apiKey
+  in: header
+  parameter: X-API-KEY
+  description: API key passed via the X-API-KEY header.
+  sources:
+  - openapi/hunter-api-openapi.yml
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: API key passed as a Bearer token in the Authorization header.
+  sources:
+  - openapi/hunter-api-openapi.yml
