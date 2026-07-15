@@ -301,6 +301,8 @@ apis:
         email: support@hunter.io
         url: https://hunter.io/contact
 common:
+  - type: AgenticAccess
+    url: agentic-access/hunter-agentic-access.yml
   - type: DomainSecurity
     url: security/hunter-domain-security.yml
   - type: Authentication
