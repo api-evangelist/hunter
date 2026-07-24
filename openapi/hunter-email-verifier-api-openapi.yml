@@ -1,0 +1,232 @@
+openapi: 3.1.0
+info:
+  title: Hunter Account Email Verifier API
+  description: Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability. The API provides domain search, email finder, email verifier, email count, account information, leads management, leads lists, campaigns, discover, enrichment, and logo retrieval capabilities.
+  version: 2.0.0
+  termsOfService: https://hunter.io/terms
+  contact:
+    name: Hunter Support
+    url: https://hunter.io/contact
+    email: support@hunter.io
+  license:
+    name: Proprietary
+    url: https://hunter.io/terms
+servers:
+- url: https://api.hunter.io/v2
+  description: Hunter API v2 Production
+security:
+- apiKeyQuery: []
+- apiKeyHeader: []
+- bearerAuth: []
+tags:
+- name: Email Verifier
+  description: Verify the deliverability of an email address.
+paths:
+  /email-verifier:
+    get:
+      operationId: emailVerifier
+      summary: Hunter Email Verifier
+      description: Verifies the deliverability of a given email address.
+      tags:
+      - Email Verifier
+      parameters:
+      - name: email
+        in: query
+        required: true
+        description: The email address to verify.
+        schema:
+          type: string
+          format: email
+        example: john@stripe.com
+      responses:
+        '200':
+          description: Successful email verification response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EmailVerifierResult'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '202':
+          description: Verification in progress. Retry the request later.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EmailVerifierResult'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  responses:
+    TooManyRequests:
+      description: Usage limit exceeded or rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid parameters or missing required fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Source:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain where the email was found.
+          example: example_value
+        uri:
+          type: string
+          format: uri
+          description: URL of the source page.
+          example: https://www.example.com
+        extracted_on:
+          type: string
+          format: date
+          description: Date the email was extracted from the source.
+          example: '2026-01-15'
+        last_seen_on:
+          type: string
+          format: date
+          description: Date the email was last seen at the source.
+          example: '2026-01-15'
+        still_on_page:
+          type: boolean
+          description: Whether the email is still present on the source page.
+          example: true
+    Meta:
+      type: object
+      properties:
+        params:
+          type: object
+          description: The parameters used in the request.
+          example: example_value
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Error identifier code.
+              code:
+                type: integer
+                description: HTTP status code.
+              details:
+                type: string
+                description: Human-readable error message.
+          example: []
+    EmailVerifierResult:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - valid
+          - invalid
+          - accept_all
+          - webmail
+          - disposable
+          - unknown
+          description: The verification status of the email address.
+          example: valid
+        result:
+          type: string
+          enum:
+          - deliverable
+          - undeliverable
+          - risky
+          description: Deprecated. The deliverability result.
+          deprecated: true
+          example: deliverable
+        score:
+          type: integer
+          description: Deliverability score.
+          example: 10
+        email:
+          type: string
+          format: email
+          description: The email address that was verified.
+          example: user@example.com
+        regexp:
+          type: boolean
+          description: Whether the email matches a valid format.
+          example: true
+        gibberish:
+          type: boolean
+          description: Whether the email appears to be gibberish.
+          example: true
+        disposable:
+          type: boolean
+          description: Whether the email uses a disposable provider.
+          example: true
+        webmail:
+          type: boolean
+          description: Whether the email is a webmail address.
+          example: true
+        mx_records:
+          type: boolean
+          description: Whether MX records exist for the domain.
+          example: true
+        smtp_server:
+          type: boolean
+          description: Whether an SMTP server was found.
+          example: true
+        smtp_check:
+          type: boolean
+          description: Whether the SMTP check passed.
+          example: true
+        accept_all:
+          type: boolean
+          description: Whether the mail server accepts all addresses.
+          example: true
+        block:
+          type: boolean
+          description: Whether the email is blocked.
+          example: true
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+          example: []
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: api_key
+      description: API key passed as a query parameter.
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key passed via the X-API-KEY header.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API key passed as a Bearer token in the Authorization header.

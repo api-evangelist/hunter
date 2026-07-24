@@ -1,0 +1,160 @@
+openapi: 3.1.0
+info:
+  title: Hunter Account Email Count API
+  description: Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability. The API provides domain search, email finder, email verifier, email count, account information, leads management, leads lists, campaigns, discover, enrichment, and logo retrieval capabilities.
+  version: 2.0.0
+  termsOfService: https://hunter.io/terms
+  contact:
+    name: Hunter Support
+    url: https://hunter.io/contact
+    email: support@hunter.io
+  license:
+    name: Proprietary
+    url: https://hunter.io/terms
+servers:
+- url: https://api.hunter.io/v2
+  description: Hunter API v2 Production
+security:
+- apiKeyQuery: []
+- apiKeyHeader: []
+- bearerAuth: []
+tags:
+- name: Email Count
+  description: Count email addresses found for a domain.
+paths:
+  /email-count:
+    get:
+      operationId: emailCount
+      summary: Hunter Email Count
+      description: Returns the number of email addresses found for a given domain or company, broken down by type, department, and seniority.
+      tags:
+      - Email Count
+      parameters:
+      - name: domain
+        in: query
+        description: Domain name to count emails for. Required if company is not provided.
+        schema:
+          type: string
+        example: stripe.com
+      - name: company
+        in: query
+        description: Company name to count emails for. Required if domain is not provided.
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: Filter count by email type.
+        schema:
+          type: string
+          enum:
+          - personal
+          - generic
+      responses:
+        '200':
+          description: Successful email count response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EmailCountResult'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  responses:
+    TooManyRequests:
+      description: Usage limit exceeded or rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid parameters or missing required fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    EmailCountResult:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of email addresses found.
+          example: 10
+        personal_emails:
+          type: integer
+          description: Number of personal email addresses.
+          example: user@example.com
+        generic_emails:
+          type: integer
+          description: Number of generic email addresses.
+          example: user@example.com
+        department:
+          type: object
+          description: Breakdown of email count by department.
+          additionalProperties:
+            type: integer
+          example: example_value
+        seniority:
+          type: object
+          description: Breakdown of email count by seniority level.
+          additionalProperties:
+            type: integer
+          example: example_value
+    Meta:
+      type: object
+      properties:
+        params:
+          type: object
+          description: The parameters used in the request.
+          example: example_value
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Error identifier code.
+              code:
+                type: integer
+                description: HTTP status code.
+              details:
+                type: string
+                description: Human-readable error message.
+          example: []
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: api_key
+      description: API key passed as a query parameter.
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key passed via the X-API-KEY header.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API key passed as a Bearer token in the Authorization header.

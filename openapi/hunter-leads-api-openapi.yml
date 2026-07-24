@@ -1,0 +1,566 @@
+openapi: 3.1.0
+info:
+  title: Hunter Account Leads API
+  description: Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability. The API provides domain search, email finder, email verifier, email count, account information, leads management, leads lists, campaigns, discover, enrichment, and logo retrieval capabilities.
+  version: 2.0.0
+  termsOfService: https://hunter.io/terms
+  contact:
+    name: Hunter Support
+    url: https://hunter.io/contact
+    email: support@hunter.io
+  license:
+    name: Proprietary
+    url: https://hunter.io/terms
+servers:
+- url: https://api.hunter.io/v2
+  description: Hunter API v2 Production
+security:
+- apiKeyQuery: []
+- apiKeyHeader: []
+- bearerAuth: []
+tags:
+- name: Leads
+  description: Manage leads stored in Hunter.
+paths:
+  /leads:
+    get:
+      operationId: listLeads
+      summary: Hunter List Leads
+      description: Returns all the leads saved in your account.
+      tags:
+      - Leads
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of leads to return. Default is 20, max is 100.
+        schema:
+          type: integer
+          default: 20
+          maximum: 100
+      - name: offset
+        in: query
+        description: Number of leads to skip for pagination.
+        schema:
+          type: integer
+          default: 0
+      - name: leads_list_id
+        in: query
+        description: Filter leads by list identifier.
+        schema:
+          type: integer
+      - name: first_name
+        in: query
+        description: Filter by first name.
+        schema:
+          type: string
+      - name: last_name
+        in: query
+        description: Filter by last name.
+        schema:
+          type: string
+      - name: email
+        in: query
+        description: Filter by email address.
+        schema:
+          type: string
+      - name: company
+        in: query
+        description: Filter by company name.
+        schema:
+          type: string
+      - name: phone_number
+        in: query
+        description: Filter by phone number.
+        schema:
+          type: string
+      - name: twitter
+        in: query
+        description: Filter by Twitter handle.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful leads list response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      leads:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Lead'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createLead
+      summary: Hunter Create Lead
+      description: Creates a new lead in your Hunter account.
+      tags:
+      - Leads
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadInput'
+      responses:
+        '201':
+          description: Lead created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Lead'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: upsertLead
+      summary: Hunter Create or Update Lead
+      description: Creates a new lead or updates an existing one if a lead with the same email address already exists in the specified list.
+      tags:
+      - Leads
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadInput'
+      responses:
+        '200':
+          description: Lead updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Lead'
+        '201':
+          description: Lead created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Lead'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /leads/{id}:
+    get:
+      operationId: getLead
+      summary: Hunter Get Lead
+      description: Retrieves a single lead by its identifier.
+      tags:
+      - Leads
+      parameters:
+      - $ref: '#/components/parameters/LeadId'
+      responses:
+        '200':
+          description: Successful lead retrieval.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Lead'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateLead
+      summary: Hunter Update Lead
+      description: Updates an existing lead by its identifier.
+      tags:
+      - Leads
+      parameters:
+      - $ref: '#/components/parameters/LeadId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadInput'
+      responses:
+        '200':
+          description: Lead updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Lead'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteLead
+      summary: Hunter Delete Lead
+      description: Deletes a lead by its identifier.
+      tags:
+      - Leads
+      parameters:
+      - $ref: '#/components/parameters/LeadId'
+      responses:
+        '204':
+          description: Lead deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  responses:
+    TooManyRequests:
+      description: Usage limit exceeded or rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Valid request but resource creation or update failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid parameters or missing required fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    PaginationMeta:
+      type: object
+      properties:
+        results:
+          type: integer
+          description: Total number of results available.
+          example: 10
+        limit:
+          type: integer
+          description: Number of results per page.
+          example: 10
+        offset:
+          type: integer
+          description: Current offset position.
+          example: 10
+    Lead:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the lead.
+          example: abc123
+        email:
+          type: string
+          format: email
+          description: Email address of the lead.
+          example: user@example.com
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: First name of the lead.
+          example: example_value
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: Last name of the lead.
+          example: example_value
+        position:
+          type:
+          - string
+          - 'null'
+          description: Job position or title.
+          example: example_value
+        company:
+          type:
+          - string
+          - 'null'
+          description: Company name.
+          example: example_value
+        company_industry:
+          type:
+          - string
+          - 'null'
+          description: Industry of the company.
+          example: example_value
+        company_size:
+          type:
+          - string
+          - 'null'
+          description: Size range of the company.
+          example: example_value
+        confidence_score:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+          maximum: 100
+          description: Confidence score for the lead email.
+          example: example_value
+        website:
+          type:
+          - string
+          - 'null'
+          description: Website URL associated with the lead.
+          example: example_value
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: ISO 3166-1 alpha-2 country code.
+          example: example_value
+        linkedin_url:
+          type:
+          - string
+          - 'null'
+          description: LinkedIn profile URL.
+          example: https://www.example.com
+        phone_number:
+          type:
+          - string
+          - 'null'
+          description: Phone number.
+          example: example_value
+        twitter:
+          type:
+          - string
+          - 'null'
+          description: Twitter handle.
+          example: example_value
+        notes:
+          type:
+          - string
+          - 'null'
+          description: Free-text notes about the lead.
+          example: example_value
+        leads_list_id:
+          type:
+          - integer
+          - 'null'
+          description: Identifier of the leads list the lead belongs to.
+          example: '500123'
+        sync_status:
+          type:
+          - string
+          - 'null'
+          description: CRM synchronization status.
+          example: example_value
+        sending_status:
+          type:
+          - string
+          - 'null'
+          description: Email sending status.
+          example: example_value
+        verification:
+          $ref: '#/components/schemas/VerificationStatus'
+        last_activity_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp of the last activity for this lead.
+          example: '2026-01-15T10:30:00Z'
+        last_contacted_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp of the last contact with this lead.
+          example: '2026-01-15T10:30:00Z'
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the lead was created.
+          example: '2026-01-15T10:30:00Z'
+    LeadInput:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address of the lead.
+          example: user@example.com
+        first_name:
+          type: string
+          description: First name of the lead.
+          example: example_value
+        last_name:
+          type: string
+          description: Last name of the lead.
+          example: example_value
+        position:
+          type: string
+          description: Job position or title.
+          example: example_value
+        company:
+          type: string
+          description: Company name.
+          example: example_value
+        company_industry:
+          type: string
+          description: Industry of the company.
+          example: example_value
+        company_size:
+          type: string
+          description: Size range of the company.
+          example: example_value
+        confidence_score:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Confidence score for the lead email.
+          example: 10
+        website:
+          type: string
+          format: uri
+          description: Website URL associated with the lead.
+          example: https://www.example.com
+        country_code:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+          example: example_value
+        linkedin_url:
+          type: string
+          format: uri
+          description: LinkedIn profile URL.
+          example: https://www.example.com
+        phone_number:
+          type: string
+          description: Phone number.
+          example: example_value
+        twitter:
+          type: string
+          description: Twitter handle.
+          example: example_value
+        notes:
+          type: string
+          description: Free-text notes about the lead.
+          example: example_value
+        leads_list_id:
+          type: integer
+          description: Identifier of the leads list to add the lead to.
+          example: '500123'
+    VerificationStatus:
+      type: object
+      properties:
+        date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Date the verification was performed.
+          example: '2026-01-15'
+        status:
+          type:
+          - string
+          - 'null'
+          enum:
+          - valid
+          - invalid
+          - accept_all
+          - webmail
+          - disposable
+          - unknown
+          - null
+          description: The verification status.
+          example: valid
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Error identifier code.
+              code:
+                type: integer
+                description: HTTP status code.
+              details:
+                type: string
+                description: Human-readable error message.
+          example: []
+  parameters:
+    LeadId:
+      name: id
+      in: path
+      required: true
+      description: The unique identifier of the lead.
+      schema:
+        type: integer
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: api_key
+      description: API key passed as a query parameter.
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key passed via the X-API-KEY header.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API key passed as a Bearer token in the Authorization header.

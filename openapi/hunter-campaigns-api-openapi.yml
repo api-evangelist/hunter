@@ -1,0 +1,357 @@
+openapi: 3.1.0
+info:
+  title: Hunter Account Campaigns API
+  description: Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability. The API provides domain search, email finder, email verifier, email count, account information, leads management, leads lists, campaigns, discover, enrichment, and logo retrieval capabilities.
+  version: 2.0.0
+  termsOfService: https://hunter.io/terms
+  contact:
+    name: Hunter Support
+    url: https://hunter.io/contact
+    email: support@hunter.io
+  license:
+    name: Proprietary
+    url: https://hunter.io/terms
+servers:
+- url: https://api.hunter.io/v2
+  description: Hunter API v2 Production
+security:
+- apiKeyQuery: []
+- apiKeyHeader: []
+- bearerAuth: []
+tags:
+- name: Campaigns
+  description: Manage email sequences and recipients.
+paths:
+  /campaigns:
+    get:
+      operationId: listCampaigns
+      summary: Hunter List Campaigns
+      description: Returns all the email sequences (campaigns) in your account.
+      tags:
+      - Campaigns
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of campaigns to return. Default is 20, max is 100.
+        schema:
+          type: integer
+          default: 20
+          maximum: 100
+      - name: offset
+        in: query
+        description: Number of campaigns to skip for pagination.
+        schema:
+          type: integer
+          default: 0
+      - name: started
+        in: query
+        description: Filter by whether the campaign has been started.
+        schema:
+          type: boolean
+      - name: archived
+        in: query
+        description: Filter by whether the campaign has been archived.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Successful campaigns list response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      campaigns:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Campaign'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /campaigns/{id}/recipients:
+    get:
+      operationId: listCampaignRecipients
+      summary: Hunter List Campaign Recipients
+      description: Returns the recipients for a given campaign.
+      tags:
+      - Campaigns
+      parameters:
+      - $ref: '#/components/parameters/CampaignId'
+      - name: limit
+        in: query
+        description: Maximum number of recipients to return.
+        schema:
+          type: integer
+          default: 20
+          maximum: 100
+      - name: offset
+        in: query
+        description: Number of recipients to skip for pagination.
+        schema:
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: Successful campaign recipients response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      recipients:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/CampaignRecipient'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: addCampaignRecipients
+      summary: Hunter Add Campaign Recipients
+      description: Adds recipients to a campaign using email addresses or lead identifiers.
+      tags:
+      - Campaigns
+      parameters:
+      - $ref: '#/components/parameters/CampaignId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emails:
+                  oneOf:
+                  - type: string
+                  - type: array
+                    items:
+                      type: string
+                  description: Email address or array of email addresses to add.
+                lead_ids:
+                  type: array
+                  items:
+                    type: integer
+                  description: Array of lead identifiers to add as recipients.
+      responses:
+        '201':
+          description: Recipients added successfully.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: cancelCampaignRecipients
+      summary: Hunter Cancel Campaign Recipients
+      description: Cancels all scheduled emails for the specified recipients.
+      tags:
+      - Campaigns
+      parameters:
+      - $ref: '#/components/parameters/CampaignId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emails:
+                  oneOf:
+                  - type: string
+                  - type: array
+                    items:
+                      type: string
+                  description: Email address or array of email addresses to cancel.
+      responses:
+        '204':
+          description: Scheduled emails cancelled successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /campaigns/{id}/start:
+    post:
+      operationId: startCampaign
+      summary: Hunter Start Campaign
+      description: Starts an email sequence for the campaign.
+      tags:
+      - Campaigns
+      parameters:
+      - $ref: '#/components/parameters/CampaignId'
+      responses:
+        '200':
+          description: Campaign started successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  responses:
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Valid request but resource creation or update failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid parameters or missing required fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Campaign:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the campaign.
+          example: abc123
+        name:
+          type: string
+          description: Name of the campaign.
+          example: Example Title
+        recipients_count:
+          type: integer
+          description: Number of recipients in the campaign.
+          example: 10
+        editable:
+          type: boolean
+          description: Whether the campaign can be edited.
+          example: true
+        started:
+          type: boolean
+          description: Whether the campaign has been started.
+          example: true
+        archived:
+          type: boolean
+          description: Whether the campaign has been archived.
+          example: true
+        paused:
+          type: boolean
+          description: Whether the campaign is paused.
+          example: true
+        sending_status:
+          type:
+          - string
+          - 'null'
+          description: Current sending status of the campaign.
+          example: example_value
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the campaign was created.
+          example: '2026-01-15T10:30:00Z'
+    PaginationMeta:
+      type: object
+      properties:
+        results:
+          type: integer
+          description: Total number of results available.
+          example: 10
+        limit:
+          type: integer
+          description: Number of results per page.
+          example: 10
+        offset:
+          type: integer
+          description: Current offset position.
+          example: 10
+    CampaignRecipient:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Recipient email address.
+          example: user@example.com
+        lead_id:
+          type:
+          - integer
+          - 'null'
+          description: Associated lead identifier.
+          example: '500123'
+        sending_status:
+          type: string
+          description: Current sending status for this recipient.
+          example: example_value
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Error identifier code.
+              code:
+                type: integer
+                description: HTTP status code.
+              details:
+                type: string
+                description: Human-readable error message.
+          example: []
+  parameters:
+    CampaignId:
+      name: id
+      in: path
+      required: true
+      description: The unique identifier of the campaign.
+      schema:
+        type: integer
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: api_key
+      description: API key passed as a query parameter.
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key passed via the X-API-KEY header.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API key passed as a Bearer token in the Authorization header.
