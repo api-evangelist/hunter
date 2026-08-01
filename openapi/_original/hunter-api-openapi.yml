@@ -1,0 +1,2707 @@
+openapi: 3.1.0
+info:
+  title: Hunter API
+  description: >-
+    Hunter is an email finding and verification service that helps find
+    professional email addresses associated with a domain and verify email
+    deliverability. The API provides domain search, email finder, email
+    verifier, email count, account information, leads management, leads
+    lists, campaigns, discover, enrichment, and logo retrieval capabilities.
+  version: 2.0.0
+  termsOfService: https://hunter.io/terms
+  contact:
+    name: Hunter Support
+    url: https://hunter.io/contact
+    email: support@hunter.io
+  license:
+    name: Proprietary
+    url: https://hunter.io/terms
+
+servers:
+- url: https://api.hunter.io/v2
+  description: Hunter API v2 Production
+
+security:
+- apiKeyQuery: []
+- apiKeyHeader: []
+- bearerAuth: []
+
+tags:
+- name: Account
+  description: Retrieve account information and usage statistics.
+- name: Campaigns
+  description: Manage email sequences and recipients.
+- name: Combined Enrichment
+  description: Merge person and company enrichment for a single email address.
+
+- name: Company Enrichment
+  description: Enrich company information linked to a domain name.
+- name: Discover
+  description: Find companies matching criteria using natural language or filters.
+- name: Domain Search
+  description: Search for email addresses associated with a domain.
+- name: Email Count
+  description: Count email addresses found for a domain.
+- name: Email Enrichment
+  description: Enrich personal information linked to an email or LinkedIn profile.
+- name: Email Finder
+  description: Find the most likely email address for a person at a company.
+- name: Email Verifier
+  description: Verify the deliverability of an email address.
+- name: Leads
+  description: Manage leads stored in Hunter.
+- name: Leads Lists
+  description: Manage leads list collections in Hunter.
+paths:
+  /domain-search:
+    get:
+      operationId: domainSearch
+      summary: Hunter Domain Search
+      description: >-
+        Returns all the email addresses found using a given domain name,
+        with sources. You must provide either a domain or a company name.
+      tags:
+      - Domain Search
+      parameters:
+      - name: domain
+        in: query
+        description: >-
+          Domain name from which you want to find the email addresses.
+          Required if company is not provided.
+        schema:
+          type: string
+        example: stripe.com
+      - name: company
+        in: query
+        description: >-
+          Company name from which you want to find the email addresses.
+          Required if domain is not provided.
+        schema:
+          type: string
+        example: Stripe
+      - name: limit
+        in: query
+        description: Maximum number of email addresses to return. Default is 10.
+        schema:
+          type: integer
+          default: 10
+      - name: offset
+        in: query
+        description: Number of email addresses to skip for pagination. Default is 0.
+        schema:
+          type: integer
+          default: 0
+      - name: type
+        in: query
+        description: Filter by email address type.
+        schema:
+          type: string
+          enum:
+          - personal
+          - generic
+      - name: seniority
+        in: query
+        description: Filter by seniority level.
+        schema:
+          type: string
+          enum:
+          - junior
+          - senior
+          - executive
+      - name: department
+        in: query
+        description: Filter by department.
+        schema:
+          type: string
+      - name: verification_status
+        in: query
+        description: Filter by verification status.
+        schema:
+          type: string
+          enum:
+          - valid
+          - accept_all
+          - unknown
+      responses:
+        '200':
+          description: Successful domain search response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DomainSearchResult'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /email-finder:
+    get:
+      operationId: emailFinder
+      summary: Hunter Email Finder
+      description: >-
+        Finds the most likely email address from a domain name, a first
+        name and a last name. You must provide a domain or company, and
+        a name (first/last or full) or LinkedIn handle.
+      tags:
+      - Email Finder
+      parameters:
+      - name: domain
+        in: query
+        description: Domain name of the company. Required if company is not provided.
+        schema:
+          type: string
+        example: stripe.com
+      - name: company
+        in: query
+        description: Company name. Required if domain is not provided.
+        schema:
+          type: string
+      - name: first_name
+        in: query
+        description: First name of the person. Required with last_name if full_name not provided.
+        schema:
+          type: string
+        example: John
+      - name: last_name
+        in: query
+        description: Last name of the person. Required with first_name if full_name not provided.
+        schema:
+          type: string
+        example: Collison
+      - name: full_name
+        in: query
+        description: Full name of the person. Required if first_name and last_name not provided.
+        schema:
+          type: string
+      - name: linkedin_handle
+        in: query
+        description: LinkedIn profile handle for the person.
+        schema:
+          type: string
+      - name: max_duration
+        in: query
+        description: Maximum duration for the request in seconds. Between 3 and 20, default is 10.
+        schema:
+          type: integer
+          minimum: 3
+          maximum: 20
+          default: 10
+      responses:
+        '200':
+          description: Successful email finder response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EmailFinderResult'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /email-verifier:
+    get:
+      operationId: emailVerifier
+      summary: Hunter Email Verifier
+      description: Verifies the deliverability of a given email address.
+      tags:
+      - Email Verifier
+      parameters:
+      - name: email
+        in: query
+        required: true
+        description: The email address to verify.
+        schema:
+          type: string
+          format: email
+        example: john@stripe.com
+      responses:
+        '200':
+          description: Successful email verification response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EmailVerifierResult'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '202':
+          description: Verification in progress. Retry the request later.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EmailVerifierResult'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /email-count:
+    get:
+      operationId: emailCount
+      summary: Hunter Email Count
+      description: >-
+        Returns the number of email addresses found for a given domain
+        or company, broken down by type, department, and seniority.
+      tags:
+      - Email Count
+      parameters:
+      - name: domain
+        in: query
+        description: Domain name to count emails for. Required if company is not provided.
+        schema:
+          type: string
+        example: stripe.com
+      - name: company
+        in: query
+        description: Company name to count emails for. Required if domain is not provided.
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: Filter count by email type.
+        schema:
+          type: string
+          enum:
+          - personal
+          - generic
+      responses:
+        '200':
+          description: Successful email count response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EmailCountResult'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /account:
+    get:
+      operationId: getAccount
+      summary: Hunter Account Information
+      description: >-
+        Returns information about the Hunter account associated with the
+        API key, including usage statistics and plan details. This call
+        is free and does not count toward usage limits.
+      tags:
+      - Account
+      responses:
+        '200':
+          description: Successful account information response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AccountResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /leads:
+    get:
+      operationId: listLeads
+      summary: Hunter List Leads
+      description: Returns all the leads saved in your account.
+      tags:
+      - Leads
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of leads to return. Default is 20, max is 100.
+        schema:
+          type: integer
+          default: 20
+          maximum: 100
+      - name: offset
+        in: query
+        description: Number of leads to skip for pagination.
+        schema:
+          type: integer
+          default: 0
+      - name: leads_list_id
+        in: query
+        description: Filter leads by list identifier.
+        schema:
+          type: integer
+      - name: first_name
+        in: query
+        description: Filter by first name.
+        schema:
+          type: string
+      - name: last_name
+        in: query
+        description: Filter by last name.
+        schema:
+          type: string
+      - name: email
+        in: query
+        description: Filter by email address.
+        schema:
+          type: string
+      - name: company
+        in: query
+        description: Filter by company name.
+        schema:
+          type: string
+      - name: phone_number
+        in: query
+        description: Filter by phone number.
+        schema:
+          type: string
+      - name: twitter
+        in: query
+        description: Filter by Twitter handle.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful leads list response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      leads:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Lead'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createLead
+      summary: Hunter Create Lead
+      description: Creates a new lead in your Hunter account.
+      tags:
+      - Leads
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadInput'
+      responses:
+        '201':
+          description: Lead created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Lead'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: upsertLead
+      summary: Hunter Create or Update Lead
+      description: >-
+        Creates a new lead or updates an existing one if a lead with the
+        same email address already exists in the specified list.
+      tags:
+      - Leads
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadInput'
+      responses:
+        '200':
+          description: Lead updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Lead'
+        '201':
+          description: Lead created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Lead'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /leads/{id}:
+    get:
+      operationId: getLead
+      summary: Hunter Get Lead
+      description: Retrieves a single lead by its identifier.
+      tags:
+      - Leads
+      parameters:
+      - $ref: '#/components/parameters/LeadId'
+      responses:
+        '200':
+          description: Successful lead retrieval.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Lead'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateLead
+      summary: Hunter Update Lead
+      description: Updates an existing lead by its identifier.
+      tags:
+      - Leads
+      parameters:
+      - $ref: '#/components/parameters/LeadId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadInput'
+      responses:
+        '200':
+          description: Lead updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Lead'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteLead
+      summary: Hunter Delete Lead
+      description: Deletes a lead by its identifier.
+      tags:
+      - Leads
+      parameters:
+      - $ref: '#/components/parameters/LeadId'
+      responses:
+        '204':
+          description: Lead deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /leads_lists:
+    get:
+      operationId: listLeadsLists
+      summary: Hunter List Leads Lists
+      description: Returns all the leads lists saved in your account.
+      tags:
+      - Leads Lists
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of lists to return. Default is 20, max is 100.
+        schema:
+          type: integer
+          default: 20
+          maximum: 100
+      - name: offset
+        in: query
+        description: Number of lists to skip for pagination.
+        schema:
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: Successful leads lists response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      leads_lists:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/LeadsList'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createLeadsList
+      summary: Hunter Create Leads List
+      description: Creates a new leads list.
+      tags:
+      - Leads Lists
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: The name of the leads list.
+      responses:
+        '201':
+          description: Leads list created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/LeadsList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /leads_lists/{id}:
+    get:
+      operationId: getLeadsList
+      summary: Hunter Get Leads List
+      description: Retrieves a single leads list by its identifier.
+      tags:
+      - Leads Lists
+      parameters:
+      - $ref: '#/components/parameters/LeadsListId'
+      responses:
+        '200':
+          description: Successful leads list retrieval.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/LeadsList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateLeadsList
+      summary: Hunter Update Leads List
+      description: Updates an existing leads list by its identifier.
+      tags:
+      - Leads Lists
+      parameters:
+      - $ref: '#/components/parameters/LeadsListId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: The new name for the leads list.
+      responses:
+        '200':
+          description: Leads list updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/LeadsList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteLeadsList
+      summary: Hunter Delete Leads List
+      description: Deletes a leads list by its identifier.
+      tags:
+      - Leads Lists
+      parameters:
+      - $ref: '#/components/parameters/LeadsListId'
+      responses:
+        '204':
+          description: Leads list deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /campaigns:
+    get:
+      operationId: listCampaigns
+      summary: Hunter List Campaigns
+      description: Returns all the email sequences (campaigns) in your account.
+      tags:
+      - Campaigns
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of campaigns to return. Default is 20, max is 100.
+        schema:
+          type: integer
+          default: 20
+          maximum: 100
+      - name: offset
+        in: query
+        description: Number of campaigns to skip for pagination.
+        schema:
+          type: integer
+          default: 0
+      - name: started
+        in: query
+        description: Filter by whether the campaign has been started.
+        schema:
+          type: boolean
+      - name: archived
+        in: query
+        description: Filter by whether the campaign has been archived.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Successful campaigns list response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      campaigns:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Campaign'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /campaigns/{id}/recipients:
+    get:
+      operationId: listCampaignRecipients
+      summary: Hunter List Campaign Recipients
+      description: Returns the recipients for a given campaign.
+      tags:
+      - Campaigns
+      parameters:
+      - $ref: '#/components/parameters/CampaignId'
+      - name: limit
+        in: query
+        description: Maximum number of recipients to return.
+        schema:
+          type: integer
+          default: 20
+          maximum: 100
+      - name: offset
+        in: query
+        description: Number of recipients to skip for pagination.
+        schema:
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: Successful campaign recipients response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      recipients:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/CampaignRecipient'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: addCampaignRecipients
+      summary: Hunter Add Campaign Recipients
+      description: Adds recipients to a campaign using email addresses or lead identifiers.
+      tags:
+      - Campaigns
+      parameters:
+      - $ref: '#/components/parameters/CampaignId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emails:
+                  oneOf:
+                  - type: string
+                  - type: array
+                    items:
+                      type: string
+                  description: Email address or array of email addresses to add.
+                lead_ids:
+                  type: array
+                  items:
+                    type: integer
+                  description: Array of lead identifiers to add as recipients.
+      responses:
+        '201':
+          description: Recipients added successfully.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: cancelCampaignRecipients
+      summary: Hunter Cancel Campaign Recipients
+      description: Cancels all scheduled emails for the specified recipients.
+      tags:
+      - Campaigns
+      parameters:
+      - $ref: '#/components/parameters/CampaignId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emails:
+                  oneOf:
+                  - type: string
+                  - type: array
+                    items:
+                      type: string
+                  description: Email address or array of email addresses to cancel.
+      responses:
+        '204':
+          description: Scheduled emails cancelled successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /campaigns/{id}/start:
+    post:
+      operationId: startCampaign
+      summary: Hunter Start Campaign
+      description: Starts an email sequence for the campaign.
+      tags:
+      - Campaigns
+      parameters:
+      - $ref: '#/components/parameters/CampaignId'
+      responses:
+        '200':
+          description: Campaign started successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /discover:
+    post:
+      operationId: discover
+      summary: Hunter Discover Companies
+      description: >-
+        Returns companies matching a set of criteria using natural language
+        queries or robust filters to find companies aligned with your ideal
+        customer profile.
+      tags:
+      - Discover
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiscoverRequest'
+      responses:
+        '200':
+          description: Successful discover response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/DiscoverResult'
+                      filters:
+                        type: object
+                        description: Applied filters for pagination context.
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /people/find:
+    get:
+      operationId: emailEnrichment
+      summary: Hunter Email Enrichment
+      description: >-
+        Returns comprehensive personal information linked to an email
+        address or LinkedIn profile. Provides enriched data points about
+        the person including employment, social profiles, and location.
+      tags:
+      - Email Enrichment
+      parameters:
+      - name: email
+        in: query
+        description: Email address to enrich. Required if linkedin_handle is not provided.
+        schema:
+          type: string
+          format: email
+      - name: linkedin_handle
+        in: query
+        description: LinkedIn profile handle. Required if email is not provided.
+        schema:
+          type: string
+      - name: clearbit_format
+        in: query
+        description: Format response to match the Clearbit schema.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Successful email enrichment response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PersonEnrichment'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '451':
+          $ref: '#/components/responses/UnavailableForLegalReasons'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /companies/find:
+    get:
+      operationId: companyEnrichment
+      summary: Hunter Company Enrichment
+      description: >-
+        Returns detailed organizational data associated with a domain
+        name, including company size, industry, location, and other
+        firmographic information.
+      tags:
+      - Company Enrichment
+      parameters:
+      - name: domain
+        in: query
+        required: true
+        description: Domain name of the company to enrich.
+        schema:
+          type: string
+        example: stripe.com
+      - name: clearbit_format
+        in: query
+        description: Format response to match the Clearbit schema.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Successful company enrichment response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CompanyEnrichment'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /combined/find:
+    get:
+      operationId: combinedEnrichment
+      summary: Hunter Combined Enrichment
+      description: >-
+        Merges person and company information for a single email address,
+        returning enriched records combining both datasets.
+      tags:
+      - Combined Enrichment
+      parameters:
+      - name: email
+        in: query
+        required: true
+        description: Email address to enrich with both person and company data.
+        schema:
+          type: string
+          format: email
+      - name: clearbit_format
+        in: query
+        description: Format response to match the Clearbit schema.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Successful combined enrichment response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      person:
+                        $ref: '#/components/schemas/PersonEnrichment'
+                      company:
+                        $ref: '#/components/schemas/CompanyEnrichment'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '451':
+          $ref: '#/components/responses/UnavailableForLegalReasons'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: api_key
+      description: API key passed as a query parameter.
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key passed via the X-API-KEY header.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API key passed as a Bearer token in the Authorization header.
+
+  parameters:
+    LeadId:
+      name: id
+      in: path
+      required: true
+      description: The unique identifier of the lead.
+      schema:
+        type: integer
+    LeadsListId:
+      name: id
+      in: path
+      required: true
+      description: The unique identifier of the leads list.
+      schema:
+        type: integer
+    CampaignId:
+      name: id
+      in: path
+      required: true
+      description: The unique identifier of the campaign.
+      schema:
+        type: integer
+
+  schemas:
+    DomainSearchResult:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: The domain name searched.
+          example: example_value
+        disposable:
+          type: boolean
+          description: Whether the domain is a disposable email service.
+          example: true
+        webmail:
+          type: boolean
+          description: Whether the domain is a webmail provider.
+          example: true
+        accept_all:
+          type: boolean
+          description: Whether the mail server accepts all email addresses.
+          example: true
+        pattern:
+          type:
+          - string
+          - 'null'
+          description: The email address pattern detected for the domain.
+          example: example_value
+        organization:
+          type: string
+          description: The name of the organization associated with the domain.
+          example: example_value
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainEmail'
+
+          example: user@example.com
+    DomainEmail:
+      type: object
+      properties:
+        value:
+          type: string
+          format: email
+          description: The email address.
+          example: example_value
+        type:
+          type: string
+          enum:
+          - personal
+          - generic
+          description: Whether the email is personal or generic.
+          example: personal
+        confidence:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Confidence score for the email address.
+          example: 10
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: First name of the person.
+          example: example_value
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: Last name of the person.
+          example: example_value
+        position:
+          type:
+          - string
+          - 'null'
+          description: Job position or title.
+          example: example_value
+        seniority:
+          type:
+          - string
+          - 'null'
+          description: Seniority level.
+          example: example_value
+        department:
+          type:
+          - string
+          - 'null'
+          description: Department within the organization.
+          example: example_value
+        linkedin:
+          type:
+          - string
+          - 'null'
+          description: LinkedIn profile URL.
+          example: example_value
+        twitter:
+          type:
+          - string
+          - 'null'
+          description: Twitter handle.
+          example: example_value
+        phone_number:
+          type:
+          - string
+          - 'null'
+          description: Phone number.
+          example: example_value
+        verification:
+          $ref: '#/components/schemas/VerificationStatus'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+
+          example: []
+    EmailFinderResult:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: First name of the person.
+          example: example_value
+        last_name:
+          type: string
+          description: Last name of the person.
+          example: example_value
+        email:
+          type: string
+          format: email
+          description: The found email address.
+          example: user@example.com
+        score:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Confidence score for the email.
+          example: 10
+        domain:
+          type: string
+          description: The domain name used for the search.
+          example: example_value
+        position:
+          type:
+          - string
+          - 'null'
+          description: Job position or title.
+          example: example_value
+        company:
+          type:
+          - string
+          - 'null'
+          description: Company name.
+          example: example_value
+        twitter:
+          type:
+          - string
+          - 'null'
+          description: Twitter handle.
+          example: example_value
+        linkedin_url:
+          type:
+          - string
+          - 'null'
+          description: LinkedIn profile URL.
+          example: https://www.example.com
+        phone_number:
+          type:
+          - string
+          - 'null'
+          description: Phone number.
+          example: example_value
+        verification:
+          $ref: '#/components/schemas/VerificationStatus'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+
+          example: []
+    EmailVerifierResult:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - valid
+          - invalid
+          - accept_all
+          - webmail
+          - disposable
+          - unknown
+          description: The verification status of the email address.
+          example: valid
+        result:
+          type: string
+          enum:
+          - deliverable
+          - undeliverable
+          - risky
+          description: Deprecated. The deliverability result.
+          deprecated: true
+          example: deliverable
+        score:
+          type: integer
+          description: Deliverability score.
+          example: 10
+        email:
+          type: string
+          format: email
+          description: The email address that was verified.
+          example: user@example.com
+        regexp:
+          type: boolean
+          description: Whether the email matches a valid format.
+          example: true
+        gibberish:
+          type: boolean
+          description: Whether the email appears to be gibberish.
+          example: true
+        disposable:
+          type: boolean
+          description: Whether the email uses a disposable provider.
+          example: true
+        webmail:
+          type: boolean
+          description: Whether the email is a webmail address.
+          example: true
+        mx_records:
+          type: boolean
+          description: Whether MX records exist for the domain.
+          example: true
+        smtp_server:
+          type: boolean
+          description: Whether an SMTP server was found.
+          example: true
+        smtp_check:
+          type: boolean
+          description: Whether the SMTP check passed.
+          example: true
+        accept_all:
+          type: boolean
+          description: Whether the mail server accepts all addresses.
+          example: true
+        block:
+          type: boolean
+          description: Whether the email is blocked.
+          example: true
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+
+          example: []
+    EmailCountResult:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of email addresses found.
+          example: 10
+        personal_emails:
+          type: integer
+          description: Number of personal email addresses.
+          example: user@example.com
+        generic_emails:
+          type: integer
+          description: Number of generic email addresses.
+          example: user@example.com
+        department:
+          type: object
+          description: Breakdown of email count by department.
+          additionalProperties:
+            type: integer
+          example: example_value
+        seniority:
+          type: object
+          description: Breakdown of email count by seniority level.
+          additionalProperties:
+            type: integer
+
+          example: example_value
+    AccountResult:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: Account holder first name.
+          example: example_value
+        last_name:
+          type: string
+          description: Account holder last name.
+          example: example_value
+        email:
+          type: string
+          format: email
+          description: Account email address.
+          example: user@example.com
+        plan_name:
+          type: string
+          description: Name of the current subscription plan.
+          example: example_value
+        plan_level:
+          type: integer
+          description: Level of the current subscription plan.
+          example: 10
+        reset_date:
+          type: string
+          format: date
+          description: Date when usage counters reset.
+          example: '2026-01-15'
+        team_id:
+          type: integer
+          description: Team identifier.
+          example: '500123'
+        requests:
+          type: object
+          description: Usage breakdown by request type.
+          properties:
+            searches:
+              $ref: '#/components/schemas/UsageCounter'
+            verifications:
+              $ref: '#/components/schemas/UsageCounter'
+          example: example_value
+        calls:
+          type: object
+          description: Deprecated. Total usage counters.
+          deprecated: true
+          properties:
+            used:
+              type: integer
+            available:
+              type: integer
+
+          example: example_value
+    UsageCounter:
+      type: object
+      properties:
+        used:
+          type: integer
+          description: Number of requests used.
+          example: 10
+        available:
+          type: integer
+          description: Number of requests available.
+
+          example: 10
+    Lead:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the lead.
+          example: abc123
+        email:
+          type: string
+          format: email
+          description: Email address of the lead.
+          example: user@example.com
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: First name of the lead.
+          example: example_value
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: Last name of the lead.
+          example: example_value
+        position:
+          type:
+          - string
+          - 'null'
+          description: Job position or title.
+          example: example_value
+        company:
+          type:
+          - string
+          - 'null'
+          description: Company name.
+          example: example_value
+        company_industry:
+          type:
+          - string
+          - 'null'
+          description: Industry of the company.
+          example: example_value
+        company_size:
+          type:
+          - string
+          - 'null'
+          description: Size range of the company.
+          example: example_value
+        confidence_score:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+          maximum: 100
+          description: Confidence score for the lead email.
+          example: example_value
+        website:
+          type:
+          - string
+          - 'null'
+          description: Website URL associated with the lead.
+          example: example_value
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: ISO 3166-1 alpha-2 country code.
+          example: example_value
+        linkedin_url:
+          type:
+          - string
+          - 'null'
+          description: LinkedIn profile URL.
+          example: https://www.example.com
+        phone_number:
+          type:
+          - string
+          - 'null'
+          description: Phone number.
+          example: example_value
+        twitter:
+          type:
+          - string
+          - 'null'
+          description: Twitter handle.
+          example: example_value
+        notes:
+          type:
+          - string
+          - 'null'
+          description: Free-text notes about the lead.
+          example: example_value
+        leads_list_id:
+          type:
+          - integer
+          - 'null'
+          description: Identifier of the leads list the lead belongs to.
+          example: '500123'
+        sync_status:
+          type:
+          - string
+          - 'null'
+          description: CRM synchronization status.
+          example: example_value
+        sending_status:
+          type:
+          - string
+          - 'null'
+          description: Email sending status.
+          example: example_value
+        verification:
+          $ref: '#/components/schemas/VerificationStatus'
+        last_activity_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp of the last activity for this lead.
+          example: '2026-01-15T10:30:00Z'
+        last_contacted_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp of the last contact with this lead.
+          example: '2026-01-15T10:30:00Z'
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the lead was created.
+
+          example: '2026-01-15T10:30:00Z'
+    LeadInput:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address of the lead.
+          example: user@example.com
+        first_name:
+          type: string
+          description: First name of the lead.
+          example: example_value
+        last_name:
+          type: string
+          description: Last name of the lead.
+          example: example_value
+        position:
+          type: string
+          description: Job position or title.
+          example: example_value
+        company:
+          type: string
+          description: Company name.
+          example: example_value
+        company_industry:
+          type: string
+          description: Industry of the company.
+          example: example_value
+        company_size:
+          type: string
+          description: Size range of the company.
+          example: example_value
+        confidence_score:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Confidence score for the lead email.
+          example: 10
+        website:
+          type: string
+          format: uri
+          description: Website URL associated with the lead.
+          example: https://www.example.com
+        country_code:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+          example: example_value
+        linkedin_url:
+          type: string
+          format: uri
+          description: LinkedIn profile URL.
+          example: https://www.example.com
+        phone_number:
+          type: string
+          description: Phone number.
+          example: example_value
+        twitter:
+          type: string
+          description: Twitter handle.
+          example: example_value
+        notes:
+          type: string
+          description: Free-text notes about the lead.
+          example: example_value
+        leads_list_id:
+          type: integer
+          description: Identifier of the leads list to add the lead to.
+
+          example: '500123'
+    LeadsList:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the leads list.
+          example: abc123
+        name:
+          type: string
+          description: Name of the leads list.
+          example: Example Title
+        leads_count:
+          type: integer
+          description: Number of leads in the list.
+          example: 10
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the list was created.
+
+          example: '2026-01-15T10:30:00Z'
+    Campaign:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the campaign.
+          example: abc123
+        name:
+          type: string
+          description: Name of the campaign.
+          example: Example Title
+        recipients_count:
+          type: integer
+          description: Number of recipients in the campaign.
+          example: 10
+        editable:
+          type: boolean
+          description: Whether the campaign can be edited.
+          example: true
+        started:
+          type: boolean
+          description: Whether the campaign has been started.
+          example: true
+        archived:
+          type: boolean
+          description: Whether the campaign has been archived.
+          example: true
+        paused:
+          type: boolean
+          description: Whether the campaign is paused.
+          example: true
+        sending_status:
+          type:
+          - string
+          - 'null'
+          description: Current sending status of the campaign.
+          example: example_value
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the campaign was created.
+
+          example: '2026-01-15T10:30:00Z'
+    CampaignRecipient:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Recipient email address.
+          example: user@example.com
+        lead_id:
+          type:
+          - integer
+          - 'null'
+          description: Associated lead identifier.
+          example: '500123'
+        sending_status:
+          type: string
+          description: Current sending status for this recipient.
+
+          example: example_value
+    DiscoverRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Natural language search query to find matching companies.
+          example: example_value
+        organization:
+          type: object
+          description: Filter by organization attributes.
+          properties:
+            domain:
+              type: string
+            name:
+              type: string
+          example: example_value
+        headquarters_location:
+          type: object
+          description: Filter by geographic location of headquarters.
+          properties:
+            country:
+              type: string
+            state:
+              type: string
+            city:
+              type: string
+          example: example_value
+        industry:
+          type: object
+          description: Filter by industry classification.
+          properties:
+            include:
+              type: array
+              items:
+                type: string
+            exclude:
+              type: array
+              items:
+                type: string
+          example: example_value
+        headcount:
+          type: array
+          description: Filter by company headcount ranges.
+          items:
+            type: string
+          example: []
+        company_type:
+          type: object
+          description: Filter by company entity type.
+          properties:
+            include:
+              type: array
+              items:
+                type: string
+            exclude:
+              type: array
+              items:
+                type: string
+          example: example_value
+        year_founded:
+          type: object
+          description: Filter by year the company was founded.
+          properties:
+            min:
+              type: integer
+            max:
+              type: integer
+          example: example_value
+        technology:
+          type: object
+          description: Filter by technologies used by the company.
+          properties:
+            include:
+              type: array
+              items:
+                type: string
+            exclude:
+              type: array
+              items:
+                type: string
+          example: example_value
+        keywords:
+          type: object
+          description: Filter by business keywords.
+          properties:
+            include:
+              type: array
+              items:
+                type: string
+            exclude:
+              type: array
+              items:
+                type: string
+          example: example_value
+        funding:
+          type: object
+          description: Filter by funding information.
+          properties:
+            stage:
+              type: string
+            min_amount:
+              type: number
+            max_amount:
+              type: number
+          example: example_value
+        limit:
+          type: integer
+          description: Maximum number of results to return.
+          example: 10
+        offset:
+          type: integer
+          description: Number of results to skip for pagination.
+
+          example: 10
+    DiscoverResult:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain name of the discovered company.
+          example: example_value
+        organization:
+          type: string
+          description: Name of the organization.
+          example: example_value
+        emails_count:
+          type: object
+          properties:
+            personal:
+              type: integer
+              description: Number of personal emails found.
+            generic:
+              type: integer
+              description: Number of generic emails found.
+            total:
+              type: integer
+              description: Total emails found.
+
+          example: user@example.com
+    PersonEnrichment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the person record.
+          example: abc123
+        name:
+          type: object
+          properties:
+            fullName:
+              type:
+              - string
+              - 'null'
+            givenName:
+              type:
+              - string
+              - 'null'
+            familyName:
+              type:
+              - string
+              - 'null'
+          example: Example Title
+        email:
+          type: string
+          format: email
+          description: Email address.
+          example: user@example.com
+        location:
+          type:
+          - string
+          - 'null'
+          description: Location description.
+          example: example_value
+        timeZone:
+          type:
+          - string
+          - 'null'
+          description: Time zone name.
+          example: example_value
+        utcOffset:
+          type:
+          - number
+          - 'null'
+          description: UTC offset in hours.
+          example: example_value
+        geo:
+          $ref: '#/components/schemas/GeoLocation'
+        bio:
+          type:
+          - string
+          - 'null'
+          description: Short biography.
+          example: example_value
+        site:
+          type:
+          - string
+          - 'null'
+          description: Personal website URL.
+          example: example_value
+        avatar:
+          type:
+          - string
+          - 'null'
+          description: Avatar image URL.
+          example: example_value
+        employment:
+          type: object
+          properties:
+            domain:
+              type:
+              - string
+              - 'null'
+            name:
+              type:
+              - string
+              - 'null'
+            title:
+              type:
+              - string
+              - 'null'
+            role:
+              type:
+              - string
+              - 'null'
+            subRole:
+              type:
+              - string
+              - 'null'
+            seniority:
+              type:
+              - string
+              - 'null'
+          example: example_value
+        facebook:
+          type: object
+          properties:
+            handle:
+              type:
+              - string
+              - 'null'
+          example: example_value
+        github:
+          type: object
+          properties:
+            handle:
+              type:
+              - string
+              - 'null'
+            id:
+              type:
+              - integer
+              - 'null'
+            avatar:
+              type:
+              - string
+              - 'null'
+            company:
+              type:
+              - string
+              - 'null'
+            blog:
+              type:
+              - string
+              - 'null'
+            followers:
+              type:
+              - integer
+              - 'null'
+            following:
+              type:
+              - integer
+              - 'null'
+          example: example_value
+        twitter:
+          type: object
+          properties:
+            handle:
+              type:
+              - string
+              - 'null'
+            id:
+              type:
+              - integer
+              - 'null'
+            bio:
+              type:
+              - string
+              - 'null'
+            followers:
+              type:
+              - integer
+              - 'null'
+            following:
+              type:
+              - integer
+              - 'null'
+            statuses:
+              type:
+              - integer
+              - 'null'
+            favorites:
+              type:
+              - integer
+              - 'null'
+            location:
+              type:
+              - string
+              - 'null'
+            site:
+              type:
+              - string
+              - 'null'
+            avatar:
+              type:
+              - string
+              - 'null'
+          example: example_value
+        linkedin:
+          type: object
+          properties:
+            handle:
+              type:
+              - string
+              - 'null'
+          example: example_value
+        fuzzy:
+          type: boolean
+          description: Whether the match was fuzzy.
+          example: true
+        emailProvider:
+          type:
+          - string
+          - 'null'
+          description: Email service provider.
+          example: user@example.com
+        indexedAt:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Date when the record was last indexed.
+          example: '2026-01-15'
+        phone:
+          type:
+          - string
+          - 'null'
+          description: Phone number.
+          example: example_value
+        activeAt:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Date when the person was last active.
+          example: '2026-01-15'
+        inactiveAt:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Date when the person became inactive.
+
+          example: '2026-01-15'
+    CompanyEnrichment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the company record.
+          example: abc123
+        name:
+          type:
+          - string
+          - 'null'
+          description: Company name.
+          example: Example Title
+        legalName:
+          type:
+          - string
+          - 'null'
+          description: Legal name of the company.
+          example: example_value
+        domain:
+          type: string
+          description: Company domain name.
+          example: example_value
+        domainAliases:
+          type: array
+          items:
+            type: string
+          description: Alternate domain names.
+          example: []
+        site:
+          type: object
+          properties:
+            phoneNumbers:
+              type: array
+              items:
+                type: string
+            emailAddresses:
+              type: array
+              items:
+                type: string
+          example: example_value
+        category:
+          type: object
+          description: Industry classification.
+          properties:
+            sector:
+              type:
+              - string
+              - 'null'
+            industryGroup:
+              type:
+              - string
+              - 'null'
+            industry:
+              type:
+              - string
+              - 'null'
+            subIndustry:
+              type:
+              - string
+              - 'null'
+            gicsCode:
+              type:
+              - string
+              - 'null'
+            sicCode:
+              type:
+              - string
+              - 'null'
+            sic4Codes:
+              type: array
+              items:
+                type: string
+            naicsCode:
+              type:
+              - string
+              - 'null'
+            naics6Codes:
+              type: array
+              items:
+                type: string
+            naics6Codes2022:
+              type: array
+              items:
+                type: string
+          example: example_value
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with the company.
+          example: []
+        description:
+          type:
+          - string
+          - 'null'
+          description: Company description.
+          example: A sample description.
+        foundedYear:
+          type:
+          - integer
+          - 'null'
+          description: Year the company was founded.
+          example: example_value
+        location:
+          type:
+          - string
+          - 'null'
+          description: Location description.
+          example: example_value
+        timeZone:
+          type:
+          - string
+          - 'null'
+          description: Time zone name.
+          example: example_value
+        utcOffset:
+          type:
+          - number
+          - 'null'
+          description: UTC offset in hours.
+          example: example_value
+        geo:
+          $ref: '#/components/schemas/CompanyGeoLocation'
+        logo:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: Company logo URL.
+          example: https://www.example.com
+        facebook:
+          type: object
+          properties:
+            handle:
+              type:
+              - string
+              - 'null'
+            likes:
+              type:
+              - integer
+              - 'null'
+          example: example_value
+        linkedin:
+          type: object
+          properties:
+            handle:
+              type:
+              - string
+              - 'null'
+          example: example_value
+        twitter:
+          type: object
+          properties:
+            handle:
+              type:
+              - string
+              - 'null'
+            id:
+              type:
+              - integer
+              - 'null'
+            bio:
+              type:
+              - string
+              - 'null'
+            followers:
+              type:
+              - integer
+              - 'null'
+            following:
+              type:
+              - integer
+              - 'null'
+            location:
+              type:
+              - string
+              - 'null'
+            site:
+              type:
+              - string
+              - 'null'
+            avatar:
+              type:
+              - string
+              - 'null'
+          example: example_value
+        crunchbase:
+          type: object
+          properties:
+            handle:
+              type:
+              - string
+              - 'null'
+          example: example_value
+        emailProvider:
+          type:
+          - string
+          - 'null'
+          description: Email service provider.
+          example: user@example.com
+        type:
+          type:
+          - string
+          - 'null'
+          description: Company type.
+          example: example_value
+        company_type:
+          type:
+          - string
+          - 'null'
+          description: Entity type classification.
+          example: example_value
+        ticker:
+          type:
+          - string
+          - 'null'
+          description: Stock ticker symbol.
+          example: example_value
+        identifiers:
+          type: object
+          properties:
+            usEIN:
+              type:
+              - string
+              - 'null'
+              description: US Employer Identification Number.
+          example: example_value
+        phone:
+          type:
+          - string
+          - 'null'
+          description: Primary phone number.
+          example: example_value
+        metrics:
+          type: object
+          properties:
+            alexaUsRank:
+              type:
+              - integer
+              - 'null'
+            alexaGlobalRank:
+              type:
+              - integer
+              - 'null'
+            trafficRank:
+              type:
+              - string
+              - 'null'
+            employees:
+              type:
+              - string
+              - 'null'
+              description: Estimated employee count or range.
+            marketCap:
+              type:
+              - number
+              - 'null'
+            raised:
+              type:
+              - number
+              - 'null'
+              description: Total funding raised.
+            annualRevenue:
+              type:
+              - number
+              - 'null'
+            estimatedAnnualRevenue:
+              type:
+              - number
+              - 'null'
+            fiscalYearEnd:
+              type:
+              - string
+              - 'null'
+          example: example_value
+        indexedAt:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Date when the record was last indexed.
+          example: '2026-01-15'
+        tech:
+          type: array
+          items:
+            type: string
+          description: Technologies used by the company.
+          example: []
+        techCategories:
+          type: array
+          items:
+            type: string
+          description: Categories of technologies used.
+          example: []
+        parent:
+          type: object
+          properties:
+            domain:
+              type:
+              - string
+              - 'null'
+          example: example_value
+        ultimateParent:
+          type: object
+          properties:
+            domain:
+              type:
+              - string
+              - 'null'
+
+          example: example_value
+    GeoLocation:
+      type: object
+      properties:
+        city:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        state:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        stateCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        country:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        countryCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        lat:
+          type:
+          - number
+          - 'null'
+          example: example_value
+        lng:
+          type:
+          - number
+          - 'null'
+
+          example: example_value
+    CompanyGeoLocation:
+      type: object
+      properties:
+        streetNumber:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        streetName:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        subPremise:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        streetAddress:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        city:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        postalCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        state:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        stateCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        country:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        countryCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        lat:
+          type:
+          - number
+          - 'null'
+          example: example_value
+        lng:
+          type:
+          - number
+          - 'null'
+
+          example: example_value
+    VerificationStatus:
+      type: object
+      properties:
+        date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Date the verification was performed.
+          example: '2026-01-15'
+        status:
+          type:
+          - string
+          - 'null'
+          enum:
+          - valid
+          - invalid
+          - accept_all
+          - webmail
+          - disposable
+          - unknown
+          - 
+          description: The verification status.
+
+          example: valid
+    Source:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain where the email was found.
+          example: example_value
+        uri:
+          type: string
+          format: uri
+          description: URL of the source page.
+          example: https://www.example.com
+        extracted_on:
+          type: string
+          format: date
+          description: Date the email was extracted from the source.
+          example: '2026-01-15'
+        last_seen_on:
+          type: string
+          format: date
+          description: Date the email was last seen at the source.
+          example: '2026-01-15'
+        still_on_page:
+          type: boolean
+          description: Whether the email is still present on the source page.
+
+          example: true
+    PaginationMeta:
+      type: object
+      properties:
+        results:
+          type: integer
+          description: Total number of results available.
+          example: 10
+        limit:
+          type: integer
+          description: Number of results per page.
+          example: 10
+        offset:
+          type: integer
+          description: Current offset position.
+
+          example: 10
+    Meta:
+      type: object
+      properties:
+        params:
+          type: object
+          description: The parameters used in the request.
+
+          example: example_value
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Error identifier code.
+              code:
+                type: integer
+                description: HTTP status code.
+              details:
+                type: string
+                description: Human-readable error message.
+
+          example: []
+  responses:
+    BadRequest:
+      description: Invalid parameters or missing required fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Valid request but resource creation or update failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Usage limit exceeded or rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnavailableForLegalReasons:
+      description: Cannot process this person's data due to legal restrictions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

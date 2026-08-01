@@ -1,0 +1,36 @@
+{
+  "provider": "hunter",
+  "sources": [
+    "hunter-account-api-openapi.yml",
+    "hunter-campaigns-api-openapi.yml",
+    "hunter-combined-enrichment-api-openapi.yml",
+    "hunter-company-enrichment-api-openapi.yml",
+    "hunter-discover-api-openapi.yml",
+    "hunter-domain-search-api-openapi.yml",
+    "hunter-email-count-api-openapi.yml",
+    "hunter-email-enrichment-api-openapi.yml",
+    "hunter-email-finder-api-openapi.yml",
+    "hunter-email-verifier-api-openapi.yml",
+    "hunter-leads-api-openapi.yml",
+    "hunter-leads-lists-api-openapi.yml"
+  ],
+  "outputs": [
+    "hunter-account-api-openapi.yml",
+    "hunter-campaigns-api-openapi.yml",
+    "hunter-combined-enrichment-api-openapi.yml",
+    "hunter-company-enrichment-api-openapi.yml",
+    "hunter-discover-api-openapi.yml",
+    "hunter-domain-search-api-openapi.yml",
+    "hunter-email-count-api-openapi.yml",
+    "hunter-email-enrichment-api-openapi.yml",
+    "hunter-email-finder-api-openapi.yml",
+    "hunter-email-verifier-api-openapi.yml",
+    "hunter-leads-api-openapi.yml",
+    "hunter-leads-lists-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
