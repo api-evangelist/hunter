@@ -557,7 +557,7 @@ common:
   - type: Documentation
     url: https://hunter.io/api-documentation/v2
   - type: OpenAPI
-    url: openapi/hunter-api-openapi.yml
+    url: openapi/_original/hunter-api-openapi.yml
   - type: JSONSchema
     url: json-schema/hunter-lead-schema.json
   - type: JSONLD
