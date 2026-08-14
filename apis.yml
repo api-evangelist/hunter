@@ -1,8 +1,12 @@
 aid: hunter
 name: Hunter
 description: >-
-  Hunter is an email finding and verification service that helps find professional email addresses associated with a
-  domain and verify email deliverability.
+  Hunter is an email finding, verification and B2B prospecting platform. Its v2 API finds the professional email
+  addresses associated with a company domain, predicts an address for a named person, verifies deliverability,
+  enriches people and companies, discovers target accounts by natural-language query or structured filter, and
+  manages the leads, lead lists and outreach sequences built from those results. Hunter also operates a first-party
+  remote MCP server at https://mcp.hunter.io/mcp exposing roughly 100 tools, and publishes its own packaged Agent
+  Skills, making it one of the few providers whose agent surface is wider than its documented REST contract.
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -19,7 +23,7 @@ accessModel:
 image: https://hunter.io/images/hunter-logo.png
 url: https://raw.githubusercontent.com/api-evangelist/hunter/refs/heads/main/apis.yml
 created: '2024-01-01'
-modified: '2026-05-19'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 type: Index
 access: 3rd-Party
@@ -34,13 +38,15 @@ apis:
 - aid: hunter:hunter-account-api
   name: Hunter Account API
   description: Retrieve account information and usage statistics.
-  humanURL: https://hunter.io/api/domain-search
+  humanURL: https://hunter.io/api-documentation/v2#account
   baseURL: https://api.hunter.io/v2
   tags:
   - Account
   properties:
   - type: OpenAPI
     url: openapi/hunter-account-api-openapi.yml
+  - type: Overlay
+    url: overlays/hunter-account-api-overlay.yaml
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#domain-search
   - type: Documentation
@@ -74,13 +80,15 @@ apis:
 - aid: hunter:hunter-campaigns-api
   name: Hunter Campaigns API
   description: Manage email sequences and recipients.
-  humanURL: https://hunter.io/api/domain-search
+  humanURL: https://hunter.io/api-documentation/v2#campaigns
   baseURL: https://api.hunter.io/v2
   tags:
   - Campaigns
   properties:
   - type: OpenAPI
     url: openapi/hunter-campaigns-api-openapi.yml
+  - type: Overlay
+    url: overlays/hunter-campaigns-api-overlay.yaml
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#domain-search
   - type: Documentation
@@ -114,13 +122,15 @@ apis:
 - aid: hunter:hunter-combined-enrichment-api
   name: Hunter Combined Enrichment API
   description: Merge person and company enrichment for a single email address.
-  humanURL: https://hunter.io/api/domain-search
+  humanURL: https://hunter.io/api-documentation/v2#combined-enrichment
   baseURL: https://api.hunter.io/v2
   tags:
   - Combined Enrichment
   properties:
   - type: OpenAPI
     url: openapi/hunter-combined-enrichment-api-openapi.yml
+  - type: Overlay
+    url: overlays/hunter-combined-enrichment-api-overlay.yaml
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#domain-search
   - type: Documentation
@@ -154,13 +164,15 @@ apis:
 - aid: hunter:hunter-company-enrichment-api
   name: Hunter Company Enrichment API
   description: Enrich company information linked to a domain name.
-  humanURL: https://hunter.io/api/domain-search
+  humanURL: https://hunter.io/api-documentation/v2#company-enrichment
   baseURL: https://api.hunter.io/v2
   tags:
   - Company Enrichment
   properties:
   - type: OpenAPI
     url: openapi/hunter-company-enrichment-api-openapi.yml
+  - type: Overlay
+    url: overlays/hunter-company-enrichment-api-overlay.yaml
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#domain-search
   - type: Documentation
@@ -194,13 +206,15 @@ apis:
 - aid: hunter:hunter-discover-api
   name: Hunter Discover API
   description: Find companies matching criteria using natural language or filters.
-  humanURL: https://hunter.io/api/domain-search
+  humanURL: https://hunter.io/api-documentation/v2#discover
   baseURL: https://api.hunter.io/v2
   tags:
   - Discover
   properties:
   - type: OpenAPI
     url: openapi/hunter-discover-api-openapi.yml
+  - type: Overlay
+    url: overlays/hunter-discover-api-overlay.yaml
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#domain-search
   - type: Documentation
@@ -234,13 +248,15 @@ apis:
 - aid: hunter:hunter-domain-search-api
   name: Hunter Domain Search API
   description: Search for email addresses associated with a domain.
-  humanURL: https://hunter.io/api/domain-search
+  humanURL: https://hunter.io/api-documentation/v2#domain-search
   baseURL: https://api.hunter.io/v2
   tags:
   - Domain Search
   properties:
   - type: OpenAPI
     url: openapi/hunter-domain-search-api-openapi.yml
+  - type: Overlay
+    url: overlays/hunter-domain-search-api-overlay.yaml
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#domain-search
   - type: Documentation
@@ -274,13 +290,15 @@ apis:
 - aid: hunter:hunter-email-count-api
   name: Hunter Email Count API
   description: Count email addresses found for a domain.
-  humanURL: https://hunter.io/api/domain-search
+  humanURL: https://hunter.io/api-documentation/v2#email-count
   baseURL: https://api.hunter.io/v2
   tags:
   - Email Count
   properties:
   - type: OpenAPI
     url: openapi/hunter-email-count-api-openapi.yml
+  - type: Overlay
+    url: overlays/hunter-email-count-api-overlay.yaml
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#domain-search
   - type: Documentation
@@ -314,13 +332,15 @@ apis:
 - aid: hunter:hunter-email-enrichment-api
   name: Hunter Email Enrichment API
   description: Enrich personal information linked to an email or LinkedIn profile.
-  humanURL: https://hunter.io/api/domain-search
+  humanURL: https://hunter.io/api-documentation/v2#email-enrichment
   baseURL: https://api.hunter.io/v2
   tags:
   - Email Enrichment
   properties:
   - type: OpenAPI
     url: openapi/hunter-email-enrichment-api-openapi.yml
+  - type: Overlay
+    url: overlays/hunter-email-enrichment-api-overlay.yaml
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#domain-search
   - type: Documentation
@@ -354,13 +374,15 @@ apis:
 - aid: hunter:hunter-email-finder-api
   name: Hunter Email Finder API
   description: Find the most likely email address for a person at a company.
-  humanURL: https://hunter.io/api/domain-search
+  humanURL: https://hunter.io/api-documentation/v2#email-finder
   baseURL: https://api.hunter.io/v2
   tags:
   - Email Finder
   properties:
   - type: OpenAPI
     url: openapi/hunter-email-finder-api-openapi.yml
+  - type: Overlay
+    url: overlays/hunter-email-finder-api-overlay.yaml
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#domain-search
   - type: Documentation
@@ -394,13 +416,15 @@ apis:
 - aid: hunter:hunter-email-verifier-api
   name: Hunter Email Verifier API
   description: Verify the deliverability of an email address.
-  humanURL: https://hunter.io/api/domain-search
+  humanURL: https://hunter.io/api-documentation/v2#email-verifier
   baseURL: https://api.hunter.io/v2
   tags:
   - Email Verifier
   properties:
   - type: OpenAPI
     url: openapi/hunter-email-verifier-api-openapi.yml
+  - type: Overlay
+    url: overlays/hunter-email-verifier-api-overlay.yaml
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#domain-search
   - type: Documentation
@@ -434,13 +458,15 @@ apis:
 - aid: hunter:hunter-leads-api
   name: Hunter Leads API
   description: Manage leads stored in Hunter.
-  humanURL: https://hunter.io/api/domain-search
+  humanURL: https://hunter.io/api-documentation/v2#leads
   baseURL: https://api.hunter.io/v2
   tags:
   - Leads
   properties:
   - type: OpenAPI
     url: openapi/hunter-leads-api-openapi.yml
+  - type: Overlay
+    url: overlays/hunter-leads-api-overlay.yaml
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#domain-search
   - type: Documentation
@@ -474,13 +500,15 @@ apis:
 - aid: hunter:hunter-leads-lists-api
   name: Hunter Leads Lists API
   description: Manage leads list collections in Hunter.
-  humanURL: https://hunter.io/api/domain-search
+  humanURL: https://hunter.io/api-documentation/v2#leads_lists
   baseURL: https://api.hunter.io/v2
   tags:
   - Leads Lists
   properties:
   - type: OpenAPI
     url: openapi/hunter-leads-lists-api-openapi.yml
+  - type: Overlay
+    url: overlays/hunter-leads-lists-api-overlay.yaml
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#domain-search
   - type: Documentation
@@ -558,6 +586,8 @@ common:
     url: https://hunter.io/api-documentation/v2
   - type: OpenAPI
     url: openapi/_original/hunter-api-openapi.yml
+  - type: Overlay
+    url: overlays/hunter-full-overlay.yaml
   - type: JSONSchema
     url: json-schema/hunter-lead-schema.json
   - type: JSONLD
@@ -632,9 +662,67 @@ common:
         description: Export domain search results and verified emails directly to Google Sheets for analysis.
       - name: Zoho CRM
         description: Integrate lead data with Zoho CRM for end-to-end sales pipeline management.
-  - name: MCP Server
-    url: https://github.com/hunter-io/hunter-mcp
-    type: MCPServer
+  - type: MCPServer
+    name: Hunter Remote MCP Server
+    url: mcp/hunter-mcp.yml
+  - type: MCPServer
+    name: Hunter Remote MCP Endpoint
+    url: https://mcp.hunter.io/mcp
+  - type: ToolCrosswalk
+    url: mcp/hunter-tool-crosswalk.yml
+  - type: AgentSkill
+    name: Hunter Agent Skills (published by Hunter)
+    url: skills/_index.yml
+  - type: WellKnown
+    url: well-known/hunter-well-known.yml
+  - type: LLMsTxt
+    url: llms/hunter-llms.txt
+  - type: Packages
+    url: packages/hunter-packages.yml
+  - type: Conventions
+    url: conventions/hunter-conventions.yml
+  - type: Idempotency
+    url: conventions/hunter-conventions.yml
+  - type: ErrorCatalog
+    url: errors/hunter-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/hunter-lifecycle.yml
+  - type: OAuthScopes
+    url: scopes/hunter-scopes.yml
+  - type: Sandbox
+    url: sandbox/hunter-sandbox.yml
+  - type: Conformance
+    url: conformance/hunter-conformance.yml
+  - type: Compliance
+    url: https://help.hunter.io/en/articles/1890029-gdpr-compliance
+  - type: DataModel
+    url: data-model/hunter-data-model.yml
+  - type: Webhooks
+    url: asyncapi/hunter-webhooks.yml
+  - type: ChangeLog
+    url: changelog/hunter-changelog.yml
+  - type: VulnerabilityDisclosure
+    url: security/hunter-vulnerability-disclosure.yml
+  - type: Security
+    url: https://hunter.io/security-policy
+  - type: Plans
+    url: plans/hunter-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/hunter-rate-limits.yml
+  - type: FinOps
+    url: finops/hunter-finops.yml
+  - type: Vocabulary
+    url: vocabulary/hunter-vocabulary.yml
+  - type: SpectralRules
+    url: rules/hunter-spectral-rules.yml
+  - type: Postman
+    url: postman/hunter-api.postman_collection.json
+  - type: APIReference
+    url: https://hunter.io/api-documentation/v2
+  - type: DeveloperPortal
+    url: https://hunter.io/api
+  - type: DataProcessingAgreement
+    url: https://hunter.io/data-processing-agreement
 integrations:
   - name: HubSpot
   - name: Salesforce
@@ -649,3 +737,9 @@ maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
     url: https://apievangelist.com
+
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 46
+  pass: local-v1
