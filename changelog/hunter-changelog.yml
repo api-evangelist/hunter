@@ -1,0 +1,59 @@
+generated: '2026-08-13'
+method: searched
+source: https://hunter.io/changelog
+scheme: dated-product-announcements
+scheme_note: >-
+  Hunter publishes a dated product changelog, not a versioned API changelog. Entries are tagged by
+  product area and change kind (New feature / Improvement / Update / Announcement). There are no
+  semantic version numbers and no separate API release notes, so API-affecting changes have to be
+  read out of product entries - the June 2026 metrics change is a worked example: it silently
+  altered the numbers returned by the API and by the MCP tools.
+current_version: v2
+window: '2026-02-17 to 2026-06-16 (most recent 8 entries at time of capture)'
+entries:
+- date: '2026-06-16'
+  title: Engagement rates are now recipient-based
+  area: Sequences
+  kind: [Improvement, Update]
+  breaking: true
+  api_affecting: true
+  highlights:
+  - Open, click, reply and unsubscribe rates now count distinct recipients rather than individual emails.
+  - Applies to the Sequences list, sequence stats, CSV export, reporting, the API and the MCP tools.
+  - 'Stated consequence for API consumers: per-step counts no longer sum to the recipient-based sequence totals.'
+  - Bounce rate and successful rate are unchanged (still per-delivery SMTP events).
+- date: '2026-04-09'
+  title: Buy domains, create email accounts, and protect your sender reputation
+  kind: [New feature]
+  breaking: false
+- date: '2026-03-31'
+  title: 'Sequences: A/B testing is here'
+  area: Sequences
+  kind: [New feature, Improvement]
+  breaking: false
+- date: '2026-03-19'
+  title: 'Discover: smarter AI Assistant & saved companies filter'
+  area: Discover
+  kind: [AI, Improvement]
+  breaking: false
+- date: '2026-03-17'
+  title: 'Progressive Sending: gradually scale your outbound volume'
+  kind: [Announcement, New feature]
+  breaking: false
+- date: '2026-03-12'
+  title: Email Accounts Center & Sender Health
+  kind: [Announcement, New feature, Improvement]
+  breaking: false
+- date: '2026-02-24'
+  title: Reveal emails in Discover based on remaining credits
+  area: Discover
+  kind: [Improvement]
+  breaking: false
+- date: '2026-02-17'
+  title: Company Logo API (free)
+  kind: [New feature]
+  breaking: false
+  api_affecting: true
+  highlights:
+  - 'Free unauthenticated logo endpoint: GET https://logos.hunter.io/{domain} returning PNG, WEBP or AVIF.'
+  - Not present in the captured v2 OpenAPI and not exposed as an MCP tool.

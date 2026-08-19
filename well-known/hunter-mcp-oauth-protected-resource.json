@@ -1,0 +1,13 @@
+{
+  "resource": "https://mcp.hunter.io",
+  "authorization_servers": [
+    "https://hunter.io"
+  ],
+  "scopes_supported": [
+    "read",
+    "write"
+  ],
+  "bearer_methods_supported": [
+    "header"
+  ]
+}

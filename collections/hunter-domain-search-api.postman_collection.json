@@ -1,0 +1,421 @@
+{
+  "item": [
+    {
+      "id": "1f674a40-a1f1-450c-851d-91b781aa6207",
+      "name": "Domain Search",
+      "description": {
+        "content": "Search for email addresses associated with a domain.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4e3d9197-7f18-4869-ad26-142c7bf1d2cc",
+          "name": "Hunter Domain Search",
+          "request": {
+            "name": "Hunter Domain Search",
+            "description": {
+              "content": "Returns all the email addresses found using a given domain name, with sources. You must provide either a domain or a company name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "domain-search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "domain",
+                  "value": "<string>",
+                  "description": "Domain name from which you want to find the email addresses. Required if company is not provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "company",
+                  "value": "<string>",
+                  "description": "Company name from which you want to find the email addresses. Required if domain is not provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of email addresses to return. Default is 10."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Number of email addresses to skip for pagination. Default is 0."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Filter by email address type."
+                },
+                {
+                  "disabled": false,
+                  "key": "seniority",
+                  "value": "<string>",
+                  "description": "Filter by seniority level."
+                },
+                {
+                  "disabled": false,
+                  "key": "department",
+                  "value": "<string>",
+                  "description": "Filter by department."
+                },
+                {
+                  "disabled": false,
+                  "key": "verification_status",
+                  "value": "<string>",
+                  "description": "Filter by verification status."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ca62e872-c24c-42ad-b045-40bf3e489f9a",
+              "name": "Successful domain search response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "domain-search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "stripe.com"
+                    },
+                    {
+                      "key": "company",
+                      "value": "Stripe"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seniority",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "department",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verification_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"domain\": \"example_value\",\n    \"disposable\": true,\n    \"webmail\": true,\n    \"accept_all\": true,\n    \"pattern\": \"example_value\",\n    \"organization\": \"example_value\",\n    \"emails\": [\n      {\n        \"value\": \"cwLH8cNP@alsUSfXehUS.qxoy\",\n        \"type\": \"personal\",\n        \"confidence\": 10,\n        \"first_name\": \"example_value\",\n        \"last_name\": \"example_value\",\n        \"position\": \"example_value\",\n        \"seniority\": \"example_value\",\n        \"department\": \"example_value\",\n        \"linkedin\": \"example_value\",\n        \"twitter\": \"example_value\",\n        \"phone_number\": \"example_value\",\n        \"verification\": {\n          \"date\": \"2026-01-15\",\n          \"status\": \"valid\"\n        }\n      },\n      {\n        \"value\": \"1kikJqq@dOCPtyNmXnwFQWLpiikKKmVJelB.hhin\",\n        \"type\": \"personal\",\n        \"confidence\": 10,\n        \"first_name\": \"example_value\",\n        \"last_name\": \"example_value\",\n        \"position\": \"example_value\",\n        \"seniority\": \"example_value\",\n        \"department\": \"example_value\",\n        \"linkedin\": \"example_value\",\n        \"twitter\": \"example_value\",\n        \"phone_number\": \"example_value\",\n        \"verification\": {\n          \"date\": \"2026-01-15\",\n          \"status\": \"valid\"\n        }\n      }\n    ]\n  },\n  \"meta\": {\n    \"results\": 10,\n    \"limit\": 10,\n    \"offset\": 10\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6639e72-ceb7-4eac-83ce-fdca7f5af23f",
+              "name": "Invalid parameters or missing required fields.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "domain-search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "stripe.com"
+                    },
+                    {
+                      "key": "company",
+                      "value": "Stripe"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seniority",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "department",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verification_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcfc2518-ebfc-4229-ad31-42307761c5c5",
+              "name": "Invalid or missing API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "domain-search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "stripe.com"
+                    },
+                    {
+                      "key": "company",
+                      "value": "Stripe"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seniority",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "department",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verification_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22954745-f1d5-4a58-8178-1d11be8f32f5",
+              "name": "Usage limit exceeded or rate limited.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "domain-search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "stripe.com"
+                    },
+                    {
+                      "key": "company",
+                      "value": "Stripe"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seniority",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "department",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verification_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.hunter.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api_key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4b525b0b-2fc5-4ea0-bc27-73781b726384",
+    "name": "Hunter Account Domain Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability. The API provides domain search, email finder, email verifier, email count, account information, leads management, leads lists, campaigns, discover, enrichment, and logo retrieval capabilities.\n\nContact Support:\n Name: Hunter Support\n Email: support@hunter.io",
+      "type": "text/plain"
+    }
+  }
+}

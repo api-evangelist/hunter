@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hunter Account Email Finder API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Email Finder",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Email Finder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/email-finder",
+            "params": [
+              {
+                "name": "domain",
+                "value": "stripe.com",
+                "type": "query",
+                "description": "Domain name of the company. Required if company is not provided."
+              },
+              {
+                "name": "company",
+                "value": "",
+                "type": "query",
+                "description": "Company name. Required if domain is not provided."
+              },
+              {
+                "name": "first_name",
+                "value": "John",
+                "type": "query",
+                "description": "First name of the person. Required with last_name if full_name not provided."
+              },
+              {
+                "name": "last_name",
+                "value": "Collison",
+                "type": "query",
+                "description": "Last name of the person. Required with first_name if full_name not provided."
+              },
+              {
+                "name": "full_name",
+                "value": "",
+                "type": "query",
+                "description": "Full name of the person. Required if first_name and last_name not provided."
+              },
+              {
+                "name": "linkedin_handle",
+                "value": "",
+                "type": "query",
+                "description": "LinkedIn profile handle for the person."
+              },
+              {
+                "name": "max_duration",
+                "value": "",
+                "type": "query",
+                "description": "Maximum duration for the request in seconds. Between 3 and 20, default is 10."
+              }
+            ]
+          },
+          "docs": "Finds the most likely email address from a domain name, a first name and a last name. You must provide a domain or company, and a name (first/last or full) or LinkedIn handle."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

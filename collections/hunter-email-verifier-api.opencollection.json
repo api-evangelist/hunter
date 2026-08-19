@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hunter Account Email Verifier API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Email Verifier",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Email Verifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/email-verifier",
+            "params": [
+              {
+                "name": "email",
+                "value": "john@stripe.com",
+                "type": "query",
+                "description": "The email address to verify."
+              }
+            ]
+          },
+          "docs": "Verifies the deliverability of a given email address."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

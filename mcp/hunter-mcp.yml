@@ -1,0 +1,533 @@
+generated: '2026-08-13'
+method: searched
+source: https://hunter.io/api-documentation/v2#mcp
+status: published
+description: >-
+  Hunter operates a first-party REMOTE MCP server at https://mcp.hunter.io/mcp using the
+  Streamable HTTP transport. It is documented in Hunter's own API reference ("Model Context
+  Protocol (MCP)" section) and wired as the single mcpServer in Hunter's Claude plugin
+  (hunter-io/claude-plugin/.mcp.json). Authentication is a Hunter API key sent as
+  "Authorization: Bearer <key>" or "X-API-KEY"; the host additionally serves RFC 9728
+  OAuth Protected Resource Metadata delegating to the hunter.io authorization server.
+deployment:
+  mode: remote
+  endpoint: https://mcp.hunter.io/mcp
+  transport: streamable-http
+  auth: api-key
+  auth_detail: >-
+    Docs require a Hunter API key in the Authorization (Bearer) or X-API-KEY header. The host
+    also publishes /.well-known/oauth-protected-resource pointing at https://hunter.io as the
+    authorization server (scopes read, write; PKCE S256; dynamic client registration), so an
+    OAuth path exists alongside the documented API-key path.
+  verified: probed
+  install: null
+  package: null
+server:
+  name: hunter
+  transport: http
+  url: https://mcp.hunter.io/mcp
+  vendor: Hunter.io
+  documented_at: https://hunter.io/api-documentation/v2#mcp
+probe:
+  url: https://mcp.hunter.io/mcp
+  method: POST
+  body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  http_status: 401
+  response: 'Unauthorized: a Hunter API key is required'
+  fetched: '2026-08-13'
+  note: >-
+    Live tools/list is auth-gated, so per-tool inputSchema could not be introspected anonymously.
+    The tool NAMES below are not guessed - they are read verbatim from Hunter's own public
+    first-party source, the TOOL_NAMES registry in hunter-io/chatgpt-mcp/src/helpers.ts, and
+    corroborated by the tool names referenced in Hunter's published Claude skills. Input schemas
+    require an authenticated tools/list call.
+tool_source:
+  repository: https://github.com/hunter-io/chatgpt-mcp
+  file: src/helpers.ts
+  symbol: TOOL_NAMES
+  registered_tools: 100
+  corroborated_by: https://github.com/hunter-io/claude-plugin
+  caveat: >-
+    hunter-io/chatgpt-mcp is Hunter's ChatGPT-facing MCP worker; the tool namespace it registers
+    is the same namespace Hunter's Claude plugin skills invoke against mcp.hunter.io. Treat the
+    ChatGPT worker's tool set as a high-confidence, first-party mirror rather than a byte-exact
+    manifest of the remote endpoint.
+related_repositories:
+- url: https://github.com/hunter-io/chatgpt-mcp
+  language: TypeScript
+  status: active
+  note: Cloudflare Worker (hunter-chatgpt-mcp) implementing the ChatGPT-facing MCP surface.
+- url: https://github.com/hunter-io/claude-plugin
+  status: active
+  note: Hunter's Claude plugin - 13 published Agent Skills plus .mcp.json pointing at mcp.hunter.io.
+- url: https://github.com/hunter-io/hunter-mcp
+  language: Python
+  status: archived
+  archived_note: >-
+    Superseded local stdio server, archived 2025-07-07. apis.yml previously advertised this
+    archived repository as the MCP surface; the live surface is the remote endpoint above.
+tool_count: 100
+tools:
+# --- search ---
+- name: Find-Companies
+  category: search
+  description: "Use this when the user wants to search for companies that match natural-language criteria such as location, industry, size, type, or technologies. Returns up to 100 matching companies per page; use"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/index.ts
+- name: Domain-Search
+  category: search
+  description: "Use this when the user wants the contacts published for a domain \u2014 emails with names, positions, and confidence scores. Returns only found (published) email addresses that Hunter has seen on the publi"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/search.ts
+- name: Email-Finder
+  category: search
+  description: "Use this when the user wants a specific person's email address at a company. Provide the person's full name and the company's domain. Returns only found addresses backed by public sources; when Hunter"
+  api_path: /email-finder/found
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/search.ts
+- name: Email-Verifier
+  category: search
+  description: "Use this when the user wants to check whether an email address is deliverable. Returns a status (valid, invalid, accept_all, etc.) and a confidence score. Uses Hunter credits, charged only for valid, "
+  api_path: /email-verifier
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/search.ts
+- name: Email-Count
+  category: search
+  description: "Use this when the user wants the count of email addresses Hunter has indexed for a domain, optionally split by personal vs generic. Free to call. Do not use this as a substitute for Domain-Search; thi"
+  api_path: /email-count
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/search.ts
+# --- enrichment ---
+- name: Company-Enrichment
+  category: enrichment
+  description: "Use this when the user wants to look up a company by domain and see its industry, size, location, technologies, funding rounds, and social profiles. Does not return personal data (PII). Uses Hunter cr"
+  api_path: /companies/find
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/index.ts
+- name: Person-Enrichment
+  category: enrichment
+  description: "Use this when the user wants to look up a professional contact by email address and see their name, job title, employer, location, phone number, and social profiles. Uses Hunter credits, charged only "
+  api_path: /people/find
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/enrichment.ts
+- name: Combined-Enrichment
+  category: enrichment
+  description: "Use this when the user provides an email address or LinkedIn handle and wants both the person's profile and their company's profile in a single response. Uses Hunter credits, charged only when data is"
+  api_path: /combined/find
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/enrichment.ts
+# --- discover people + saved searches ---
+- name: Find-People
+  category: discover people + saved searches
+  description: "Use this when the user wants to extract people from companies \u2014 the natural next step right after a Find-Companies result ('now get me the people at these companies'). For each matching company it rep"
+  api_path: /discover/people
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/discover.ts
+- name: List-Saved-Searches
+  category: discover people + saved searches
+  description: "Use this when the user wants to see the Discover searches they saved earlier \u2014 a good opening move at the start of a prospecting conversation ('want to rerun one of your saved searches?'). Each saved "
+  api_path: /discover/views
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/discover.ts
+- name: Get-Saved-Search
+  category: discover people + saved searches
+  description: "Use this when the user wants the details of one saved Discover search, identified by ID \u2014 typically to rerun it. Read the stored"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/discover.ts
+- name: Create-Saved-Search
+  category: discover people + saved searches
+  description: "Use this when the user wants to save the current Discover filter set under a name so the search can be rerun later. Stores the"
+  api_path: /discover/views
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/discover.ts
+- name: Delete-Saved-Search
+  category: discover people + saved searches
+  description: "Use this when the user wants to permanently delete a saved Discover search, identified by ID. Deletion cannot be undone through the API. Because saved searches have no update endpoint, delete-and-recr"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/discover.ts
+# --- account ---
+- name: Get-Account-Details
+  category: account
+  description: "Use this when the user asks about their Hunter plan or remaining credits. Returns plan name and per-product credit balances (search, verification, enrichment). Does not return personal identifiers suc"
+  api_path: /account
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/account.ts
+# --- usage + API keys ---
+- name: Get-Usage
+  category: usage + API keys
+  description: "Use this when the user wants to know how many Hunter credits or requests they have left in the current billing period \u2014 and proactively BEFORE any large credit-consuming action (a Domain-Search loop o"
+  api_path: /usage
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/account-management.ts
+- name: List-API-Keys
+  category: usage + API keys
+  description: "Use this when the user wants to list their Hunter API keys. Keys are scoped to the requesting user, not the team \u2014 another team member's keys are never visible here. Key values are masked (only the la"
+  api_path: /api-keys
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/account-management.ts
+- name: Create-API-Key
+  category: usage + API keys
+  description: "Use this when the user wants to create a new Hunter API key, optionally with a name (names must be unique among the user's keys; a user can have at most 100 keys). SECURITY: this tool's response is th"
+  api_path: /api-keys
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/account-management.ts
+- name: Delete-API-Key
+  category: usage + API keys
+  description: "Use this when the user wants to permanently delete one of their Hunter API keys. Deletion is immediate and irreversible: anything still authenticating with the key \u2014 scripts, integrations, connected t"
+  api_path: /api-keys
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/account-management.ts
+# --- leads ---
+- name: Save-Company
+  category: leads
+  description: "Use this when the user wants to add a company as a lead in their Hunter account, identified by domain. Free to call."
+  api_path: /leads/companies
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/index.ts
+- name: List-Leads
+  category: leads
+  description: "Use this when the user wants to list leads from their Hunter account, with optional filters on email, name, company, or list. Returns up to 100 leads per page; use"
+  api_path: /leads
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/leads.ts
+- name: Get-Lead
+  category: leads
+  description: "Use this when the user wants to retrieve a single lead from their Hunter account by ID. Free to call."
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/leads.ts
+- name: Create-Lead
+  category: leads
+  description: "Use this when the user wants to create a new lead in their Hunter account. Email is required; other fields are optional. Pass"
+  api_path: /leads
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/leads.ts
+- name: Update-Lead
+  category: leads
+  description: "Use this when the user wants to update fields on an existing lead identified by ID. Free to call. Updating a lead overwrites the supplied fields in place."
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/leads.ts
+- name: Delete-Lead
+  category: leads
+  description: "Use this when the user wants to remove a lead from their Hunter account, identified by ID. Free to call. Deleting a lead cannot be undone from the API."
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/leads.ts
+- name: Create-Or-Update-Lead
+  category: leads
+  description: "Use this when the user explicitly wants to create a lead or overwrite an existing lead's fields by email. If a lead with the email exists, its fields are overwritten with the supplied values; otherwis"
+  api_path: /leads
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/leads.ts
+- name: Create-Lead-If-Missing
+  category: leads
+  description: "Use this when the user wants to save a verified contact as a new lead without modifying any existing lead. If a lead with the email already exists, returns the existing record unchanged with "
+  api_path: /leads/exist
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/leads.ts
+- name: Lead-Exists
+  category: leads
+  description: "Use this when the user wants to check whether a lead with a given email already exists in their Hunter account. Returns the lead ID and list info if present. Free to call."
+  api_path: /leads/exist
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/leads.ts
+# --- lead tags ---
+- name: List-Lead-Tags
+  category: lead tags
+  description: "Use this when the user wants to see the lead tags in their Hunter account \u2014 and ALWAYS before tagging leads or creating a new tag, so you can suggest reusing an existing tag instead of creating a near"
+  api_path: /tags
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/lead-organization.ts
+- name: Create-Lead-Tag
+  category: lead tags
+  description: "Use this when the user wants to create a new lead tag. Before creating one, call ${TOOL_NAMES.listLeadTags} and prefer reusing an existing tag with the same meaning (e.g."
+  api_path: /tags
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/lead-organization.ts
+- name: Update-Lead-Tag
+  category: lead tags
+  description: "Use this when the user wants to rename a lead tag or change its color, identified by ID. Renaming overwrites the previous name everywhere the tag is applied, and the old name cannot be recovered from "
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/lead-organization.ts
+- name: Delete-Lead-Tag
+  category: lead tags
+  description: "Use this when the user wants to delete a lead tag by ID. Deleting a tag removes it from EVERY lead it is applied to (the tag's assignments are destroyed with it); the leads themselves are untouched. T"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/lead-organization.ts
+- name: Add-Tag-To-Lead
+  category: lead tags
+  description: "Use this when the user wants to tag a lead, identified by "
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/lead-organization.ts
+- name: Remove-Tag-From-Lead
+  category: lead tags
+  description: "Use this when the user wants to remove a tag from a single lead, identified by "
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/lead-organization.ts
+# --- leads lists ---
+- name: List-Leads-Lists
+  category: leads lists
+  description: "Use this when the user wants to list the leads lists in their Hunter account, with pagination. Free to call."
+  api_path: /leads-lists
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/leads-lists.ts
+- name: Get-Leads-List
+  category: leads lists
+  description: "Use this when the user wants to retrieve a single leads list (name, lead count, timestamps) by ID. Free to call."
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/leads-lists.ts
+- name: Create-Leads-List
+  category: leads lists
+  description: "Use this when the user wants to create a new, empty leads list with the given name. Free to call."
+  api_path: /leads-lists
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/leads-lists.ts
+- name: Update-Leads-List
+  category: leads lists
+  description: "Use this when the user wants to rename an existing leads list, identified by ID. Overwrites the existing list name; the previous name cannot be recovered from the API. If the user declines the rename,"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/leads-lists.ts
+- name: Delete-Leads-List
+  category: leads lists
+  description: "Use this when the user wants to permanently delete a leads list, identified by ID. Lists with more than 10 leads are scheduled for asynchronous deletion (HTTP 202). Free to call. Deleting a list canno"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/leads-lists.ts
+- name: Merge-Leads-Lists
+  category: leads lists
+  description: "Use this when the user wants to move every lead from a source list into a destination list. The source list is permanently deleted after the move. Leads on the destination list are preserved. Free to "
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/leads-lists.ts
+# --- leads list folders + favorites ---
+- name: List-Leads-List-Folders
+  category: leads list folders + favorites
+  description: "Use this when the user wants to see the leads-list folders in their Hunter account \u2014 and when the account has many leads lists, since grouping lists by folder is how users keep a large workspace navig"
+  api_path: /leads-lists/folders
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/lead-organization.ts
+- name: Create-Leads-List-Folder
+  category: leads list folders + favorites
+  description: "Use this when the user wants to create a new leads-list folder to group leads lists \u2014 worth suggesting once the account has many lists. Provide a "
+  api_path: /leads-lists/folders
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/lead-organization.ts
+- name: Update-Leads-List-Folder
+  category: leads list folders + favorites
+  description: "Use this when the user wants to update a leads-list folder, identified by ID. You can rename it ("
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/lead-organization.ts
+- name: Delete-Leads-List-Folder
+  category: leads list folders + favorites
+  description: "Use this when the user wants to delete a leads-list folder by ID. Deleting a folder does not delete the leads lists filed in it \u2014 each affected list keeps existing and simply becomes unfiled (its fold"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/lead-organization.ts
+- name: Favorite-Leads-List
+  category: leads list folders + favorites
+  description: "Use this when the user wants to mark a leads list as a favorite, identified by ID. Favorites are a personal flag for the current user, and a favorited list is a strong signal of their preferred workin"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/lead-organization.ts
+- name: Unfavorite-Leads-List
+  category: leads list folders + favorites
+  description: "Use this when the user wants to remove the favorite flag from a leads list, identified by ID. This only clears the current user's personal favorite marker; the list and its contents are untouched, and"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/lead-organization.ts
+# --- bulk operations ---
+- name: Bulk-Move-Leads
+  category: bulk operations
+  description: "Use this when the user wants to move many leads at once from one static leads list to another. Both lists must be static (not dynamic) and different;"
+  api_path: /leads/bulk/move
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/bulk-operations.ts
+- name: Bulk-Delete-Leads
+  category: bulk operations
+  description: "Use this when the user wants to delete many leads at once, selected by explicit"
+  api_path: /leads/bulk/delete
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/bulk-operations.ts
+- name: Bulk-Move-Companies
+  category: bulk operations
+  description: "Use this when the user wants to move many companies at once from one static company list to another. Both lists must be static (not dynamic) and different;"
+  api_path: /companies/bulk/move
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/bulk-operations.ts
+- name: Bulk-Copy-Companies
+  category: bulk operations
+  description: "Use this when the user wants to copy many companies at once into a static company list, leaving the source selection untouched. Select the companies by explicit"
+  api_path: /companies/bulk/copy
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/bulk-operations.ts
+- name: Bulk-Delete-Companies
+  category: bulk operations
+  description: "Use this when the user wants to delete many companies at once, selected by explicit"
+  api_path: /companies/bulk/delete
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/bulk-operations.ts
+# --- company lists ---
+- name: List-Company-Lists
+  category: company lists
+  description: "Use this when the user wants to see the company lists in their Hunter account. Lists are ordered with the most recently created first. Each list reports its"
+  api_path: /company-lists
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/company-lists.ts
+- name: Get-Company-List
+  category: company lists
+  description: "Use this when the user wants the details of a single company list, identified by ID: its"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/company-lists.ts
+- name: Create-Company-List
+  category: company lists
+  description: "Use this when the user wants to create a new company list. Provide a"
+  api_path: /company-lists
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/company-lists.ts
+- name: Update-Company-List
+  category: company lists
+  description: "Use this when the user wants to update a company list, identified by ID. You can rename it ("
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/company-lists.ts
+- name: Delete-Company-List
+  category: company lists
+  description: "Use this when the user wants to delete a company list by ID. Empty lists and dynamic lists are deleted immediately (status 204). A static list that still contains companies is deleted asynchronously: "
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/company-lists.ts
+- name: Favorite-Company-List
+  category: company lists
+  description: "Use this when the user wants to mark a company list as a favorite, identified by ID. Favoriting is a reversible flag (it can be undone later) and does not change the list's contents. The call is idemp"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/company-lists.ts
+- name: Unfavorite-Company-List
+  category: company lists
+  description: "Use this when the user wants to remove the favorite flag from a company list, identified by ID. This only clears the favorite marker; the list and its contents are untouched, and it can be favorited a"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/company-lists.ts
+- name: Add-Company-To-List
+  category: company lists
+  description: "Use this when the user wants to save a company to a static company list. Identify the list by"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/company-lists.ts
+- name: Remove-Company-From-List
+  category: company lists
+  description: "Use this when the user wants to remove a company from a static company list. Identify the list by"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/company-lists.ts
+# --- company list folders ---
+- name: List-Company-List-Folders
+  category: company list folders
+  description: "Use this when the user wants to see the company-list folders in their Hunter account. Folders group company lists. Lists are ordered with the most recently created first. Each folder reports its"
+  api_path: /company-lists/folders
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/company-lists.ts
+- name: Create-Company-List-Folder
+  category: company list folders
+  description: "Use this when the user wants to create a new company-list folder. Provide a "
+  api_path: /company-lists/folders
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/company-lists.ts
+- name: Update-Company-List-Folder
+  category: company list folders
+  description: "Use this when the user wants to update a company-list folder, identified by ID. You can rename it ("
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/company-lists.ts
+- name: Delete-Company-List-Folder
+  category: company list folders
+  description: "Use this when the user wants to delete a company-list folder by ID. Deleting a folder does not delete the company lists filed in it \u2014 each affected list keeps existing and simply becomes unfiled (its "
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/company-lists.ts
+# --- custom attributes ---
+- name: List-Custom-Attributes
+  category: custom attributes
+  description: "Use this when the user wants to list all custom attributes defined on leads in their Hunter account. Free to call."
+  api_path: /leads_custom_attributes
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/custom-attributes.ts
+- name: Get-Custom-Attribute
+  category: custom attributes
+  description: "Use this when the user wants to retrieve a single custom-attribute definition by ID. Free to call."
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/custom-attributes.ts
+- name: Create-Custom-Attribute
+  category: custom attributes
+  description: "Use this when the user wants to define a new custom attribute on leads, identified by label. Free to call."
+  api_path: /leads_custom_attributes
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/custom-attributes.ts
+- name: Update-Custom-Attribute
+  category: custom attributes
+  description: "Use this when the user wants to rename an existing custom-attribute definition, identified by ID. Overwrites the existing label; the previous label cannot be recovered from the API. If the user declin"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/custom-attributes.ts
+- name: Delete-Custom-Attribute
+  category: custom attributes
+  description: "Use this when the user wants to permanently delete a custom-attribute definition, identified by ID. Per-lead values stored for the attribute are dropped and cannot be recovered. Free to call."
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/custom-attributes.ts
+# --- sequences ---
+- name: List-Sequence-Follow-Ups
+  category: sequences
+  description: "Use this when the user wants to see the follow-up steps of a sequence, ordered by step. Step 0 is the introduction message and steps 1 and up are follow-ups; each step reports its"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: Pause-Sequence
+  category: sequences
+  description: "Use this when the user wants to pause a started sequence so it stops sending outbound emails until it is resumed. Only a started, non-archived sequence can be paused: pausing a draft (not yet started)"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: Resume-Sequence
+  category: sequences
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: Archive-Sequence
+  category: sequences
+  description: "Use this when the user wants to archive a started sequence to file it once it is finished. Only a started sequence (active or paused) can be archived: archiving a draft (a sequence that was never star"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: Get-Sequence-Stats
+  category: sequences
+  description: "Use this when the user wants to see how a sequence is performing. Reports recipient-based stats for a sequence plus a per-follow-up breakdown. The top-level engagement totals ("
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: List-Sequences
+  category: sequences
+  description: "Use this when the user wants to list the sequences in their Hunter account with name, lifecycle booleans (started/archived/paused), recipient count, and owner, most recent first. Optionally filter by"
+  api_path: /sequences
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: Get-Sequence
+  category: sequences
+  description: "Use this when the user wants to inspect one sequence's full configuration. Returns the lifecycle"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: Create-Sequence
+  category: sequences
+  description: "Use this when the user wants to create a new outreach sequence. Only"
+  api_path: /sequences
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: Update-Sequence
+  category: sequences
+  description: "Use this when the user wants to modify an existing sequence's name, schedule, senders, or settings; omitted fields are left unchanged. On a draft every field is editable. Once the sequence has STARTED"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: Delete-Sequence
+  category: sequences
+  description: "Use this when the user wants to permanently delete a DRAFT sequence. Deletion is drafts-only: a started or archived sequence cannot be deleted (invalid_input error, id sequence_not_destroyable) \u2014 arch"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: Get-Sequence-Follow-Up
+  category: sequences
+  description: "Use this when the user wants to inspect a single step of a sequence by its follow-up ID (from List-Sequence-Follow-Ups). Returns the step number (0 is the introduction email),"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: Create-Sequence-Follow-Up
+  category: sequences
+  description: "Use this when the user wants to add an email step to a sequence. Author the sequence step-by-step in conversation: draft the"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: Delete-Sequence-Follow-Up
+  category: sequences
+  description: "Use this when the user wants to remove a step from a sequence. Only the LAST step can be deleted \u2014 to redo an earlier step, delete steps from the end back down to it, then re-create them. Deletion is "
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: List-Sequence-Recipients
+  category: sequences
+  description: "Use this when the user wants to list the recipients of a sequence with per-recipient status. Free to call."
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: Add-Sequence-Recipients
+  category: sequences
+  description: "Use this when the user wants to add recipients to an existing sequence by email address or by lead ID. Up to 50 per call; batch larger sets across multiple calls. For a draft (not-yet-started) sequenc"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: Remove-Sequence-Recipients
+  category: sequences
+  description: "Use this when the user wants to remove recipients from a sequence by email address. Pending messages scheduled for the removed recipients are cancelled; messages already sent are not recalled. Free to"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+- name: Start-Sequence
+  category: sequences
+  description: "Use this when the user wants to start an existing sequence, which begins sending real emails to its recipients. The sequence must have a subject, message body, and connected email account configured. "
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/sequences.ts
+# --- message templates ---
+- name: List-Message-Templates
+  category: message templates
+  description: "Use this when the user wants to see the saved message templates in their Hunter account, or when the user is drafting a sequence step (an introduction message or a follow-up) \u2014 list the templates firs"
+  api_path: /message-templates
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/message-templates.ts
+- name: Get-Message-Template
+  category: message templates
+  description: "Use this when the user wants to inspect a single saved message template by ID \u2014 its full"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/message-templates.ts
+- name: Create-Message-Template
+  category: message templates
+  description: "Use this when the user wants to save a reusable message template \u2014 including when they ask to save a message draft written in chat (e.g. a sequence introduction or follow-up they liked) as a new templ"
+  api_path: /message-templates
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/message-templates.ts
+- name: Update-Message-Template
+  category: message templates
+  description: "Use this when the user wants to edit a saved message template's name, subject, body, or message format. Only the fields provided are changed; the previous values are overwritten and cannot be recovere"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/message-templates.ts
+- name: Delete-Message-Template
+  category: message templates
+  description: "Use this when the user wants to permanently delete a saved message template by ID. Deleting cannot be undone from the API. Sequence steps already created from this template keep their own copy of the "
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/message-templates.ts
+# --- email accounts ---
+- name: List-Email-Accounts
+  category: email accounts
+  description: "Use this when the user wants to see the email accounts (sending inboxes) connected to their Hunter account, typically as the first step before creating or starting a sequence. Surface each account's"
+  api_path: /email-accounts
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/email-accounts.ts
+- name: Get-Email-Account
+  category: email accounts
+  description: "Use this when the user wants to see how a specific sending email account is set up \u2014 e.g. "
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/email-accounts.ts
+- name: List-Email-Account-Sequences
+  category: email accounts
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/email-accounts.ts
+# --- connected apps ---
+- name: List-Connected-Apps
+  category: connected apps
+  description: "Use this when the user wants to see the connected apps (third-party integrations such as HubSpot, Pipedrive, Google Sheets, or a custom SMTP/IMAP inbox) linked to their Hunter account. Surface each ap"
+  api_path: /connected-apps
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/connected-apps.ts
+- name: Get-Connected-App
+  category: connected apps
+  description: "Use this when the user wants the details of a single connected app, identified by ID, including its"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/connected-apps.ts
+# --- integrations (CRM push + webhooks) ---
+- name: Push-Leads-To-CRM
+  category: integrations (CRM push + webhooks)
+  api_path: /leads
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/integrations.ts
+- name: List-Webhooks
+  category: integrations (CRM push + webhooks)
+  description: "Use this when the user wants to inspect the webhooks configured on their Hunter account \u2014 typically to debug an integration: is my webhook configured, which event does it listen to, and where does it "
+  api_path: /webhooks
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/integrations.ts
+- name: Update-Webhook
+  category: integrations (CRM push + webhooks)
+  description: "Use this when the user wants to re-point an existing webhook to a different"
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/integrations.ts
+# --- coordinator ---
+- name: Plan-Prospecting-Flow
+  category: coordinator
+  description: "Use this when the user gives a natural-language prospecting brief (e.g."
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/prospecting.ts
+# --- feedback ---
+- name: Report-API-Feedback
+  category: feedback
+  description: "Report any problem you hit while using Hunter's API or tools \u2014 use this PROACTIVELY and liberally."
+  api_path: /feedback
+  source: https://github.com/hunter-io/chatgpt-mcp/blob/main/src/tools/feedback.ts

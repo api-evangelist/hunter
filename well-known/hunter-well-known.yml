@@ -1,0 +1,84 @@
+generated: '2026-08-13'
+method: probed
+source: https://hunter.io/.well-known/
+description: >-
+  Hunter serves live OAuth 2.0 Authorization Server Metadata (RFC 8414) and OpenID Connect
+  discovery from hunter.io, and RFC 9728 OAuth Protected Resource Metadata from the remote
+  MCP host mcp.hunter.io. No security.txt, api-catalog or ai-plugin.json is served on any host.
+hosts:
+- host: https://hunter.io
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: hunter-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: hunter-oauth-authorization-server.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://api.hunter.io
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    note: same document as hunter.io; issuer is https://hunter.io
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    note: same document as hunter.io; issuer is https://hunter.io
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://mcp.hunter.io
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+    file: hunter-mcp-oauth-protected-resource.json
+    note: RFC 9728 protected-resource metadata for the remote MCP server; delegates to hunter.io.
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    note: mirrors the hunter.io authorization-server document
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+findings:
+- id: jwks-uri-500
+  detail: >-
+    The advertised jwks_uri https://hunter.io/oauth/discovery/keys returned HTTP 500 when probed
+    on 2026-08-13. A relying party performing OIDC signature validation cannot fetch Hunter's signing
+    keys at the documented location.
+  url: https://hunter.io/oauth/discovery/keys
+  http_status: 500
+- id: dynamic-client-registration
+  detail: >-
+    The authorization-server document advertises a registration_endpoint
+    (https://hunter.io/oauth/register), i.e. RFC 7591 dynamic client registration, plus PKCE S256
+    and the token_endpoint_auth_method "none" - the public-client shape MCP clients require.
+x-evidence:
+  fetched: '2026-08-13'
+  probed_paths: 21
+  hits: 5

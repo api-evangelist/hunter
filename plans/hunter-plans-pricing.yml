@@ -4,7 +4,23 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Hunter
 providerId: hunter
 created: '2026-05-04'
-modified: '2026-05-05'
+# Provenance: originally written by the API Evangelist bulk sweep dated 2026-05-04.
+# Re-verified 2026-08-13 against https://hunter.io/pricing: the tier names and monthly credit
+# allotments below match the live pricing page, so the method is upgraded to searched.
+method: searched
+modified: '2026-08-13'
+verified: '2026-08-13'
+plan_count: 5
+listPrices:
+  currency: USD
+  billing_periods: [monthly, yearly]
+  yearly_discount: '30%'
+  tiers:
+  - {name: Free, monthly: '0', yearly: '0', credits_per_month: 50}
+  - {name: Starter, monthly: '49', yearly_monthly_equivalent: '34', yearly_total: '408', credits_per_month: 2000}
+  - {name: Growth, monthly: '149', yearly_monthly_equivalent: '104', yearly_total: '1248', credits_per_month: 10000}
+  - {name: Scale, monthly: '299', yearly_monthly_equivalent: '209', yearly_total: '2508', credits_per_month: 25000}
+  - {name: Enterprise, monthly: null, yearly: null, credits_per_month: null, note: 'Custom - "Talk to sales"'}
 reconciled: true
 tags:
   - Email

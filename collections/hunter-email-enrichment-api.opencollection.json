@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hunter Account Email Enrichment API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Email Enrichment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Email Enrichment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/people/find",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Email address to enrich. Required if linkedin_handle is not provided."
+              },
+              {
+                "name": "linkedin_handle",
+                "value": "",
+                "type": "query",
+                "description": "LinkedIn profile handle. Required if email is not provided."
+              },
+              {
+                "name": "clearbit_format",
+                "value": "",
+                "type": "query",
+                "description": "Format response to match the Clearbit schema."
+              }
+            ]
+          },
+          "docs": "Returns comprehensive personal information linked to an email address or LinkedIn profile. Provides enriched data points about the person including employment, social profiles, and location."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

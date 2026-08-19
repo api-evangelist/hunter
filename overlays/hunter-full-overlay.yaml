@@ -1,0 +1,71 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Hunter API
+  version: 1.0.0
+extends: openapi/_original/hunter-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: API Evangelist enrichment pipeline (local-v1)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: hunter
+    x-apievangelist-artifacts:
+      conventions: conventions/hunter-conventions.yml
+      errors: errors/hunter-problem-types.yml
+      authentication: authentication/hunter-authentication.yml
+      scopes: scopes/hunter-scopes.yml
+      rate-limits: rate-limits/hunter-rate-limits.yml
+      sandbox: sandbox/hunter-sandbox.yml
+      lifecycle: lifecycle/hunter-lifecycle.yml
+      data-model: data-model/hunter-data-model.yml
+      mcp: mcp/hunter-mcp.yml
+      tool-crosswalk: mcp/hunter-tool-crosswalk.yml
+      webhooks: asyncapi/hunter-webhooks.yml
+    x-agent-surface:
+      mcp-server: https://mcp.hunter.io/mcp
+      mcp-transport: streamable-http
+      mcp-tools: 100
+      agent-skills: skills/_index.yml
+      agent-card: null
+- target: $.info
+  update:
+    x-sandbox-key: test-api-key
+    x-sandbox-note: >-
+      The literal key "test-api-key" returns a fixed dummy response on Domain Search,
+      Email Finder and Email Verifier. Published by Hunter at
+      https://hunter.io/api-documentation/v2#authentication
+- target: $.info
+  update:
+    x-error-envelope: '{"errors": [{"id": "...", "code": 400, "details": "..."}]}'
+    x-error-note: >-
+      Not RFC 9457. Branch on errors[0].id. 403 means the per-second/per-minute rate limit was
+      hit and IS retryable with backoff; 429 means the monthly credit quota is exhausted and is
+      NOT retryable. 451 encodes a GDPR erasure request on the enrichment endpoints.
+- target: $.info
+  update:
+    x-idempotency:
+      header: Idempotency-Key
+      operations: [POST /v2/sequences]
+      retention: 24h
+      note: Sequence creation only. Lead creation and bulk operations have no replay protection.
+- target: $.info
+  update:
+    x-pagination:
+      style: limit-offset
+      params: [limit, offset]
+      response: [meta.total, meta.limit, meta.offset]
+      max_offset: 10000
+      note: Discover People uses a search_after cursor instead of an offset.
+- target: $.info
+  update:
+    x-rate-limit-headers: none
+    x-rate-limit-note: >-
+      Hunter publishes no X-RateLimit-* or RateLimit-* response headers, so a client has no
+      runtime budget signal and must pace itself against the documented per-endpoint numbers.
+- target: $.servers[*]
+  update:
+    x-verified: '2026-08-13'
+    x-verified-note: Base URL reconciled against openapi/_original, apis.yml and the published API reference.
+x-coverage:
+  operations: 25

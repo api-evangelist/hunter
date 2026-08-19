@@ -1,0 +1,164 @@
+{
+  "item": [
+    {
+      "id": "5d6edb4f-6a05-4163-ac21-9e4bafd99302",
+      "name": "Account",
+      "description": {
+        "content": "Retrieve account information and usage statistics.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fe9cfd16-fb44-4b62-94ad-138e6f1e1607",
+          "name": "Hunter Account Information",
+          "request": {
+            "name": "Hunter Account Information",
+            "description": {
+              "content": "Returns information about the Hunter account associated with the API key, including usage statistics and plan details. This call is free and does not count toward usage limits.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e0fe4b68-03d9-40ac-8139-48049197fc52",
+              "name": "Successful account information response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"first_name\": \"example_value\",\n    \"last_name\": \"example_value\",\n    \"email\": \"user@example.com\",\n    \"plan_name\": \"example_value\",\n    \"plan_level\": 10,\n    \"reset_date\": \"2026-01-15\",\n    \"team_id\": 4309,\n    \"requests\": {\n      \"searches\": {\n        \"used\": 10,\n        \"available\": 10\n      },\n      \"verifications\": {\n        \"used\": 10,\n        \"available\": 10\n      }\n    },\n    \"calls\": {\n      \"used\": 9668,\n      \"available\": 5526\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9a3c2db-e784-4e0c-aac9-352d43148d90",
+              "name": "Invalid or missing API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.hunter.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api_key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "56314573-050d-4470-b753-94a8ae649ef6",
+    "name": "Hunter Account API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability. The API provides domain search, email finder, email verifier, email count, account information, leads management, leads lists, campaigns, discover, enrichment, and logo retrieval capabilities.\n\nContact Support:\n Name: Hunter Support\n Email: support@hunter.io",
+      "type": "text/plain"
+    }
+  }
+}

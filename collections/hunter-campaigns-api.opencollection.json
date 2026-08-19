@@ -1,0 +1,159 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hunter Account Campaigns API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter List Campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/campaigns",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of campaigns to return. Default is 20, max is 100."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of campaigns to skip for pagination."
+              },
+              {
+                "name": "started",
+                "value": "",
+                "type": "query",
+                "description": "Filter by whether the campaign has been started."
+              },
+              {
+                "name": "archived",
+                "value": "",
+                "type": "query",
+                "description": "Filter by whether the campaign has been archived."
+              }
+            ]
+          },
+          "docs": "Returns all the email sequences (campaigns) in your account."
+        },
+        {
+          "info": {
+            "name": "Hunter List Campaign Recipients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/campaigns/:id/recipients",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the campaign."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of recipients to return."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of recipients to skip for pagination."
+              }
+            ]
+          },
+          "docs": "Returns the recipients for a given campaign."
+        },
+        {
+          "info": {
+            "name": "Hunter Add Campaign Recipients",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.hunter.io/v2/campaigns/:id/recipients",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the campaign."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds recipients to a campaign using email addresses or lead identifiers."
+        },
+        {
+          "info": {
+            "name": "Hunter Cancel Campaign Recipients",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.hunter.io/v2/campaigns/:id/recipients",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the campaign."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancels all scheduled emails for the specified recipients."
+        },
+        {
+          "info": {
+            "name": "Hunter Start Campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.hunter.io/v2/campaigns/:id/start",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the campaign."
+              }
+            ]
+          },
+          "docs": "Starts an email sequence for the campaign."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,45 @@
+generated: '2026-08-13'
+method: searched
+source: https://hunter.io/api-documentation/v2#authentication
+description: >-
+  Hunter ships a single published test credential rather than a separate sandbox environment.
+  There is no test-mode host and no test/live key-prefix split: the same base URL is used, and
+  the magic key short-circuits the request to a fixed dummy response without spending credits.
+mode: magic-test-key
+test_credentials:
+- name: test-api-key
+  value: test-api-key
+  kind: api_key
+  published: true
+  source: https://hunter.io/api-documentation/v2#authentication
+  behaviour: >-
+    Validates the supplied parameters and always returns the same dummy response. Quoted verbatim
+    from the docs: "A special API key can be used to test our API: test-api-key. It will validate
+    the provided parameters, but will always return the same, dummy, response."
+  supported_endpoints:
+  - operation: domainSearch
+    path: /v2/domain-search
+  - operation: emailFinder
+    path: /v2/email-finder
+  - operation: emailVerifier
+    path: /v2/email-verifier
+  unsupported_note: >-
+    Only these three endpoints accept it. Leads, leads lists, campaigns/sequences, Discover,
+    enrichment and account cannot be exercised without a real key and real credits.
+separation:
+  test_live_hosts: false
+  key_prefixes: null
+  key_prefix_note: Hunter API keys carry no documented test/live prefix; the literal string test-api-key is the only test credential.
+free_operations:
+- Discover (company and people search) - documented as free
+- Email Count - documented as free
+- Leads, lists, sequences, CRM push, saved searches and usage calls - documented as free
+- Logo API (https://logos.hunter.io/{domain}) - unauthenticated and free
+credit_behaviour:
+  failed_lookups_free: true
+  note: >-
+    Email Finder is charged only when an email is found; failed searches and failed verifications
+    do not consume credits.
+time_simulation: null
+fixtures: null
+free_tier: '50 credits per month on the Free plan - see plans/hunter-plans-pricing.yml'

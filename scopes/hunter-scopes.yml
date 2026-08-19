@@ -1,0 +1,45 @@
+generated: '2026-08-13'
+method: probed
+source: https://hunter.io/.well-known/oauth-authorization-server
+docs: https://hunter.io/api-documentation/v2#authentication
+description: >-
+  Hunter's OAuth surface is not described in the OpenAPI (which declares only API-key and bearer
+  schemes) and is not written up in the API reference. It was discovered by probing RFC 8414
+  authorization-server metadata on hunter.io, which advertises exactly two coarse scopes.
+  The remote MCP server at mcp.hunter.io publishes RFC 9728 protected-resource metadata naming
+  the same two scopes and hunter.io as its authorization server.
+schemes:
+- name: OAuth2
+  source: https://hunter.io/.well-known/oauth-authorization-server
+  issuer: https://hunter.io
+  registration_endpoint: https://hunter.io/oauth/register
+  code_challenge_methods_supported: [S256]
+  token_endpoint_auth_methods_supported: [client_secret_basic, client_secret_post, none]
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://hunter.io/oauth/authorize
+    tokenUrl: https://hunter.io/oauth/token
+  - flow: clientCredentials
+    tokenUrl: https://hunter.io/oauth/token
+  - flow: refreshToken
+    tokenUrl: https://hunter.io/oauth/token
+scopes:
+- scope: read
+  description: >-
+    Read access. Granularity is not documented; Hunter publishes no scope reference page, so the
+    mapping from this scope to individual endpoints or MCP tools is not stated anywhere public.
+  flows: [authorizationCode, clientCredentials, refreshToken]
+  sources: [https://hunter.io/.well-known/oauth-authorization-server, https://mcp.hunter.io/.well-known/oauth-protected-resource]
+- scope: write
+  description: >-
+    Write access. Same caveat: no published scope-to-operation mapping, so a client cannot tell
+    which of the 100 MCP tools or 25 REST operations a "write" grant actually unlocks.
+  flows: [authorizationCode, clientCredentials, refreshToken]
+  sources: [https://hunter.io/.well-known/oauth-authorization-server, https://mcp.hunter.io/.well-known/oauth-protected-resource]
+gaps:
+- id: no-scope-reference-page
+  detail: Hunter publishes no scopes/permissions reference page; the two scopes are only discoverable from the discovery documents.
+- id: coarse-granularity
+  detail: >-
+    Two scopes cover an API surface that includes destructive bulk deletes, CRM push and sending
+    email sequences. A "write" grant is effectively full account control.

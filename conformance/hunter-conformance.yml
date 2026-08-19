@@ -1,0 +1,81 @@
+generated: '2026-08-13'
+method: searched
+source: https://hunter.io/api-documentation/v2
+standards:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    RFC 6749 authorization-code, client-credentials and refresh-token grants advertised at
+    https://hunter.io/.well-known/oauth-authorization-server (probed HTTP 200).
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server returns a valid metadata document on hunter.io and api.hunter.io.
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: true
+  evidence: https://mcp.hunter.io/.well-known/oauth-protected-resource returns resource + authorization_servers + scopes_supported.
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint https://hunter.io/oauth/register advertised in the authorization-server metadata.
+- id: rfc7636-pkce
+  conforms: true
+  evidence: 'code_challenge_methods_supported: [S256]'
+- id: openid-connect-discovery
+  conforms: partial
+  evidence: >-
+    /.well-known/openid-configuration returns a complete OIDC discovery document (userinfo,
+    introspection, revocation, RS256 id tokens), but the advertised jwks_uri
+    https://hunter.io/oauth/discovery/keys returned HTTP 500 when probed on 2026-08-13, so id-token
+    signature validation cannot be completed against the published metadata.
+- id: mcp-streamable-http
+  conforms: true
+  evidence: >-
+    Hunter documents a remote MCP server at https://mcp.hunter.io/mcp using the Streamable HTTP
+    transport; POST tools/list returns a well-formed 401 auth challenge.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use a proprietary envelope, {"errors": [{"id","code","details"}]}, served as
+    application/json - not application/problem+json.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header support is documented.
+- id: rfc7807
+  conforms: false
+  evidence: superseded by RFC 9457; neither is used.
+- id: idempotency-key
+  conforms: partial
+  evidence: >-
+    The draft-standard Idempotency-Key request header is supported on POST /v2/sequences only
+    (24-hour dedup TTL, body fingerprinting, structured 409/422 error ids). No other write
+    operation accepts it.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on hunter.io and api.hunter.io.
+- id: gdpr
+  conforms: true
+  evidence: >-
+    Published GDPR compliance program - controller/processor split, a Data Processing Agreement
+    incorporated into the Terms of Use, a sub-processors page, SCCs plus the UK IDTA for
+    out-of-EEA transfers, and privacy@hunter.io as the privacy contact.
+  url: https://help.hunter.io/en/articles/1890029-gdpr-compliance
+- id: soc2
+  conforms: false
+  evidence: No SOC 2 attestation is named on the security policy, GDPR article or any trust page.
+- id: iso-27001
+  conforms: false
+  evidence: No ISO 27001 certification is named on any public Hunter page.
+- id: pagination
+  conforms: true
+  evidence: >-
+    limit/offset pagination with a meta block (total, limit, offset) across list endpoints;
+    Discover People uses a search_after cursor instead.
+compliance:
+  gdpr_page: https://help.hunter.io/en/articles/1890029-gdpr-compliance
+  dpa: https://hunter.io/data-processing-agreement
+  sub_processors: https://hunter.io/subprocessors
+  security_policy: https://hunter.io/security-policy
+  certifications: []
+  certifications_note: >-
+    Hunter publishes a detailed written security program (third-party penetration testing,
+    RBAC least-privilege provisioning, AES-at-rest backups on GCP, an ongoing bug bounty) but
+    names no third-party attestation or certification anywhere public.

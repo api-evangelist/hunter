@@ -1,0 +1,311 @@
+{
+  "item": [
+    {
+      "id": "fb5f1a5a-f707-49ba-9b70-1735cf8f24da",
+      "name": "Email Verifier",
+      "description": {
+        "content": "Verify the deliverability of an email address.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c8e0c921-c805-4b44-b797-56ba2952ae9d",
+          "name": "Hunter Email Verifier",
+          "request": {
+            "name": "Hunter Email Verifier",
+            "description": {
+              "content": "Verifies the deliverability of a given email address.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "email-verifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<email>",
+                  "description": "(Required) The email address to verify."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c6fd0e09-7cc5-44c2-818d-59d5312a6061",
+              "name": "Successful email verification response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email-verifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "john@stripe.com"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"status\": \"valid\",\n    \"result\": \"deliverable\",\n    \"score\": 10,\n    \"email\": \"user@example.com\",\n    \"regexp\": true,\n    \"gibberish\": true,\n    \"disposable\": true,\n    \"webmail\": true,\n    \"mx_records\": true,\n    \"smtp_server\": true,\n    \"smtp_check\": true,\n    \"accept_all\": true,\n    \"block\": true\n  },\n  \"meta\": {\n    \"params\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df0e27b2-7de0-4f48-9bc0-a9b20d0277e2",
+              "name": "Verification in progress. Retry the request later.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email-verifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "john@stripe.com"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"status\": \"valid\",\n    \"result\": \"deliverable\",\n    \"score\": 10,\n    \"email\": \"user@example.com\",\n    \"regexp\": true,\n    \"gibberish\": true,\n    \"disposable\": true,\n    \"webmail\": true,\n    \"mx_records\": true,\n    \"smtp_server\": true,\n    \"smtp_check\": true,\n    \"accept_all\": true,\n    \"block\": true\n  },\n  \"meta\": {\n    \"params\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6108678e-0699-4a8d-8458-98f7f4771800",
+              "name": "Invalid parameters or missing required fields.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email-verifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "john@stripe.com"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4958887-947e-4620-90b3-a2b9cea97741",
+              "name": "Invalid or missing API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email-verifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "john@stripe.com"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73e5c5fb-aba8-405c-bede-b535c7e83de3",
+              "name": "Usage limit exceeded or rate limited.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email-verifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "john@stripe.com"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.hunter.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api_key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1d31c7e6-6679-4caf-8c15-c1fda6b6a49f",
+    "name": "Hunter Account Email Verifier API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability. The API provides domain search, email finder, email verifier, email count, account information, leads management, leads lists, campaigns, discover, enrichment, and logo retrieval capabilities.\n\nContact Support:\n Name: Hunter Support\n Email: support@hunter.io",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hunter Account Company Enrichment API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Company Enrichment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Company Enrichment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/companies/find",
+            "params": [
+              {
+                "name": "domain",
+                "value": "stripe.com",
+                "type": "query",
+                "description": "Domain name of the company to enrich."
+              },
+              {
+                "name": "clearbit_format",
+                "value": "",
+                "type": "query",
+                "description": "Format response to match the Clearbit schema."
+              }
+            ]
+          },
+          "docs": "Returns detailed organizational data associated with a domain name, including company size, industry, location, and other firmographic information."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

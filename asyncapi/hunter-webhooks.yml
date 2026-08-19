@@ -1,0 +1,49 @@
+generated: '2026-08-13'
+method: searched
+source: https://hunter.io/api-documentation/v2#webhooks
+spec_type: null
+spec_type_note: >-
+  Hunter publishes NO AsyncAPI document. It does publish a real, managed webhook surface with a
+  fixed event vocabulary, captured here as a webhook catalog. Probed for /asyncapi.yaml,
+  /asyncapi.json and an event-catalog page on hunter.io and api.hunter.io - all 404.
+status: beta
+status_statement: >-
+  "This endpoint is in Beta. It's fully functional, but its parameters and response format may
+  still change as we refine it, so expect occasional breaking changes during the Beta period."
+transport: http-webhook
+delivery:
+  direction: outbound
+  target: subscriber-supplied HTTPS URL (target_url, 12-500 characters)
+  management: 'REST - list, retrieve, create, update and delete webhooks under /v2/webhooks'
+  cost: All webhook management calls are documented as free.
+management_operations:
+- {name: List all your webhooks, method: GET, path: /v2/webhooks, params: [limit, offset]}
+- {name: Get a webhook, method: GET, path: '/v2/webhooks/{id}'}
+- {name: Create a webhook, method: POST, path: /v2/webhooks, body: [target_url, event, filter_on]}
+- {name: Update a webhook, method: PUT, path: '/v2/webhooks/{id}'}
+- {name: Delete a webhook, method: DELETE, path: '/v2/webhooks/{id}'}
+events:
+- name: lead.created
+  description: A lead was created.
+  caveat: >-
+    Delivered through the Zapier integration - it only fires once Hunter Leads is connected to
+    Zapier. The message.* events fire for any webhook.
+- {name: message.sent, description: An outreach message was sent.}
+- {name: message.read, description: An outreach message was opened.}
+- {name: message.clicked, description: A link in an outreach message was clicked.}
+- {name: message.replied, description: A recipient replied to an outreach message.}
+- {name: export.completed, description: An export finished.}
+- {name: import.completed, description: An import finished.}
+- {name: sequence.paused, description: A sequence was paused.}
+- {name: sequence.resumed, description: A sequence was resumed.}
+event_count: 9
+payload_shape:
+  webhook_record: '{"id": 1, "target_url": "https://example.com/hooks/leads", "event": "lead.created"}'
+  event_payload: >-
+    The delivered event payload is not documented in the API reference; only the webhook
+    REGISTRATION record shape is published. A subscriber cannot know the body shape in advance.
+gaps:
+- No AsyncAPI document, and no schema for the delivered event payloads.
+- No documented signature/HMAC verification for inbound deliveries.
+- No documented retry or dead-letter behaviour.
+- lead.created is coupled to Zapier rather than firing natively.

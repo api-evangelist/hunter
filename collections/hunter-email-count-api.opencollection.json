@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hunter Account Email Count API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Email Count",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Email Count",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/email-count",
+            "params": [
+              {
+                "name": "domain",
+                "value": "stripe.com",
+                "type": "query",
+                "description": "Domain name to count emails for. Required if company is not provided."
+              },
+              {
+                "name": "company",
+                "value": "",
+                "type": "query",
+                "description": "Company name to count emails for. Required if domain is not provided."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter count by email type."
+              }
+            ]
+          },
+          "docs": "Returns the number of email addresses found for a given domain or company, broken down by type, department, and seniority."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

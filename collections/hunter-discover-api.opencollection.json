@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hunter Account Discover API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Discover",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Discover Companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.hunter.io/v2/discover",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns companies matching a set of criteria using natural language queries or robust filters to find companies aligned with your ideal customer profile."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,431 @@
+generated: '2026-08-13'
+method: derived
+source: mcp/hunter-mcp.yml + openapi/_original/hunter-api-openapi.yml
+description: >-
+  Binds each of the 100 tools on Hunter's remote MCP server (https://mcp.hunter.io/mcp) to the
+  operationId(s) that back it in the captured Hunter v2 OpenAPI. The two surfaces are far from
+  identical: the MCP server exposes four times as many capabilities as the machine-readable
+  contract, because whole product areas Hunter documents in prose (Sequences lifecycle, Company
+  Lists, lead tags, custom attributes, email accounts, webhooks, usage, API-key management) have
+  never been published as OpenAPI. Every REST operation in the spec does carry a tool, so the
+  divergence is entirely one-directional - MCP is the wider surface here, not a subset.
+surfaces:
+  openapi:
+    file: openapi/_original/hunter-api-openapi.yml
+    servers: [https://api.hunter.io/v2]
+    operations: 25
+  mcp:
+    url: https://mcp.hunter.io/mcp
+    transport: streamable-http
+    tools: 100
+    gated: true
+    gated_note: 'tools/list returned HTTP 401 anonymously; input schemas require an authenticated call, so bindings are by name and by the API path each tool calls in Hunter''s own public worker source.'
+  graphql: null
+  rest_docs: https://hunter.io/api-documentation/v2
+crosswalk:
+- tool: Find-Companies
+  category: search
+  rest: [discover]
+  binding: rest
+  confidence: high
+  note: "POST /discover; Hunter's own skill and docs both describe Find-Companies as the Discover call."
+- tool: Domain-Search
+  category: search
+  rest: [domainSearch]
+  binding: rest
+  confidence: high
+- tool: Email-Finder
+  category: search
+  rest: [emailFinder]
+  binding: rest
+  confidence: high
+- tool: Email-Verifier
+  category: search
+  rest: [emailVerifier]
+  binding: rest
+  confidence: high
+- tool: Email-Count
+  category: search
+  rest: [emailCount]
+  binding: rest
+  confidence: high
+- tool: Person-Enrichment
+  category: enrichment
+  rest: [emailEnrichment]
+  binding: rest
+  confidence: high
+  note: "GET /people/find - the docs call this Email Enrichment, the MCP tool calls it Person-Enrichment."
+- tool: Company-Enrichment
+  category: enrichment
+  rest: [companyEnrichment]
+  binding: rest
+  confidence: high
+- tool: Combined-Enrichment
+  category: enrichment
+  rest: [combinedEnrichment]
+  binding: rest
+  confidence: high
+- tool: Get-Account-Details
+  category: account
+  rest: [getAccount]
+  binding: rest
+  confidence: high
+- tool: List-Leads
+  category: leads
+  rest: [listLeads]
+  binding: rest
+  confidence: high
+- tool: Get-Lead
+  category: leads
+  rest: [getLead]
+  binding: rest
+  confidence: high
+- tool: Create-Lead
+  category: leads
+  rest: [createLead]
+  binding: rest
+  confidence: high
+- tool: Update-Lead
+  category: leads
+  rest: [updateLead]
+  binding: rest
+  confidence: high
+- tool: Delete-Lead
+  category: leads
+  rest: [deleteLead]
+  binding: rest
+  confidence: high
+- tool: Create-Or-Update-Lead
+  category: leads
+  rest: [upsertLead]
+  binding: rest
+  confidence: high
+  note: "PUT /leads is the documented upsert."
+- tool: Create-Lead-If-Missing
+  category: leads
+  rest: [listLeads, createLead]
+  binding: rest
+  confidence: medium
+  note: "Server-side composite: looks the lead up first, creates only when absent. No single REST operation."
+- tool: List-Leads-Lists
+  category: leads lists
+  rest: [listLeadsLists]
+  binding: rest
+  confidence: high
+- tool: Get-Leads-List
+  category: leads lists
+  rest: [getLeadsList]
+  binding: rest
+  confidence: high
+- tool: Create-Leads-List
+  category: leads lists
+  rest: [createLeadsList]
+  binding: rest
+  confidence: high
+- tool: Update-Leads-List
+  category: leads lists
+  rest: [updateLeadsList]
+  binding: rest
+  confidence: high
+- tool: Delete-Leads-List
+  category: leads lists
+  rest: [deleteLeadsList]
+  binding: rest
+  confidence: high
+- tool: List-Sequences
+  category: sequences
+  rest: [listCampaigns]
+  binding: rest
+  confidence: medium
+  note: "Hunter renamed the Campaigns product to Sequences; the captured v2 spec still carries the campaigns paths."
+- tool: List-Sequence-Recipients
+  category: sequences
+  rest: [listCampaignRecipients]
+  binding: rest
+  confidence: medium
+  note: "Same Campaigns->Sequences rename."
+- tool: Add-Sequence-Recipients
+  category: sequences
+  rest: [addCampaignRecipients]
+  binding: rest
+  confidence: medium
+  note: "Same Campaigns->Sequences rename."
+- tool: Remove-Sequence-Recipients
+  category: sequences
+  rest: [cancelCampaignRecipients]
+  binding: rest
+  confidence: medium
+  note: "DELETE /campaigns/{id}/recipients cancels queued recipients."
+- tool: Start-Sequence
+  category: sequences
+  rest: [startCampaign]
+  binding: rest
+  confidence: medium
+  note: "Same Campaigns->Sequences rename."
+mcp_only:
+- tool: Save-Company
+  category: leads
+  reason: "Documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /leads/companies
+- tool: Get-Usage
+  category: usage + API keys
+  reason: "Usage, usage history and API-key management are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /usage
+- tool: List-API-Keys
+  category: usage + API keys
+  reason: "Usage, usage history and API-key management are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /api-keys
+- tool: Create-API-Key
+  category: usage + API keys
+  reason: "Usage, usage history and API-key management are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /api-keys
+- tool: Delete-API-Key
+  category: usage + API keys
+  reason: "Usage, usage history and API-key management are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /api-keys
+- tool: Bulk-Move-Leads
+  category: bulk operations
+  reason: "Bulk lead/company operations are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /leads/bulk/move
+- tool: Bulk-Delete-Leads
+  category: bulk operations
+  reason: "Bulk lead/company operations are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /leads/bulk/delete
+- tool: Bulk-Move-Companies
+  category: bulk operations
+  reason: "Bulk lead/company operations are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /companies/bulk/move
+- tool: Bulk-Copy-Companies
+  category: bulk operations
+  reason: "Bulk lead/company operations are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /companies/bulk/copy
+- tool: Bulk-Delete-Companies
+  category: bulk operations
+  reason: "Bulk lead/company operations are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /companies/bulk/delete
+- tool: List-Company-Lists
+  category: company lists
+  reason: "Company Lists is documented in the live API reference but has no operation in the captured v2 OpenAPI."
+  observed_path: /company-lists
+- tool: Get-Company-List
+  category: company lists
+  reason: "Company Lists is documented in the live API reference but has no operation in the captured v2 OpenAPI."
+- tool: Create-Company-List
+  category: company lists
+  reason: "Company Lists is documented in the live API reference but has no operation in the captured v2 OpenAPI."
+  observed_path: /company-lists
+- tool: Update-Company-List
+  category: company lists
+  reason: "Company Lists is documented in the live API reference but has no operation in the captured v2 OpenAPI."
+- tool: Delete-Company-List
+  category: company lists
+  reason: "Company Lists is documented in the live API reference but has no operation in the captured v2 OpenAPI."
+- tool: List-Company-List-Folders
+  category: company list folders
+  reason: "Company list folders are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /company-lists/folders
+- tool: Create-Company-List-Folder
+  category: company list folders
+  reason: "Company list folders are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /company-lists/folders
+- tool: Update-Company-List-Folder
+  category: company list folders
+  reason: "Company list folders are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Delete-Company-List-Folder
+  category: company list folders
+  reason: "Company list folders are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Favorite-Company-List
+  category: company lists
+  reason: "Company Lists is documented in the live API reference but has no operation in the captured v2 OpenAPI."
+- tool: Unfavorite-Company-List
+  category: company lists
+  reason: "Company Lists is documented in the live API reference but has no operation in the captured v2 OpenAPI."
+- tool: Add-Company-To-List
+  category: company lists
+  reason: "Company Lists is documented in the live API reference but has no operation in the captured v2 OpenAPI."
+- tool: Remove-Company-From-List
+  category: company lists
+  reason: "Company Lists is documented in the live API reference but has no operation in the captured v2 OpenAPI."
+- tool: List-Connected-Apps
+  category: connected apps
+  reason: "Connected Apps is documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /connected-apps
+- tool: Get-Connected-App
+  category: connected apps
+  reason: "Connected Apps is documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: List-Custom-Attributes
+  category: custom attributes
+  reason: "Lead custom attributes are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /leads_custom_attributes
+- tool: Get-Custom-Attribute
+  category: custom attributes
+  reason: "Lead custom attributes are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Create-Custom-Attribute
+  category: custom attributes
+  reason: "Lead custom attributes are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /leads_custom_attributes
+- tool: Update-Custom-Attribute
+  category: custom attributes
+  reason: "Lead custom attributes are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Delete-Custom-Attribute
+  category: custom attributes
+  reason: "Lead custom attributes are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Find-People
+  category: discover people + saved searches
+  reason: "Discover People and saved searches are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /discover/people
+- tool: List-Saved-Searches
+  category: discover people + saved searches
+  reason: "Discover People and saved searches are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /discover/views
+- tool: Get-Saved-Search
+  category: discover people + saved searches
+  reason: "Discover People and saved searches are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Create-Saved-Search
+  category: discover people + saved searches
+  reason: "Discover People and saved searches are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /discover/views
+- tool: Delete-Saved-Search
+  category: discover people + saved searches
+  reason: "Discover People and saved searches are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: List-Email-Accounts
+  category: email accounts
+  reason: "Email Accounts is documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /email-accounts
+- tool: Get-Email-Account
+  category: email accounts
+  reason: "Email Accounts is documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: List-Email-Account-Sequences
+  category: email accounts
+  reason: "Email Accounts is documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Report-API-Feedback
+  category: feedback
+  reason: "Feedback reporting tool with no public REST operation."
+  observed_path: /feedback
+- tool: Push-Leads-To-CRM
+  category: integrations (CRM push + webhooks)
+  reason: "CRM push and webhook management are documented in the live API reference (Webhooks is in Beta) but absent from the captured v2 OpenAPI."
+  observed_path: /leads
+- tool: List-Webhooks
+  category: integrations (CRM push + webhooks)
+  reason: "CRM push and webhook management are documented in the live API reference (Webhooks is in Beta) but absent from the captured v2 OpenAPI."
+  observed_path: /webhooks
+- tool: Update-Webhook
+  category: integrations (CRM push + webhooks)
+  reason: "CRM push and webhook management are documented in the live API reference (Webhooks is in Beta) but absent from the captured v2 OpenAPI."
+- tool: List-Lead-Tags
+  category: lead tags
+  reason: "Lead tags are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /tags
+- tool: Create-Lead-Tag
+  category: lead tags
+  reason: "Lead tags are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /tags
+- tool: Update-Lead-Tag
+  category: lead tags
+  reason: "Lead tags are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Delete-Lead-Tag
+  category: lead tags
+  reason: "Lead tags are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Add-Tag-To-Lead
+  category: lead tags
+  reason: "Lead tags are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Remove-Tag-From-Lead
+  category: lead tags
+  reason: "Lead tags are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: List-Leads-List-Folders
+  category: leads list folders + favorites
+  reason: "Leads-list folders and favorites are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /leads-lists/folders
+- tool: Create-Leads-List-Folder
+  category: leads list folders + favorites
+  reason: "Leads-list folders and favorites are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /leads-lists/folders
+- tool: Update-Leads-List-Folder
+  category: leads list folders + favorites
+  reason: "Leads-list folders and favorites are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Delete-Leads-List-Folder
+  category: leads list folders + favorites
+  reason: "Leads-list folders and favorites are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Favorite-Leads-List
+  category: leads list folders + favorites
+  reason: "Leads-list folders and favorites are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Unfavorite-Leads-List
+  category: leads list folders + favorites
+  reason: "Leads-list folders and favorites are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Merge-Leads-Lists
+  category: leads lists
+  reason: "Documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Lead-Exists
+  category: leads
+  reason: "Documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /leads/exist
+- tool: List-Message-Templates
+  category: message templates
+  reason: "Message templates are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /message-templates
+- tool: Get-Message-Template
+  category: message templates
+  reason: "Message templates are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Create-Message-Template
+  category: message templates
+  reason: "Message templates are documented in the live API reference but absent from the captured v2 OpenAPI."
+  observed_path: /message-templates
+- tool: Update-Message-Template
+  category: message templates
+  reason: "Message templates are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Delete-Message-Template
+  category: message templates
+  reason: "Message templates are documented in the live API reference but absent from the captured v2 OpenAPI."
+- tool: Plan-Prospecting-Flow
+  category: coordinator
+  reason: "Server-side planning tool with no REST backing - it returns a suggested multi-step prospecting plan."
+- tool: List-Sequence-Follow-Ups
+  category: sequences
+  reason: "Sequence lifecycle (create/update/delete, follow-ups, pause/resume/archive, stats) is documented in the live API reference under Sequences but is absent from the captured v2 OpenAPI, which only carries the older Campaigns paths."
+- tool: Pause-Sequence
+  category: sequences
+  reason: "Sequence lifecycle (create/update/delete, follow-ups, pause/resume/archive, stats) is documented in the live API reference under Sequences but is absent from the captured v2 OpenAPI, which only carries the older Campaigns paths."
+- tool: Resume-Sequence
+  category: sequences
+  reason: "Sequence lifecycle (create/update/delete, follow-ups, pause/resume/archive, stats) is documented in the live API reference under Sequences but is absent from the captured v2 OpenAPI, which only carries the older Campaigns paths."
+- tool: Archive-Sequence
+  category: sequences
+  reason: "Sequence lifecycle (create/update/delete, follow-ups, pause/resume/archive, stats) is documented in the live API reference under Sequences but is absent from the captured v2 OpenAPI, which only carries the older Campaigns paths."
+- tool: Get-Sequence-Stats
+  category: sequences
+  reason: "Sequence lifecycle (create/update/delete, follow-ups, pause/resume/archive, stats) is documented in the live API reference under Sequences but is absent from the captured v2 OpenAPI, which only carries the older Campaigns paths."
+- tool: Get-Sequence
+  category: sequences
+  reason: "Sequence lifecycle (create/update/delete, follow-ups, pause/resume/archive, stats) is documented in the live API reference under Sequences but is absent from the captured v2 OpenAPI, which only carries the older Campaigns paths."
+- tool: Create-Sequence
+  category: sequences
+  reason: "Sequence lifecycle (create/update/delete, follow-ups, pause/resume/archive, stats) is documented in the live API reference under Sequences but is absent from the captured v2 OpenAPI, which only carries the older Campaigns paths."
+  observed_path: /sequences
+- tool: Update-Sequence
+  category: sequences
+  reason: "Sequence lifecycle (create/update/delete, follow-ups, pause/resume/archive, stats) is documented in the live API reference under Sequences but is absent from the captured v2 OpenAPI, which only carries the older Campaigns paths."
+- tool: Delete-Sequence
+  category: sequences
+  reason: "Sequence lifecycle (create/update/delete, follow-ups, pause/resume/archive, stats) is documented in the live API reference under Sequences but is absent from the captured v2 OpenAPI, which only carries the older Campaigns paths."
+- tool: Get-Sequence-Follow-Up
+  category: sequences
+  reason: "Sequence lifecycle (create/update/delete, follow-ups, pause/resume/archive, stats) is documented in the live API reference under Sequences but is absent from the captured v2 OpenAPI, which only carries the older Campaigns paths."
+- tool: Create-Sequence-Follow-Up
+  category: sequences
+  reason: "Sequence lifecycle (create/update/delete, follow-ups, pause/resume/archive, stats) is documented in the live API reference under Sequences but is absent from the captured v2 OpenAPI, which only carries the older Campaigns paths."
+- tool: Delete-Sequence-Follow-Up
+  category: sequences
+  reason: "Sequence lifecycle (create/update/delete, follow-ups, pause/resume/archive, stats) is documented in the live API reference under Sequences but is absent from the captured v2 OpenAPI, which only carries the older Campaigns paths."
+rest_only: []
+rest_only_note: >-
+  Every operation in the captured v2 OpenAPI has at least one MCP tool bound to it. The Logo API
+  (GET https://logos.hunter.io/{domain}, unauthenticated) is documented but is in neither column:
+  it is absent from the OpenAPI and has no MCP tool.
+coverage:
+  mcp_tools_named: 100
+  mcp_tools_bound: 26
+  mcp_only: 74
+  rest_operations_total: 25
+  rest_operations_with_a_tool: 25
+  rest_only: 0

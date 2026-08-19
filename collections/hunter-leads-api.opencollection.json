@@ -1,0 +1,184 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hunter Account Leads API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Leads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter List Leads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/leads",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of leads to return. Default is 20, max is 100."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of leads to skip for pagination."
+              },
+              {
+                "name": "leads_list_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter leads by list identifier."
+              },
+              {
+                "name": "first_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by first name."
+              },
+              {
+                "name": "last_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by last name."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter by email address."
+              },
+              {
+                "name": "company",
+                "value": "",
+                "type": "query",
+                "description": "Filter by company name."
+              },
+              {
+                "name": "phone_number",
+                "value": "",
+                "type": "query",
+                "description": "Filter by phone number."
+              },
+              {
+                "name": "twitter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Twitter handle."
+              }
+            ]
+          },
+          "docs": "Returns all the leads saved in your account."
+        },
+        {
+          "info": {
+            "name": "Hunter Create Lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.hunter.io/v2/leads",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new lead in your Hunter account."
+        },
+        {
+          "info": {
+            "name": "Hunter Create or Update Lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.hunter.io/v2/leads",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new lead or updates an existing one if a lead with the same email address already exists in the specified list."
+        },
+        {
+          "info": {
+            "name": "Hunter Get Lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/leads/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the lead."
+              }
+            ]
+          },
+          "docs": "Retrieves a single lead by its identifier."
+        },
+        {
+          "info": {
+            "name": "Hunter Update Lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.hunter.io/v2/leads/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the lead."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing lead by its identifier."
+        },
+        {
+          "info": {
+            "name": "Hunter Delete Lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.hunter.io/v2/leads/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the lead."
+              }
+            ]
+          },
+          "docs": "Deletes a lead by its identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

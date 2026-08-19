@@ -1,0 +1,399 @@
+{
+  "item": [
+    {
+      "id": "99ea87b6-a698-4867-b136-b191455cfacc",
+      "name": "Email Finder",
+      "description": {
+        "content": "Find the most likely email address for a person at a company.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c547d398-c8d9-47cf-bd8a-f228cc9bef82",
+          "name": "Hunter Email Finder",
+          "request": {
+            "name": "Hunter Email Finder",
+            "description": {
+              "content": "Finds the most likely email address from a domain name, a first name and a last name. You must provide a domain or company, and a name (first/last or full) or LinkedIn handle.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "email-finder"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "domain",
+                  "value": "<string>",
+                  "description": "Domain name of the company. Required if company is not provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "company",
+                  "value": "<string>",
+                  "description": "Company name. Required if domain is not provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "first_name",
+                  "value": "<string>",
+                  "description": "First name of the person. Required with last_name if full_name not provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "last_name",
+                  "value": "<string>",
+                  "description": "Last name of the person. Required with first_name if full_name not provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "full_name",
+                  "value": "<string>",
+                  "description": "Full name of the person. Required if first_name and last_name not provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "linkedin_handle",
+                  "value": "<string>",
+                  "description": "LinkedIn profile handle for the person."
+                },
+                {
+                  "disabled": false,
+                  "key": "max_duration",
+                  "value": "10",
+                  "description": "Maximum duration for the request in seconds. Between 3 and 20, default is 10."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9df738f5-90af-498f-9932-92d0f925b5de",
+              "name": "Successful email finder response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email-finder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "stripe.com"
+                    },
+                    {
+                      "key": "company",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first_name",
+                      "value": "John"
+                    },
+                    {
+                      "key": "last_name",
+                      "value": "Collison"
+                    },
+                    {
+                      "key": "full_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "linkedin_handle",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "max_duration",
+                      "value": "10"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"first_name\": \"example_value\",\n    \"last_name\": \"example_value\",\n    \"email\": \"user@example.com\",\n    \"score\": 10,\n    \"domain\": \"example_value\",\n    \"position\": \"example_value\",\n    \"company\": \"example_value\",\n    \"twitter\": \"example_value\",\n    \"linkedin_url\": \"https://www.example.com\",\n    \"phone_number\": \"example_value\",\n    \"verification\": {\n      \"date\": \"2026-01-15\",\n      \"status\": \"valid\"\n    }\n  },\n  \"meta\": {\n    \"params\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80485932-3fc2-4f69-8b69-f83984374ae1",
+              "name": "Invalid parameters or missing required fields.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email-finder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "stripe.com"
+                    },
+                    {
+                      "key": "company",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first_name",
+                      "value": "John"
+                    },
+                    {
+                      "key": "last_name",
+                      "value": "Collison"
+                    },
+                    {
+                      "key": "full_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "linkedin_handle",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "max_duration",
+                      "value": "10"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d134168-dd5a-4545-87fa-45af7aebfca5",
+              "name": "Invalid or missing API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email-finder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "stripe.com"
+                    },
+                    {
+                      "key": "company",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first_name",
+                      "value": "John"
+                    },
+                    {
+                      "key": "last_name",
+                      "value": "Collison"
+                    },
+                    {
+                      "key": "full_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "linkedin_handle",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "max_duration",
+                      "value": "10"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54231d13-fb27-4349-a7ae-7af05084e600",
+              "name": "Usage limit exceeded or rate limited.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email-finder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "stripe.com"
+                    },
+                    {
+                      "key": "company",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first_name",
+                      "value": "John"
+                    },
+                    {
+                      "key": "last_name",
+                      "value": "Collison"
+                    },
+                    {
+                      "key": "full_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "linkedin_handle",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "max_duration",
+                      "value": "10"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.hunter.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api_key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d5eeac3d-458e-4519-8290-5c584819861f",
+    "name": "Hunter Account Email Finder API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability. The API provides domain search, email finder, email verifier, email count, account information, leads management, leads lists, campaigns, discover, enrichment, and logo retrieval capabilities.\n\nContact Support:\n Name: Hunter Support\n Email: support@hunter.io",
+      "type": "text/plain"
+    }
+  }
+}

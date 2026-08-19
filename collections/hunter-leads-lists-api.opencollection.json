@@ -1,0 +1,127 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hunter Account Leads Lists API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Leads Lists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter List Leads Lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/leads_lists",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of lists to return. Default is 20, max is 100."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of lists to skip for pagination."
+              }
+            ]
+          },
+          "docs": "Returns all the leads lists saved in your account."
+        },
+        {
+          "info": {
+            "name": "Hunter Create Leads List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.hunter.io/v2/leads_lists",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new leads list."
+        },
+        {
+          "info": {
+            "name": "Hunter Get Leads List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/leads_lists/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the leads list."
+              }
+            ]
+          },
+          "docs": "Retrieves a single leads list by its identifier."
+        },
+        {
+          "info": {
+            "name": "Hunter Update Leads List",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.hunter.io/v2/leads_lists/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the leads list."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing leads list by its identifier."
+        },
+        {
+          "info": {
+            "name": "Hunter Delete Leads List",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.hunter.io/v2/leads_lists/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the leads list."
+              }
+            ]
+          },
+          "docs": "Deletes a leads list by its identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

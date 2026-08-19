@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hunter Account Combined Enrichment API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Combined Enrichment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Combined Enrichment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/combined/find",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Email address to enrich with both person and company data."
+              },
+              {
+                "name": "clearbit_format",
+                "value": "",
+                "type": "query",
+                "description": "Format response to match the Clearbit schema."
+              }
+            ]
+          },
+          "docs": "Merges person and company information for a single email address, returning enriched records combining both datasets."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

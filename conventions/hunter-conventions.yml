@@ -1,0 +1,88 @@
+generated: '2026-08-13'
+method: searched
+source: https://hunter.io/api-documentation/v2
+description: >-
+  Cross-cutting request/response semantics for the Hunter v2 API, read from the published API
+  reference and cross-checked against openapi/_original/hunter-api-openapi.yml.
+authentication:
+  style: api-key
+  transports:
+  - {in: query, name: api_key}
+  - {in: header, name: X-API-KEY}
+  - {in: header, name: Authorization, format: 'Bearer YOUR_API_KEY'}
+  oauth: >-
+    An OAuth 2.1-shaped authorization server exists at hunter.io (authorization code + PKCE S256,
+    client credentials, refresh, dynamic client registration) but is not written up in the API
+    reference - see scopes/hunter-scopes.yml.
+  artifact: authentication/hunter-authentication.yml
+idempotency:
+  supported: true
+  header: Idempotency-Key
+  scope: 'per-user, per-endpoint'
+  operations: [POST /v2/sequences]
+  retention: '24 hours (60 seconds while the original request is in flight)'
+  body_fingerprint: true
+  fingerprint_normalisation:
+  - Reordered or duplicated entries in schedule_days and email_account_ids are normalised on both sides.
+  - bcc_recipient is lowercased before comparison.
+  - Explicit nulls for fields whose null semantics is "leave unchanged" are dropped before hashing.
+  errors:
+  - {id: idempotency_key_too_long, status: 422}
+  - {id: idempotency_key_in_flight, status: 409, headers: 'Retry-After: 2'}
+  - {id: idempotency_key_mismatch, status: 422}
+  - {id: idempotency_key_consumed, status: 422}
+  naturally_idempotent:
+  - 'PUT /v2/leads (documented upsert)'
+  - 'POST /v2/sequences/{id}/pause - "calling it on an already paused sequence will succeed without any side effects"'
+  caveat: >-
+    Idempotency-Key is honoured on sequence creation ONLY. Lead creation, recipient addition and
+    every bulk operation have no replay protection, so a retried POST /v2/leads creates a duplicate.
+  docs: https://hunter.io/api-documentation/v2#sequences
+pagination:
+  style: limit-offset
+  params: [limit, offset]
+  response_fields: [meta.total, meta.limit, meta.offset]
+  defaults: {limit: 20, max_limit: 100}
+  max_offset: 10000
+  plan_gated: >-
+    Changing offset requires a paid plan on Discover and Domain Search; Free-plan callers are
+    capped at offset 10 and receive pagination_error above it.
+  cursor_exception:
+    endpoint: Discover People
+    param: search_after
+    note: Discover People paginates with an opaque cursor rather than an offset.
+error_envelope:
+  media_type: application/json
+  shape: '{"errors": [{"id", "code", "details"}]}'
+  discriminator: errors[].id
+  rfc9457: false
+  artifact: errors/hunter-problem-types.yml
+success_envelope:
+  shape: '{"data": {...}, "meta": {...}}'
+  note: 'Some endpoints additionally return a top-level "status" field set to "success".'
+rate_limit_signalling:
+  headers_published: false
+  headers_note: >-
+    Hunter documents no X-RateLimit-* or RateLimit-* response headers. The only runtime signal an
+    agent gets is the status code, plus Retry-After on the idempotency 409. Clients must pace
+    themselves against the per-endpoint numbers in the docs.
+  exhaustion_status: '403 (rate limit) / 429 (monthly credit quota)'
+  artifact: rate-limits/hunter-rate-limits.yml
+versioning:
+  style: uri-path
+  current: v2
+  artifact: lifecycle/hunter-lifecycle.yml
+request_tracing:
+  request_id_header: null
+  note: No request-id or correlation header is documented on requests or responses.
+field_expansion: null
+sparse_fieldsets: null
+metadata:
+  supported: true
+  detail: >-
+    Leads support custom attributes (documented as Custom Attributes) and tags; both are managed
+    through their own endpoints rather than an inline metadata object.
+filtering:
+  detail: >-
+    Domain Search supports server-side department and seniority filters; Discover accepts a
+    natural-language query plus structured filters.

@@ -1,0 +1,93 @@
+generated: '2026-08-13'
+method: searched
+source: https://github.com/hunter-io/claude-plugin
+description: >-
+  Hunter publishes its own packaged Agent Skills in the first-party hunter-io/claude-plugin
+  repository (MIT, plugin.json author Hunter.io). All thirteen SKILL.md files are saved here
+  VERBATIM - none were authored by API Evangelist. Each skill drives the remote MCP server at
+  https://mcp.hunter.io/mcp and names real MCP tools from Hunter's own TOOL_NAMES registry.
+publisher: Hunter.io
+repository: https://github.com/hunter-io/claude-plugin
+license: MIT
+mcp_server: https://mcp.hunter.io/mcp
+skills:
+- file: hunter-email-finder.md
+  name: email-finder
+  description: Finds a professional email address from a person's name and company domain.
+  api: openapi/hunter-email-finder-api-openapi.yml
+  operations: [emailFinder]
+  mcp_tools: [Email-Finder]
+- file: hunter-email-verifier.md
+  name: email-verifier
+  description: Checks whether an email address is deliverable.
+  api: openapi/hunter-email-verifier-api-openapi.yml
+  operations: [emailVerifier]
+  mcp_tools: [Email-Verifier]
+- file: hunter-domain-search.md
+  name: domain-search
+  description: Lists all contacts at a company domain.
+  api: openapi/hunter-domain-search-api-openapi.yml
+  operations: [domainSearch]
+  mcp_tools: [Domain-Search]
+- file: hunter-company-enrichment.md
+  name: company-enrichment
+  description: Returns company details for a domain.
+  api: openapi/hunter-company-enrichment-api-openapi.yml
+  operations: [companyEnrichment]
+  mcp_tools: [Company-Enrichment]
+- file: hunter-person-enrichment.md
+  name: person-enrichment
+  description: Returns person details for an email address.
+  api: openapi/hunter-email-enrichment-api-openapi.yml
+  operations: [emailEnrichment]
+  mcp_tools: [Person-Enrichment]
+- file: hunter-discover.md
+  name: discover
+  description: Finds companies by criteria and sizes their contacts.
+  api: openapi/hunter-discover-api-openapi.yml
+  operations: [discover]
+  mcp_tools: [Find-Companies, Find-People]
+- file: hunter-prospecting.md
+  name: prospecting
+  description: End-to-end prospecting pipeline chaining discovery, search, verification and enrichment.
+  api: openapi/_original/hunter-api-openapi.yml
+  operations: [discover, domainSearch, emailFinder, emailVerifier, companyEnrichment, createLead]
+  mcp_tools: [Plan-Prospecting-Flow, Find-Companies, Domain-Search, Email-Verifier, Company-Enrichment]
+- file: hunter-build-sequences.md
+  name: build-sequences
+  description: Creates and runs email outreach sequences.
+  api: openapi/hunter-campaigns-api-openapi.yml
+  operations: [listCampaigns, addCampaignRecipients, startCampaign]
+  mcp_tools: [Create-Sequence, Create-Sequence-Follow-Up, Add-Sequence-Recipients, Start-Sequence]
+- file: hunter-manage-leads.md
+  name: manage-leads
+  description: Creates, tags and organizes leads.
+  api: openapi/hunter-leads-api-openapi.yml
+  operations: [listLeads, createLead, updateLead, deleteLead, upsertLead]
+  mcp_tools: [Create-Lead, Create-Lead-If-Missing, Update-Lead, Add-Tag-To-Lead]
+- file: hunter-lead-lists.md
+  name: lead-lists
+  description: Builds and organizes leads lists.
+  api: openapi/hunter-leads-lists-api-openapi.yml
+  operations: [listLeadsLists, createLeadsList, updateLeadsList, deleteLeadsList]
+  mcp_tools: [List-Leads-Lists, Create-Leads-List, Merge-Leads-Lists]
+- file: hunter-company-lists.md
+  name: company-lists
+  description: Saves and organizes target accounts.
+  api: null
+  operations: []
+  mcp_tools: [List-Company-Lists, Create-Company-List, Add-Company-To-List]
+  note: No public REST operation for company lists is documented in the v2 OpenAPI.
+- file: hunter-push-to-crm.md
+  name: push-to-crm
+  description: Syncs leads to a connected CRM.
+  api: null
+  operations: []
+  mcp_tools: [Push-Leads-To-CRM, List-Connected-Apps]
+  note: CRM push is exposed by the MCP server and the docs' Connected Apps section, not by the captured v2 OpenAPI.
+- file: hunter-check-usage.md
+  name: check-usage
+  description: Reports plan and remaining credits.
+  api: openapi/hunter-account-api-openapi.yml
+  operations: [getAccount]
+  mcp_tools: [Get-Account-Details, Get-Usage]

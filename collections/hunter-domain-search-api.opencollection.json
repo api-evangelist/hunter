@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hunter Account Domain Search API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Domain Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hunter Domain Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.hunter.io/v2/domain-search",
+            "params": [
+              {
+                "name": "domain",
+                "value": "stripe.com",
+                "type": "query",
+                "description": "Domain name from which you want to find the email addresses. Required if company is not provided."
+              },
+              {
+                "name": "company",
+                "value": "Stripe",
+                "type": "query",
+                "description": "Company name from which you want to find the email addresses. Required if domain is not provided."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of email addresses to return. Default is 10."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of email addresses to skip for pagination. Default is 0."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by email address type."
+              },
+              {
+                "name": "seniority",
+                "value": "",
+                "type": "query",
+                "description": "Filter by seniority level."
+              },
+              {
+                "name": "department",
+                "value": "",
+                "type": "query",
+                "description": "Filter by department."
+              },
+              {
+                "name": "verification_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by verification status."
+              }
+            ]
+          },
+          "docs": "Returns all the email addresses found using a given domain name, with sources. You must provide either a domain or a company name."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

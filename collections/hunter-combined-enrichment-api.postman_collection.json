@@ -1,0 +1,342 @@
+{
+  "item": [
+    {
+      "id": "8bc827eb-1bb1-4ff1-b9c7-a119ca360670",
+      "name": "Combined Enrichment",
+      "description": {
+        "content": "Merge person and company enrichment for a single email address.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9091dfd0-6e0b-4964-a412-e119aec134e3",
+          "name": "Hunter Combined Enrichment",
+          "request": {
+            "name": "Hunter Combined Enrichment",
+            "description": {
+              "content": "Merges person and company information for a single email address, returning enriched records combining both datasets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "combined",
+                "find"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<email>",
+                  "description": "(Required) Email address to enrich with both person and company data."
+                },
+                {
+                  "disabled": false,
+                  "key": "clearbit_format",
+                  "value": "<boolean>",
+                  "description": "Format response to match the Clearbit schema."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "04e0f28d-0789-44ee-ba8c-355f81af04bb",
+              "name": "Successful combined enrichment response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "combined",
+                    "find"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "clearbit_format",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"person\": {\n      \"id\": \"abc123\",\n      \"name\": {\n        \"fullName\": \"string\",\n        \"givenName\": \"string\",\n        \"familyName\": \"string\"\n      },\n      \"email\": \"user@example.com\",\n      \"location\": \"example_value\",\n      \"timeZone\": \"example_value\",\n      \"utcOffset\": 1274.1974623976437,\n      \"geo\": {\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"stateCode\": \"example_value\",\n        \"country\": \"example_value\",\n        \"countryCode\": \"example_value\",\n        \"lat\": 1052.7229525563598,\n        \"lng\": 2287.9950636144263\n      },\n      \"bio\": \"example_value\",\n      \"site\": \"example_value\",\n      \"avatar\": \"example_value\",\n      \"employment\": {\n        \"domain\": \"string\",\n        \"name\": \"string\",\n        \"title\": \"string\",\n        \"role\": \"string\",\n        \"subRole\": \"string\",\n        \"seniority\": \"string\"\n      },\n      \"facebook\": {\n        \"handle\": \"string\"\n      },\n      \"github\": {\n        \"handle\": \"string\",\n        \"id\": 8470,\n        \"avatar\": \"string\",\n        \"company\": \"string\",\n        \"blog\": \"string\",\n        \"followers\": 3242,\n        \"following\": 2478\n      },\n      \"twitter\": {\n        \"handle\": \"string\",\n        \"id\": 6741,\n        \"bio\": \"string\",\n        \"followers\": 4543,\n        \"following\": 991,\n        \"statuses\": 7298,\n        \"favorites\": 492,\n        \"location\": \"string\",\n        \"site\": \"string\",\n        \"avatar\": \"string\"\n      },\n      \"linkedin\": {\n        \"handle\": \"string\"\n      },\n      \"fuzzy\": true,\n      \"emailProvider\": \"user@example.com\",\n      \"indexedAt\": \"2026-01-15\",\n      \"phone\": \"example_value\",\n      \"activeAt\": \"2026-01-15\",\n      \"inactiveAt\": \"2026-01-15\"\n    },\n    \"company\": {\n      \"id\": \"abc123\",\n      \"name\": \"Example Title\",\n      \"legalName\": \"example_value\",\n      \"domain\": \"example_value\",\n      \"site\": {\n        \"phoneNumbers\": [\n          \"string\",\n          \"string\"\n        ],\n        \"emailAddresses\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"category\": {\n        \"sector\": \"string\",\n        \"industryGroup\": \"string\",\n        \"industry\": \"string\",\n        \"subIndustry\": \"string\",\n        \"gicsCode\": \"string\",\n        \"sicCode\": \"string\",\n        \"sic4Codes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"naicsCode\": \"string\",\n        \"naics6Codes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"naics6Codes2022\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"description\": \"A sample description.\",\n      \"foundedYear\": 3759,\n      \"location\": \"example_value\",\n      \"timeZone\": \"example_value\",\n      \"utcOffset\": 4085.9232926286536,\n      \"geo\": {\n        \"streetNumber\": \"example_value\",\n        \"streetName\": \"example_value\",\n        \"subPremise\": \"example_value\",\n        \"streetAddress\": \"example_value\",\n        \"city\": \"example_value\",\n        \"postalCode\": \"example_value\",\n        \"state\": \"example_value\",\n        \"stateCode\": \"example_value\",\n        \"country\": \"example_value\",\n        \"countryCode\": \"example_value\",\n        \"lat\": 3432.420810351258,\n        \"lng\": 5412.242287948551\n      },\n      \"logo\": \"https://www.example.com\",\n      \"facebook\": {\n        \"handle\": \"string\",\n        \"likes\": 7401\n      },\n      \"linkedin\": {\n        \"handle\": \"string\"\n      },\n      \"twitter\": {\n        \"handle\": \"string\",\n        \"id\": 4038,\n        \"bio\": \"string\",\n        \"followers\": 8381,\n        \"following\": 1567,\n        \"location\": \"string\",\n        \"site\": \"string\",\n        \"avatar\": \"string\"\n      },\n      \"crunchbase\": {\n        \"handle\": \"string\"\n      },\n      \"emailProvider\": \"user@example.com\",\n      \"type\": \"example_value\",\n      \"company_type\": \"example_value\",\n      \"ticker\": \"example_value\",\n      \"identifiers\": {\n        \"usEIN\": \"string\"\n      },\n      \"phone\": \"example_value\",\n      \"metrics\": {\n        \"alexaUsRank\": 9078,\n        \"alexaGlobalRank\": 946,\n        \"trafficRank\": \"string\",\n        \"employees\": \"string\",\n        \"marketCap\": 4869.068565987455,\n        \"raised\": 6676.046197103375,\n        \"annualRevenue\": 7497.786265366039,\n        \"estimatedAnnualRevenue\": 2214.8946510447186,\n        \"fiscalYearEnd\": \"string\"\n      },\n      \"indexedAt\": \"2026-01-15\",\n      \"parent\": {\n        \"domain\": \"string\"\n      },\n      \"ultimateParent\": {\n        \"domain\": \"string\"\n      }\n    }\n  },\n  \"meta\": {\n    \"params\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ae7f906-4d24-4b95-b432-27e49ef967e0",
+              "name": "Invalid parameters or missing required fields.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "combined",
+                    "find"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "clearbit_format",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfa9d49c-3769-4952-981d-bebc1ec40ab0",
+              "name": "Invalid or missing API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "combined",
+                    "find"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "clearbit_format",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b4bfacf-24ac-48c4-88e6-89038cfa6288",
+              "name": "Usage limit exceeded or rate limited.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "combined",
+                    "find"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "clearbit_format",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e13fdacd-c1a3-4fa7-ab25-21e9cc9d30e3",
+              "name": "Cannot process this person's data due to legal restrictions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "combined",
+                    "find"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "clearbit_format",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "code": 451,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.hunter.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api_key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "213c115c-5d28-4558-bfa3-2bbfe21a6261",
+    "name": "Hunter Account Combined Enrichment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability. The API provides domain search, email finder, email verifier, email count, account information, leads management, leads lists, campaigns, discover, enrichment, and logo retrieval capabilities.\n\nContact Support:\n Name: Hunter Support\n Email: support@hunter.io",
+      "type": "text/plain"
+    }
+  }
+}

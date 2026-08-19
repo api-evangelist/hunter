@@ -1,0 +1,294 @@
+{
+  "item": [
+    {
+      "id": "b5da89c9-9dad-4eb3-9891-bb4f2e909078",
+      "name": "Company Enrichment",
+      "description": {
+        "content": "Enrich company information linked to a domain name.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "70fff9e6-da35-4983-881a-3927c28cfe5d",
+          "name": "Hunter Company Enrichment",
+          "request": {
+            "name": "Hunter Company Enrichment",
+            "description": {
+              "content": "Returns detailed organizational data associated with a domain name, including company size, industry, location, and other firmographic information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "companies",
+                "find"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "domain",
+                  "value": "<string>",
+                  "description": "(Required) Domain name of the company to enrich."
+                },
+                {
+                  "disabled": false,
+                  "key": "clearbit_format",
+                  "value": "<boolean>",
+                  "description": "Format response to match the Clearbit schema."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9fe037d3-5dfa-43fd-950f-0674502bbbf4",
+              "name": "Successful company enrichment response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    "find"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "stripe.com"
+                    },
+                    {
+                      "key": "clearbit_format",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"abc123\",\n    \"name\": \"Example Title\",\n    \"legalName\": \"example_value\",\n    \"domain\": \"example_value\",\n    \"site\": {\n      \"phoneNumbers\": [\n        \"string\",\n        \"string\"\n      ],\n      \"emailAddresses\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"category\": {\n      \"sector\": \"string\",\n      \"industryGroup\": \"string\",\n      \"industry\": \"string\",\n      \"subIndustry\": \"string\",\n      \"gicsCode\": \"string\",\n      \"sicCode\": \"string\",\n      \"sic4Codes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"naicsCode\": \"string\",\n      \"naics6Codes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"naics6Codes2022\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"description\": \"A sample description.\",\n    \"foundedYear\": 1808,\n    \"location\": \"example_value\",\n    \"timeZone\": \"example_value\",\n    \"utcOffset\": 2096.973749713025,\n    \"geo\": {\n      \"streetNumber\": \"example_value\",\n      \"streetName\": \"example_value\",\n      \"subPremise\": \"example_value\",\n      \"streetAddress\": \"example_value\",\n      \"city\": \"example_value\",\n      \"postalCode\": \"example_value\",\n      \"state\": \"example_value\",\n      \"stateCode\": \"example_value\",\n      \"country\": \"example_value\",\n      \"countryCode\": \"example_value\",\n      \"lat\": 2061.5168152691667,\n      \"lng\": 6641.330903564238\n    },\n    \"logo\": \"https://www.example.com\",\n    \"facebook\": {\n      \"handle\": \"string\",\n      \"likes\": 2730\n    },\n    \"linkedin\": {\n      \"handle\": \"string\"\n    },\n    \"twitter\": {\n      \"handle\": \"string\",\n      \"id\": 3826,\n      \"bio\": \"string\",\n      \"followers\": 1617,\n      \"following\": 2429,\n      \"location\": \"string\",\n      \"site\": \"string\",\n      \"avatar\": \"string\"\n    },\n    \"crunchbase\": {\n      \"handle\": \"string\"\n    },\n    \"emailProvider\": \"user@example.com\",\n    \"type\": \"example_value\",\n    \"company_type\": \"example_value\",\n    \"ticker\": \"example_value\",\n    \"identifiers\": {\n      \"usEIN\": \"string\"\n    },\n    \"phone\": \"example_value\",\n    \"metrics\": {\n      \"alexaUsRank\": 4706,\n      \"alexaGlobalRank\": 3111,\n      \"trafficRank\": \"string\",\n      \"employees\": \"string\",\n      \"marketCap\": 4656.548452841641,\n      \"raised\": 859.1151728983082,\n      \"annualRevenue\": 8185.533903476015,\n      \"estimatedAnnualRevenue\": 2915.873022810835,\n      \"fiscalYearEnd\": \"string\"\n    },\n    \"indexedAt\": \"2026-01-15\",\n    \"parent\": {\n      \"domain\": \"string\"\n    },\n    \"ultimateParent\": {\n      \"domain\": \"string\"\n    }\n  },\n  \"meta\": {\n    \"params\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8ad2d63-fdcc-4bde-a704-cd9046a1c9d6",
+              "name": "Invalid parameters or missing required fields.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    "find"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "stripe.com"
+                    },
+                    {
+                      "key": "clearbit_format",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66c5e9b4-53f2-4c91-9558-7ce3b830f3e4",
+              "name": "Invalid or missing API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    "find"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "stripe.com"
+                    },
+                    {
+                      "key": "clearbit_format",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03ed04d9-f5ce-468f-abd2-dae849b4836f",
+              "name": "Usage limit exceeded or rate limited.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    "find"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "stripe.com"
+                    },
+                    {
+                      "key": "clearbit_format",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.hunter.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api_key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6ba110f9-f76b-4b90-9ae0-34c8672ad407",
+    "name": "Hunter Account Company Enrichment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability. The API provides domain search, email finder, email verifier, email count, account information, leads management, leads lists, campaigns, discover, enrichment, and logo retrieval capabilities.\n\nContact Support:\n Name: Hunter Support\n Email: support@hunter.io",
+      "type": "text/plain"
+    }
+  }
+}

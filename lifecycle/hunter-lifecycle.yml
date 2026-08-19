@@ -1,0 +1,42 @@
+generated: '2026-08-13'
+method: searched
+source: https://hunter.io/api-documentation/v2
+versioning:
+  scheme: uri-path
+  current: v2
+  previous: v1
+  base_url: https://api.hunter.io/v2
+  docs: https://hunter.io/api-documentation/v2
+  note: >-
+    The API reference carries a V1/V2 version switcher, so v1 is still documented alongside v2.
+    Hunter publishes no dated version history, no version-support window and no migration guide.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation policy, Sunset/Deprecation header support (RFC 8594) or end-of-life schedule
+    is published for either version. This is a real gap, not an unchecked box: probed and searched
+    on 2026-08-13 across the API reference, changelog and help centre.
+beta_surfaces:
+- name: Webhooks
+  status: beta
+  statement: >-
+    "This endpoint is in Beta. It's fully functional, but its parameters and response format may
+    still change as we refine it, so expect occasional breaking changes during the Beta period."
+  url: https://hunter.io/api-documentation/v2#webhooks
+sla:
+  url: null
+  uptime_target: null
+  note: No public SLA or uptime commitment was found; enterprise terms are sales-gated.
+status_page: https://status.hunter.io
+changelog: https://hunter.io/changelog
+changelog_artifact: changelog/hunter-changelog.yml
+deprecated_operations: []
+deprecated_operations_note: 'No operation in the captured OpenAPI carries deprecated: true.'
+observed_renames:
+- from: Campaigns
+  to: Sequences
+  detail: >-
+    The product and the MCP tool namespace use "Sequences"; the captured v2 OpenAPI and the
+    /campaigns paths still use "Campaigns". Both surfaces are live - see mcp/hunter-tool-crosswalk.yml.

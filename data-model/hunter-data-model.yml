@@ -1,0 +1,132 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/_original/hunter-api-openapi.yml
+description: >-
+  Entity-relationship graph derived from the $ref links and id-reference fields in Hunter's
+  captured v2 OpenAPI. Hunter's data core is small and email-centric: an email address is the
+  join key between the discovery surface (domain search, finder, verifier), the enrichment
+  surface (person, company, combined) and the CRM surface (leads, leads lists, campaigns).
+  Identifiers are plain integers - Hunter uses no prefixed object ids.
+id_convention:
+  style: integer
+  prefixed: false
+  note: 'Leads, leads lists, campaigns and webhooks are addressed by a bare integer id.'
+join_keys:
+- key: email
+  note: The email address is the primary join across discovery, verification, enrichment and leads.
+- key: domain
+  note: The company domain is the join across domain search, email count, company enrichment and Discover.
+entity_count: 23
+entities:
+- name: DomainSearchResult
+  fields: 7
+- name: DomainEmail
+  fields: 13
+- name: EmailFinderResult
+  fields: 12
+- name: EmailVerifierResult
+  fields: 14
+- name: EmailCountResult
+  fields: 5
+- name: AccountResult
+  fields: 9
+- name: UsageCounter
+  fields: 2
+- name: Lead
+  fields: 22
+- name: LeadInput
+  fields: 15
+- name: LeadsList
+  fields: 4
+- name: Campaign
+  fields: 9
+- name: CampaignRecipient
+  fields: 3
+- name: DiscoverRequest
+  fields: 12
+- name: DiscoverResult
+  fields: 3
+- name: PersonEnrichment
+  fields: 21
+- name: CompanyEnrichment
+  fields: 31
+- name: GeoLocation
+  fields: 7
+- name: CompanyGeoLocation
+  fields: 12
+- name: VerificationStatus
+  fields: 2
+- name: Source
+  fields: 5
+- name: PaginationMeta
+  fields: 3
+- name: Meta
+  fields: 1
+- name: Error
+  fields: 1
+relationships:
+- from: DomainSearchResult
+  to: DomainEmail
+  type: has_many
+  via: emails
+- from: DomainEmail
+  to: VerificationStatus
+  type: has_one
+  via: verification
+- from: DomainEmail
+  to: Source
+  type: has_many
+  via: sources
+- from: EmailFinderResult
+  to: VerificationStatus
+  type: has_one
+  via: verification
+- from: EmailFinderResult
+  to: Source
+  type: has_many
+  via: sources
+- from: EmailVerifierResult
+  to: Source
+  type: has_many
+  via: sources
+- from: Lead
+  to: VerificationStatus
+  type: has_one
+  via: verification
+- from: PersonEnrichment
+  to: GeoLocation
+  type: has_one
+  via: geo
+- from: CompanyEnrichment
+  to: CompanyGeoLocation
+  type: has_one
+  via: geo
+id_reference_fields:
+- from: Lead
+  via: leads_list_id
+  references: leads_list
+- from: LeadInput
+  via: leads_list_id
+  references: leads_list
+- from: CampaignRecipient
+  via: lead_id
+  references: lead
+domains:
+- name: Discovery
+  entities: [DomainSearchResult, DomainEmail, EmailFinderResult, EmailCountResult, DiscoverRequest, DiscoverResult, Source]
+- name: Verification
+  entities: [EmailVerifierResult, VerificationStatus]
+- name: Enrichment
+  entities: [PersonEnrichment, CompanyEnrichment, GeoLocation, CompanyGeoLocation]
+- name: CRM
+  entities: [Lead, LeadInput, LeadsList, Campaign, CampaignRecipient]
+- name: Account
+  entities: [AccountResult, UsageCounter]
+- name: Envelope
+  entities: [Meta, PaginationMeta, Error]
+gaps:
+- >-
+  Entities backing the MCP-only surface - sequences (as distinct from campaigns), company lists,
+  lead tags, custom attributes, message templates, email accounts, connected apps and webhooks -
+  have no schema in the captured OpenAPI. See mcp/hunter-tool-crosswalk.yml for the 74 tools with
+  no modelled REST counterpart.

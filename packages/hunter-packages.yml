@@ -1,0 +1,116 @@
+generated: '2026-08-13'
+method: searched
+source: https://hunter.io/api-documentation/v2#api-wrappers
+description: >-
+  Hunter ships NO first-party client SDK in any package registry. The API reference lists six
+  client libraries under a heading that states plainly: "These wrappers can help you get started
+  faster with Hunter's API. They have been built by the community." Every entry below is therefore
+  official: false. Registry metadata was read on 2026-08-13 and shows most of them are long abandoned -
+  four of the six have not shipped a release since 2021, and the two npm packages have been
+  untouched since 2016 and 2017, while the API they wrap has since added Sequences, Discover,
+  enrichment, webhooks and 100 MCP tools. Hunter's own first-party agent-facing code
+  (hunter-io/chatgpt-mcp, hunter-io/claude-plugin) is published to GitHub only, not to a registry.
+official_sdk_count: 0
+packages:
+- language: python
+  registry: pypi
+  name: pyhunter
+  url: https://pypi.org/project/pyhunter/
+  install: pip install pyhunter
+  official: false
+  source_repo: https://github.com/VonStruddle/PyHunter
+  version: 2.1.0
+  published: '2026-04-09'
+  note: Community wrapper, listed in Hunter's docs. The only listed wrapper with a 2026 release.
+- language: ruby
+  registry: rubygems
+  name: emailhunter
+  url: https://rubygems.org/gems/emailhunter
+  install: gem install emailhunter
+  official: false
+  source_repo: https://github.com/davidesantangelo/emailhunter
+  version: 2.0.0
+  published: '2025-11-28'
+  note: Community wrapper by Davide Santangelo; the Ruby entry linked from Hunter's docs.
+- language: php
+  registry: packagist
+  name: messerli90/hunterio
+  url: https://packagist.org/packages/messerli90/hunterio
+  install: composer require messerli90/hunterio
+  official: false
+  source_repo: https://github.com/messerli90/hunterio
+  version: 2.0.0
+  published: '2021-03-09'
+  note: Laravel wrapper, listed in Hunter's docs as "Laravel". No release in five years.
+- language: go
+  registry: go-modules
+  name: github.com/picatz/hunter
+  url: https://pkg.go.dev/github.com/picatz/hunter
+  install: go get github.com/picatz/hunter
+  official: false
+  source_repo: https://github.com/picatz/hunter
+  version: v1.0.0
+  published: '2020-04-11'
+  note: Community wrapper, listed in Hunter's docs as "Go".
+- language: javascript
+  registry: npm
+  name: hunter.io
+  url: https://www.npmjs.com/package/hunter.io
+  install: npm install hunter.io
+  official: false
+  version: 0.2.7
+  published: '2017-12-23'
+  note: >-
+    "A simple javascript wrapper for Hunter.io API". Not the package Hunter's docs link to, but the
+    closest-named npm package; last published 2017.
+- language: javascript
+  registry: npm
+  name: hunterio
+  url: https://www.npmjs.com/package/hunterio
+  install: npm install hunterio
+  official: false
+  version: 1.0.0
+  published: '2016-10-29'
+  note: >-
+    The Node.js wrapper Hunter's docs link to. Self-described as "Hunter.io SDK (unofficial)";
+    last published 2016, nearly a decade before the current API surface.
+- language: ruby
+  registry: rubygems
+  name: hunterio
+  url: https://rubygems.org/gems/hunterio
+  install: gem install hunterio
+  official: false
+  version: 0.2.0
+  published: '2016-12-01'
+  note: Second, older community Ruby gem; not the one linked from Hunter's docs.
+- language: r
+  registry: null
+  name: hunteR
+  url: https://github.com/dschmeh/hunteR
+  install: null
+  official: false
+  version: null
+  published: null
+  note: >-
+    Listed in Hunter's docs as "R". GitHub-only - not published to CRAN, so there is no registry
+    metadata endpoint to read a version or release date from.
+first_party_repositories:
+- url: https://github.com/hunter-io/chatgpt-mcp
+  registry: null
+  version: null
+  published: null
+  note: >-
+    Hunter's ChatGPT-facing MCP Cloudflare Worker. package.json declares "private": true, so it is
+    deliberately not published to npm and has no registry metadata.
+- url: https://github.com/hunter-io/claude-plugin
+  registry: null
+  version: '0.1.0'
+  published: null
+  note: >-
+    Hunter's Claude plugin (13 Agent Skills + .mcp.json). Version read from .claude-plugin/plugin.json;
+    distributed through the Claude plugin directory, not a package registry, so there is no
+    registry publish date to record.
+no_code:
+- name: Zapier
+  url: https://zapier.com/zapbook/hunter/
+  note: Listed in the docs as the no-code integration path.

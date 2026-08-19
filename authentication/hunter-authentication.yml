@@ -1,31 +1,84 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/hunter-api-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: openapi/_original/hunter-api-openapi.yml
+docs: https://hunter.io/api-documentation/v2#authentication
+description: >-
+  Hunter authenticates every call with a single account API key, accepted in three interchangeable
+  positions. The OpenAPI declares all three. Separately — and documented nowhere in the API
+  reference — hunter.io runs a full OAuth 2.1 authorization server, discovered by probing RFC 8414
+  metadata; it is what the remote MCP server at mcp.hunter.io delegates to via RFC 9728
+  protected-resource metadata.
 summary:
   types:
   - apiKey
   - http
+  - oauth2
   api_key_in:
   - header
   - query
+  oauth2_flows:
+  - authorizationCode
+  - clientCredentials
+  - refreshToken
 schemes:
 - name: apiKeyQuery
   type: apiKey
   in: query
   parameter: api_key
-  description: API key passed as a query parameter.
+  description: API key passed as a query parameter. This is the form used throughout Hunter's own examples.
   sources:
-  - openapi/hunter-api-openapi.yml
+  - openapi/_original/hunter-api-openapi.yml
+  - https://hunter.io/api-documentation/v2#authentication
 - name: apiKeyHeader
   type: apiKey
   in: header
   parameter: X-API-KEY
-  description: API key passed via the X-API-KEY header.
+  description: API key passed via the X-API-KEY header. Also accepted by the remote MCP server.
   sources:
-  - openapi/hunter-api-openapi.yml
+  - openapi/_original/hunter-api-openapi.yml
+  - https://hunter.io/api-documentation/v2#authentication
 - name: bearerAuth
   type: http
   scheme: bearer
-  description: API key passed as a Bearer token in the Authorization header.
+  description: >-
+    API key passed as a Bearer token in the Authorization header. Note this is the API key itself,
+    not an OAuth access token. Also accepted by the remote MCP server.
   sources:
-  - openapi/hunter-api-openapi.yml
+  - openapi/_original/hunter-api-openapi.yml
+  - https://hunter.io/api-documentation/v2#authentication
+- name: oauth2
+  type: oauth2
+  description: >-
+    OAuth 2.1-shaped authorization server at https://hunter.io. Not declared in the OpenAPI and not
+    written up in the API reference; discovered from discovery metadata. Supports authorization
+    code with PKCE S256, client credentials and refresh tokens, plus RFC 7591 dynamic client
+    registration and the public-client token_endpoint_auth_method "none".
+  issuer: https://hunter.io
+  authorizationUrl: https://hunter.io/oauth/authorize
+  tokenUrl: https://hunter.io/oauth/token
+  revocationUrl: https://hunter.io/oauth/revoke
+  introspectionUrl: https://hunter.io/oauth/introspect
+  userinfoUrl: https://hunter.io/oauth/userinfo
+  jwksUri: https://hunter.io/oauth/discovery/keys
+  registrationUrl: https://hunter.io/oauth/register
+  scopes: [read, write]
+  artifact: scopes/hunter-scopes.yml
+  sources:
+  - https://hunter.io/.well-known/oauth-authorization-server
+  - https://hunter.io/.well-known/openid-configuration
+  - https://mcp.hunter.io/.well-known/oauth-protected-resource
+key_management:
+  self_serve: true
+  location: Hunter dashboard
+  api: 'API-key management is exposed through the MCP server (List-API-Keys, Create-API-Key, Delete-API-Key) and the docs'' API keys section, but not through the captured v2 OpenAPI.'
+  rotation_policy: null
+test_credential:
+  key: test-api-key
+  artifact: sandbox/hunter-sandbox.yml
+findings:
+- id: jwks-uri-500
+  detail: The advertised jwks_uri https://hunter.io/oauth/discovery/keys returned HTTP 500 when probed on 2026-08-13.
+- id: oauth-undocumented
+  detail: >-
+    A production OAuth/OIDC authorization server exists but appears in no human documentation.
+    Integrators can only find it by reading the well-known discovery documents.

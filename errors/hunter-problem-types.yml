@@ -1,0 +1,100 @@
+generated: '2026-08-13'
+method: searched
+source: https://hunter.io/api-documentation/v2#errors
+derived_from: openapi/_original/hunter-api-openapi.yml
+format: proprietary
+format_note: >-
+  Hunter does NOT use RFC 9457 problem+json. Every error is an application/json body carrying an
+  "errors" array whose members have id (a machine-readable slug), code (the HTTP status repeated)
+  and details (a human sentence). Agents should branch on errors[0].id, not on the prose.
+envelope:
+  media_type: application/json
+  shape: '{"errors": [{"id": "wrong_params", "code": 400, "details": "You are missing the domain parameter"}]}'
+  discriminator: errors[].id
+status_codes:
+- status: 200
+  title: OK
+  meaning: The request was successful.
+- status: 201
+  title: Created
+  meaning: The request was successful and the resource was created.
+- status: 202
+  title: Accepted
+  meaning: Verification accepted but not yet complete (Email Verifier); retry to collect the result.
+- status: 204
+  title: No content
+  meaning: The request was successful and no additional content was sent.
+- status: 400
+  title: Bad request
+  meaning: Missing a required parameter, or a supplied parameter was invalid.
+  remediation: Fix the named parameter in errors[0].details and retry. Not retryable as-is.
+- status: 401
+  title: Unauthorized
+  meaning: No valid API key was provided.
+  remediation: Supply api_key, X-API-KEY or Authorization Bearer. Not retryable.
+- status: 403
+  title: Forbidden
+  meaning: The per-second / per-minute RATE limit was reached.
+  remediation: Back off exponentially and retry. See rate-limits/hunter-rate-limits.yml.
+- status: 404
+  title: Not found
+  meaning: The requested resource does not exist.
+- status: 409
+  title: Conflict
+  meaning: Idempotency key still in flight (idempotency_key_in_flight).
+  remediation: Honour the Retry-After header (documented value 2 seconds) and retry the same key.
+- status: 422
+  title: Unprocessable entity
+  meaning: The request was valid but resource creation failed. Inspect errors[].
+- status: 429
+  title: Too many requests
+  meaning: The monthly USAGE / credit allotment is exhausted - NOT a rate limit.
+  remediation: Upgrade the plan or wait for the next billing cycle. Retrying will not help.
+- status: 451
+  title: Unavailable for legal reasons
+  meaning: >-
+    Hunter has been asked not to process personally identifiable information linked to this
+    person, so the request cannot be fulfilled.
+  remediation: Do not retry. Drop the subject from the workflow.
+- status: 5XX
+  title: Server error
+  meaning: Something went wrong on Hunter's end.
+problems:
+- id: wrong_params
+  status: 400
+  title: Missing or invalid parameter
+  details_example: You are missing the domain parameter
+  source: https://hunter.io/api-documentation/v2#errors
+- id: pagination_error
+  status: 400
+  title: Invalid limit or offset
+  details_example: The supplied limit or offset is invalid; e.g. offset above 10 on a Free plan.
+  source: https://hunter.io/api-documentation/v2#discover
+- id: idempotency_key_too_long
+  status: 422
+  title: Idempotency-Key exceeds 255 characters
+  source: https://hunter.io/api-documentation/v2#sequences
+- id: idempotency_key_in_flight
+  status: 409
+  title: A concurrent request with the same Idempotency-Key is still processing
+  headers: {Retry-After: '2'}
+  source: https://hunter.io/api-documentation/v2#sequences
+- id: idempotency_key_mismatch
+  status: 422
+  title: Same Idempotency-Key replayed with a different request body fingerprint
+  source: https://hunter.io/api-documentation/v2#sequences
+- id: idempotency_key_consumed
+  status: 422
+  title: The sequence created by the original request is no longer accessible
+  source: https://hunter.io/api-documentation/v2#sequences
+- id: not_found
+  status: 404
+  title: Resource not found
+  details_example: The requested resource couldn't be found.
+  source: probed - api.hunter.io returns this envelope on any unknown path
+notes:
+- >-
+  The 403/429 split is inverted relative to most APIs: 403 means "slow down" (rate limit) and 429
+  means "you are out of credits". An agent that treats 429 as retryable will burn retries against
+  an exhausted quota, and one that treats 403 as fatal will abandon a request it could have retried.
+- 451 is a first-class, expected response on the enrichment endpoints and encodes a GDPR erasure request.

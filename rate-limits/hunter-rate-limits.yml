@@ -4,7 +4,21 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Hunter
 providerId: hunter
 created: '2026-05-04'
-modified: '2026-05-05'
+# Provenance: originally written by the API Evangelist bulk sweep dated 2026-05-04.
+# Re-verified 2026-08-13 against the live API reference: every per-endpoint number below was
+# read back from https://hunter.io/api-documentation/v2, so the method is upgraded to searched.
+method: searched
+modified: '2026-08-13'
+verified: '2026-08-13'
+headers_published: false
+headers_note: >-
+  Confirmed on 2026-08-13: Hunter documents NO X-RateLimit-* or RateLimit-* response headers.
+  The only runtime header any part of the reference names is Retry-After, and only on the
+  idempotency_key_in_flight 409 for POST /v2/sequences. An agent has no live budget signal.
+retryAfterHeader:
+  documented: true
+  scope: idempotency_key_in_flight (409) on POST /v2/sequences only
+  value: '2'
 reconciled: true
 tags:
   - Rate Limiting
