@@ -3,20 +3,16 @@
   "feeds": [
     {
       "source": "https://hunter.io/blog/feed/",
-      "feed_url": "https://hunter.io/blog/feed/",
-      "title": "",
-      "saved": 3,
-      "method": "feed"
+      "error": "HTTPError"
     },
     {
       "source": "https://status.hunter.io",
       "feed_url": "https://status.hunter.io",
       "title": "",
       "saved": 0,
-      "method": "none",
-      "error": "parse_failed"
+      "method": "none"
     }
   ],
   "post_count": 50,
-  "fetched": "2026-08-15T12:11:08Z"
+  "fetched": "2026-08-22T20:20:02Z"
 }
