@@ -11,8 +11,11 @@ info:
     underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: hunterApi
-  url: ../openapi/hunter-api-openapi.yml
+- name: leadsApi
+  url: ../openapi/hunter-leads-api-openapi.yml
+  type: openapi
+- name: leadsListsApi
+  url: ../openapi/hunter-leads-lists-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-list-add-lead

@@ -11,8 +11,17 @@ info:
     read and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: hunterApi
-  url: ../openapi/hunter-api-openapi.yml
+- name: domainSearchApi
+  url: ../openapi/hunter-domain-search-api-openapi.yml
+  type: openapi
+- name: emailVerifierApi
+  url: ../openapi/hunter-email-verifier-api-openapi.yml
+  type: openapi
+- name: leadsApi
+  url: ../openapi/hunter-leads-api-openapi.yml
+  type: openapi
+- name: leadsListsApi
+  url: ../openapi/hunter-leads-lists-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: domain-search-build-list

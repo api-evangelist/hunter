@@ -12,8 +12,14 @@ info:
     opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: hunterApi
-  url: ../openapi/hunter-api-openapi.yml
+- name: discoverApi
+  url: ../openapi/hunter-discover-api-openapi.yml
+  type: openapi
+- name: domainSearchApi
+  url: ../openapi/hunter-domain-search-api-openapi.yml
+  type: openapi
+- name: emailCountApi
+  url: ../openapi/hunter-email-count-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: discover-search-count

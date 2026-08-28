@@ -13,8 +13,14 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: hunterApi
-  url: ../openapi/hunter-api-openapi.yml
+- name: emailEnrichmentApi
+  url: ../openapi/hunter-email-enrichment-api-openapi.yml
+  type: openapi
+- name: emailVerifierApi
+  url: ../openapi/hunter-email-verifier-api-openapi.yml
+  type: openapi
+- name: leadsApi
+  url: ../openapi/hunter-leads-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: enrich-verify-create-lead

@@ -11,8 +11,11 @@ info:
     opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: hunterApi
-  url: ../openapi/hunter-api-openapi.yml
+- name: combinedEnrichmentApi
+  url: ../openapi/hunter-combined-enrichment-api-openapi.yml
+  type: openapi
+- name: leadsApi
+  url: ../openapi/hunter-leads-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: combined-enrich-upsert-lead
