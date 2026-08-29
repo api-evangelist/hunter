@@ -7,6 +7,18 @@ description: >-
   manages the leads, lead lists and outreach sequences built from those results. Hunter also operates a first-party
   remote MCP server at https://mcp.hunter.io/mcp exposing roughly 100 tools, and publishes its own packaged Agent
   Skills, making it one of the few providers whose agent surface is wider than its documented REST contract.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
