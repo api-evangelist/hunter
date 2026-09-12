@@ -552,6 +552,8 @@ apis:
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#logo
 common:
+  - type: Website
+    url: https://www.hunter.io/
   - type: AgenticAccess
     url: agentic-access/hunter-agentic-access.yml
   - type: DomainSecurity
