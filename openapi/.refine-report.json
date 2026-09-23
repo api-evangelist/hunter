@@ -1,18 +1,7 @@
 {
   "provider": "hunter",
   "sources": [
-    "hunter-account-api-openapi.yml",
-    "hunter-campaigns-api-openapi.yml",
-    "hunter-combined-enrichment-api-openapi.yml",
-    "hunter-company-enrichment-api-openapi.yml",
-    "hunter-discover-api-openapi.yml",
-    "hunter-domain-search-api-openapi.yml",
-    "hunter-email-count-api-openapi.yml",
-    "hunter-email-enrichment-api-openapi.yml",
-    "hunter-email-finder-api-openapi.yml",
-    "hunter-email-verifier-api-openapi.yml",
-    "hunter-leads-api-openapi.yml",
-    "hunter-leads-lists-api-openapi.yml"
+    "_original/hunter-api-openapi.yml"
   ],
   "outputs": [
     "hunter-account-api-openapi.yml",
@@ -31,6 +20,23 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "hunter-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "hunter-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hunter-campaigns-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hunter-combined-enrichment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hunter-company-enrichment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hunter-discover-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hunter-domain-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hunter-email-count-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hunter-email-enrichment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hunter-email-finder-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hunter-email-verifier-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hunter-leads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hunter-leads-lists-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

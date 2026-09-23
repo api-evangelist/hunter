@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Hunter Account Leads API
+  title: Hunter Leads API
   description: Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability. The API provides domain search, email finder, email verifier, email count, account information, leads management, leads lists, campaigns, discover, enrichment, and logo retrieval capabilities.
   version: 2.0.0
   termsOfService: https://hunter.io/terms
@@ -253,21 +253,29 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  parameters:
+    LeadId:
+      name: id
+      in: path
+      required: true
+      description: The unique identifier of the lead.
+      schema:
+        type: integer
   responses:
+    UnprocessableEntity:
+      description: Valid request but resource creation or update failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     TooManyRequests:
       description: Usage limit exceeded or rate limited.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    UnprocessableEntity:
-      description: Valid request but resource creation or update failed.
+    NotFound:
+      description: Resource not found.
       content:
         application/json:
           schema:
@@ -278,8 +286,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
+    Unauthorized:
+      description: Invalid or missing API key.
       content:
         application/json:
           schema:
@@ -300,6 +308,30 @@ components:
           type: integer
           description: Current offset position.
           example: 10
+    VerificationStatus:
+      type: object
+      properties:
+        date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Date the verification was performed.
+          example: '2026-01-15'
+        status:
+          type:
+          - string
+          - 'null'
+          enum:
+          - valid
+          - invalid
+          - accept_all
+          - webmail
+          - disposable
+          - unknown
+          - null
+          description: The verification status.
+          example: valid
     Lead:
       type: object
       properties:
@@ -499,30 +531,6 @@ components:
           type: integer
           description: Identifier of the leads list to add the lead to.
           example: '500123'
-    VerificationStatus:
-      type: object
-      properties:
-        date:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: Date the verification was performed.
-          example: '2026-01-15'
-        status:
-          type:
-          - string
-          - 'null'
-          enum:
-          - valid
-          - invalid
-          - accept_all
-          - webmail
-          - disposable
-          - unknown
-          - null
-          description: The verification status.
-          example: valid
     Error:
       type: object
       properties:
@@ -541,14 +549,6 @@ components:
                 type: string
                 description: Human-readable error message.
           example: []
-  parameters:
-    LeadId:
-      name: id
-      in: path
-      required: true
-      description: The unique identifier of the lead.
-      schema:
-        type: integer
   securitySchemes:
     apiKeyQuery:
       type: apiKey
