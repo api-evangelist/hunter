@@ -72,39 +72,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Source:
-      type: object
-      properties:
-        domain:
-          type: string
-          description: Domain where the email was found.
-          example: example_value
-        uri:
-          type: string
-          format: uri
-          description: URL of the source page.
-          example: https://www.example.com
-        extracted_on:
-          type: string
-          format: date
-          description: Date the email was extracted from the source.
-          example: '2026-01-15'
-        last_seen_on:
-          type: string
-          format: date
-          description: Date the email was last seen at the source.
-          example: '2026-01-15'
-        still_on_page:
-          type: boolean
-          description: Whether the email is still present on the source page.
-          example: true
-    Meta:
-      type: object
-      properties:
-        params:
-          type: object
-          description: The parameters used in the request.
-          example: example_value
     EmailVerifierResult:
       type: object
       properties:
@@ -196,7 +163,46 @@ components:
                 type: string
                 description: Human-readable error message.
           example: []
+    Meta:
+      type: object
+      properties:
+        params:
+          type: object
+          description: The parameters used in the request.
+          example: example_value
+    Source:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain where the email was found.
+          example: example_value
+        uri:
+          type: string
+          format: uri
+          description: URL of the source page.
+          example: https://www.example.com
+        extracted_on:
+          type: string
+          format: date
+          description: Date the email was extracted from the source.
+          example: '2026-01-15'
+        last_seen_on:
+          type: string
+          format: date
+          description: Date the email was last seen at the source.
+          example: '2026-01-15'
+        still_on_page:
+          type: boolean
+          description: Whether the email is still present on the source page.
+          example: true
   responses:
+    BadRequest:
+      description: Invalid parameters or missing required fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     TooManyRequests:
       description: Usage limit exceeded or rate limited.
       content:
@@ -205,12 +211,6 @@ components:
             $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid parameters or missing required fields.
       content:
         application/json:
           schema:

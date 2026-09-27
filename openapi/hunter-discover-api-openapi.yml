@@ -65,7 +65,59 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    BadRequest:
+      description: Invalid parameters or missing required fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Usage limit exceeded or rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Error identifier code.
+              code:
+                type: integer
+                description: HTTP status code.
+              details:
+                type: string
+                description: Human-readable error message.
+          example: []
+    PaginationMeta:
+      type: object
+      properties:
+        results:
+          type: integer
+          description: Total number of results available.
+          example: 10
+        limit:
+          type: integer
+          description: Number of results per page.
+          example: 10
+        offset:
+          type: integer
+          description: Current offset position.
+          example: 10
     DiscoverResult:
       type: object
       properties:
@@ -203,58 +255,6 @@ components:
           type: integer
           description: Number of results to skip for pagination.
           example: 10
-    PaginationMeta:
-      type: object
-      properties:
-        results:
-          type: integer
-          description: Total number of results available.
-          example: 10
-        limit:
-          type: integer
-          description: Number of results per page.
-          example: 10
-        offset:
-          type: integer
-          description: Current offset position.
-          example: 10
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Error identifier code.
-              code:
-                type: integer
-                description: HTTP status code.
-              details:
-                type: string
-                description: Human-readable error message.
-          example: []
-  responses:
-    TooManyRequests:
-      description: Usage limit exceeded or rate limited.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid parameters or missing required fields.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyQuery:
       type: apiKey

@@ -107,48 +107,26 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    BadRequest:
+      description: Invalid parameters or missing required fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Usage limit exceeded or rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Source:
-      type: object
-      properties:
-        domain:
-          type: string
-          description: Domain where the email was found.
-          example: example_value
-        uri:
-          type: string
-          format: uri
-          description: URL of the source page.
-          example: https://www.example.com
-        extracted_on:
-          type: string
-          format: date
-          description: Date the email was extracted from the source.
-          example: '2026-01-15'
-        last_seen_on:
-          type: string
-          format: date
-          description: Date the email was last seen at the source.
-          example: '2026-01-15'
-        still_on_page:
-          type: boolean
-          description: Whether the email is still present on the source page.
-          example: true
-    PaginationMeta:
-      type: object
-      properties:
-        results:
-          type: integer
-          description: Total number of results available.
-          example: 10
-        limit:
-          type: integer
-          description: Number of results per page.
-          example: 10
-        offset:
-          type: integer
-          description: Current offset position.
-          example: 10
     VerificationStatus:
       type: object
       properties:
@@ -173,6 +151,24 @@ components:
           - null
           description: The verification status.
           example: valid
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Error identifier code.
+              code:
+                type: integer
+                description: HTTP status code.
+              details:
+                type: string
+                description: Human-readable error message.
+          example: []
     DomainSearchResult:
       type: object
       properties:
@@ -207,6 +203,47 @@ components:
           items:
             $ref: '#/components/schemas/DomainEmail'
           example: user@example.com
+    PaginationMeta:
+      type: object
+      properties:
+        results:
+          type: integer
+          description: Total number of results available.
+          example: 10
+        limit:
+          type: integer
+          description: Number of results per page.
+          example: 10
+        offset:
+          type: integer
+          description: Current offset position.
+          example: 10
+    Source:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain where the email was found.
+          example: example_value
+        uri:
+          type: string
+          format: uri
+          description: URL of the source page.
+          example: https://www.example.com
+        extracted_on:
+          type: string
+          format: date
+          description: Date the email was extracted from the source.
+          example: '2026-01-15'
+        last_seen_on:
+          type: string
+          format: date
+          description: Date the email was last seen at the source.
+          example: '2026-01-15'
+        still_on_page:
+          type: boolean
+          description: Whether the email is still present on the source page.
+          example: true
     DomainEmail:
       type: object
       properties:
@@ -283,43 +320,6 @@ components:
           items:
             $ref: '#/components/schemas/Source'
           example: []
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Error identifier code.
-              code:
-                type: integer
-                description: HTTP status code.
-              details:
-                type: string
-                description: Human-readable error message.
-          example: []
-  responses:
-    TooManyRequests:
-      description: Usage limit exceeded or rate limited.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid parameters or missing required fields.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyQuery:
       type: apiKey
