@@ -70,31 +70,6 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    BadRequest:
-      description: Invalid parameters or missing required fields.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Usage limit exceeded or rate limited.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    UnavailableForLegalReasons:
-      description: Cannot process this person's data due to legal restrictions.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -120,44 +95,6 @@ components:
         params:
           type: object
           description: The parameters used in the request.
-          example: example_value
-    GeoLocation:
-      type: object
-      properties:
-        city:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        state:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        stateCode:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        country:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        countryCode:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        lat:
-          type:
-          - number
-          - 'null'
-          example: example_value
-        lng:
-          type:
-          - number
-          - 'null'
           example: example_value
     PersonEnrichment:
       type: object
@@ -382,6 +319,69 @@ components:
           format: date
           description: Date when the person became inactive.
           example: '2026-01-15'
+    GeoLocation:
+      type: object
+      properties:
+        city:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        state:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        stateCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        country:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        countryCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        lat:
+          type:
+          - number
+          - 'null'
+          example: example_value
+        lng:
+          type:
+          - number
+          - 'null'
+          example: example_value
+  responses:
+    TooManyRequests:
+      description: Usage limit exceeded or rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid parameters or missing required fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnavailableForLegalReasons:
+      description: Cannot process this person's data due to legal restrictions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyQuery:
       type: apiKey

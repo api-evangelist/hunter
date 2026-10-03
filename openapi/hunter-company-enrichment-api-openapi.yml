@@ -64,25 +64,6 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    BadRequest:
-      description: Invalid parameters or missing required fields.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Usage limit exceeded or rate limited.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -102,6 +83,13 @@ components:
                 type: string
                 description: Human-readable error message.
           example: []
+    Meta:
+      type: object
+      properties:
+        params:
+          type: object
+          description: The parameters used in the request.
+          example: example_value
     CompanyGeoLocation:
       type: object
       properties:
@@ -164,13 +152,6 @@ components:
           type:
           - number
           - 'null'
-          example: example_value
-    Meta:
-      type: object
-      properties:
-        params:
-          type: object
-          description: The parameters used in the request.
           example: example_value
     CompanyEnrichment:
       type: object
@@ -483,6 +464,25 @@ components:
               - string
               - 'null'
           example: example_value
+  responses:
+    TooManyRequests:
+      description: Usage limit exceeded or rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid parameters or missing required fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyQuery:
       type: apiKey
