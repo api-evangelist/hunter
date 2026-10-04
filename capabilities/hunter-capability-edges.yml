@@ -1,0 +1,36 @@
+slug: hunter
+provider: Hunter
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Campaigns
+  spec_file: hunter-campaigns-api-openapi.yml
+  capability_id: BC-400.40
+  capability_id_l1: BC-400
+  capability_name: Demand Generation Management
+  confidence: 0.72
+  evidence: POST /campaigns/{id}/recipients addCampaignRecipients; POST /campaigns/{id}/start startCampaign;
+    schema Campaign, CampaignRecipient
+  reason: Operations create and start outbound email outreach campaigns and manage their recipient lists,
+    which is lead-generation/outreach campaign execution. Mapped to Demand Generation Management; some
+    ambiguity with sales-side outreach (BC-410.50), hence moderate confidence.
+- tag: Leads Lists
+  spec_file: hunter-leads-lists-api-openapi.yml
+  capability_id: BC-410.30
+  capability_id_l1: BC-410
+  capability_name: Opportunity & Pipeline Management
+  confidence: 0.7
+  evidence: POST /leads_lists createLeadsList  Hunter Create Leads List; schema LeadsList
+  reason: Manages collections of leads used for prospecting/outreach. Supports lead pipeline management,
+    though a list container is thinner evidence than the Lead object itself; could alternatively be demand-generation
+    list management.

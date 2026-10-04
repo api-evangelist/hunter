@@ -552,6 +552,9 @@ apis:
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#logo
 common:
+  - type: CapabilityMap
+    url: capabilities/hunter-capability-edges.yml
+    name: Hunter Business Capability Map
   - type: Website
     url: https://www.hunter.io/
   - type: AgenticAccess
