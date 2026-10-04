@@ -65,94 +65,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Error identifier code.
-              code:
-                type: integer
-                description: HTTP status code.
-              details:
-                type: string
-                description: Human-readable error message.
-          example: []
-    Meta:
-      type: object
-      properties:
-        params:
-          type: object
-          description: The parameters used in the request.
-          example: example_value
-    CompanyGeoLocation:
-      type: object
-      properties:
-        streetNumber:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        streetName:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        subPremise:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        streetAddress:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        city:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        postalCode:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        state:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        stateCode:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        country:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        countryCode:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        lat:
-          type:
-          - number
-          - 'null'
-          example: example_value
-        lng:
-          type:
-          - number
-          - 'null'
-          example: example_value
     CompanyEnrichment:
       type: object
       properties:
@@ -464,9 +376,97 @@ components:
               - string
               - 'null'
           example: example_value
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Error identifier code.
+              code:
+                type: integer
+                description: HTTP status code.
+              details:
+                type: string
+                description: Human-readable error message.
+          example: []
+    Meta:
+      type: object
+      properties:
+        params:
+          type: object
+          description: The parameters used in the request.
+          example: example_value
+    CompanyGeoLocation:
+      type: object
+      properties:
+        streetNumber:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        streetName:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        subPremise:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        streetAddress:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        city:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        postalCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        state:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        stateCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        country:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        countryCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        lat:
+          type:
+          - number
+          - 'null'
+          example: example_value
+        lng:
+          type:
+          - number
+          - 'null'
+          example: example_value
   responses:
-    TooManyRequests:
-      description: Usage limit exceeded or rate limited.
+    Unauthorized:
+      description: Invalid or missing API key.
       content:
         application/json:
           schema:
@@ -477,8 +477,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Invalid or missing API key.
+    TooManyRequests:
+      description: Usage limit exceeded or rate limited.
       content:
         application/json:
           schema:

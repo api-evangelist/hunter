@@ -72,355 +72,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Error identifier code.
-              code:
-                type: integer
-                description: HTTP status code.
-              details:
-                type: string
-                description: Human-readable error message.
-          example: []
-    Meta:
-      type: object
-      properties:
-        params:
-          type: object
-          description: The parameters used in the request.
-          example: example_value
-    PersonEnrichment:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the person record.
-          example: abc123
-        name:
-          type: object
-          properties:
-            fullName:
-              type:
-              - string
-              - 'null'
-            givenName:
-              type:
-              - string
-              - 'null'
-            familyName:
-              type:
-              - string
-              - 'null'
-          example: Example Title
-        email:
-          type: string
-          format: email
-          description: Email address.
-          example: user@example.com
-        location:
-          type:
-          - string
-          - 'null'
-          description: Location description.
-          example: example_value
-        timeZone:
-          type:
-          - string
-          - 'null'
-          description: Time zone name.
-          example: example_value
-        utcOffset:
-          type:
-          - number
-          - 'null'
-          description: UTC offset in hours.
-          example: example_value
-        geo:
-          $ref: '#/components/schemas/GeoLocation'
-        bio:
-          type:
-          - string
-          - 'null'
-          description: Short biography.
-          example: example_value
-        site:
-          type:
-          - string
-          - 'null'
-          description: Personal website URL.
-          example: example_value
-        avatar:
-          type:
-          - string
-          - 'null'
-          description: Avatar image URL.
-          example: example_value
-        employment:
-          type: object
-          properties:
-            domain:
-              type:
-              - string
-              - 'null'
-            name:
-              type:
-              - string
-              - 'null'
-            title:
-              type:
-              - string
-              - 'null'
-            role:
-              type:
-              - string
-              - 'null'
-            subRole:
-              type:
-              - string
-              - 'null'
-            seniority:
-              type:
-              - string
-              - 'null'
-          example: example_value
-        facebook:
-          type: object
-          properties:
-            handle:
-              type:
-              - string
-              - 'null'
-          example: example_value
-        github:
-          type: object
-          properties:
-            handle:
-              type:
-              - string
-              - 'null'
-            id:
-              type:
-              - integer
-              - 'null'
-            avatar:
-              type:
-              - string
-              - 'null'
-            company:
-              type:
-              - string
-              - 'null'
-            blog:
-              type:
-              - string
-              - 'null'
-            followers:
-              type:
-              - integer
-              - 'null'
-            following:
-              type:
-              - integer
-              - 'null'
-          example: example_value
-        twitter:
-          type: object
-          properties:
-            handle:
-              type:
-              - string
-              - 'null'
-            id:
-              type:
-              - integer
-              - 'null'
-            bio:
-              type:
-              - string
-              - 'null'
-            followers:
-              type:
-              - integer
-              - 'null'
-            following:
-              type:
-              - integer
-              - 'null'
-            statuses:
-              type:
-              - integer
-              - 'null'
-            favorites:
-              type:
-              - integer
-              - 'null'
-            location:
-              type:
-              - string
-              - 'null'
-            site:
-              type:
-              - string
-              - 'null'
-            avatar:
-              type:
-              - string
-              - 'null'
-          example: example_value
-        linkedin:
-          type: object
-          properties:
-            handle:
-              type:
-              - string
-              - 'null'
-          example: example_value
-        fuzzy:
-          type: boolean
-          description: Whether the match was fuzzy.
-          example: true
-        emailProvider:
-          type:
-          - string
-          - 'null'
-          description: Email service provider.
-          example: user@example.com
-        indexedAt:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: Date when the record was last indexed.
-          example: '2026-01-15'
-        phone:
-          type:
-          - string
-          - 'null'
-          description: Phone number.
-          example: example_value
-        activeAt:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: Date when the person was last active.
-          example: '2026-01-15'
-        inactiveAt:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: Date when the person became inactive.
-          example: '2026-01-15'
-    CompanyGeoLocation:
-      type: object
-      properties:
-        streetNumber:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        streetName:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        subPremise:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        streetAddress:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        city:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        postalCode:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        state:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        stateCode:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        country:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        countryCode:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        lat:
-          type:
-          - number
-          - 'null'
-          example: example_value
-        lng:
-          type:
-          - number
-          - 'null'
-          example: example_value
-    GeoLocation:
-      type: object
-      properties:
-        city:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        state:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        stateCode:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        country:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        countryCode:
-          type:
-          - string
-          - 'null'
-          example: example_value
-        lat:
-          type:
-          - number
-          - 'null'
-          example: example_value
-        lng:
-          type:
-          - number
-          - 'null'
-          example: example_value
     CompanyEnrichment:
       type: object
       properties:
@@ -732,9 +383,358 @@ components:
               - string
               - 'null'
           example: example_value
+    Meta:
+      type: object
+      properties:
+        params:
+          type: object
+          description: The parameters used in the request.
+          example: example_value
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Error identifier code.
+              code:
+                type: integer
+                description: HTTP status code.
+              details:
+                type: string
+                description: Human-readable error message.
+          example: []
+    GeoLocation:
+      type: object
+      properties:
+        city:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        state:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        stateCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        country:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        countryCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        lat:
+          type:
+          - number
+          - 'null'
+          example: example_value
+        lng:
+          type:
+          - number
+          - 'null'
+          example: example_value
+    PersonEnrichment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the person record.
+          example: abc123
+        name:
+          type: object
+          properties:
+            fullName:
+              type:
+              - string
+              - 'null'
+            givenName:
+              type:
+              - string
+              - 'null'
+            familyName:
+              type:
+              - string
+              - 'null'
+          example: Example Title
+        email:
+          type: string
+          format: email
+          description: Email address.
+          example: user@example.com
+        location:
+          type:
+          - string
+          - 'null'
+          description: Location description.
+          example: example_value
+        timeZone:
+          type:
+          - string
+          - 'null'
+          description: Time zone name.
+          example: example_value
+        utcOffset:
+          type:
+          - number
+          - 'null'
+          description: UTC offset in hours.
+          example: example_value
+        geo:
+          $ref: '#/components/schemas/GeoLocation'
+        bio:
+          type:
+          - string
+          - 'null'
+          description: Short biography.
+          example: example_value
+        site:
+          type:
+          - string
+          - 'null'
+          description: Personal website URL.
+          example: example_value
+        avatar:
+          type:
+          - string
+          - 'null'
+          description: Avatar image URL.
+          example: example_value
+        employment:
+          type: object
+          properties:
+            domain:
+              type:
+              - string
+              - 'null'
+            name:
+              type:
+              - string
+              - 'null'
+            title:
+              type:
+              - string
+              - 'null'
+            role:
+              type:
+              - string
+              - 'null'
+            subRole:
+              type:
+              - string
+              - 'null'
+            seniority:
+              type:
+              - string
+              - 'null'
+          example: example_value
+        facebook:
+          type: object
+          properties:
+            handle:
+              type:
+              - string
+              - 'null'
+          example: example_value
+        github:
+          type: object
+          properties:
+            handle:
+              type:
+              - string
+              - 'null'
+            id:
+              type:
+              - integer
+              - 'null'
+            avatar:
+              type:
+              - string
+              - 'null'
+            company:
+              type:
+              - string
+              - 'null'
+            blog:
+              type:
+              - string
+              - 'null'
+            followers:
+              type:
+              - integer
+              - 'null'
+            following:
+              type:
+              - integer
+              - 'null'
+          example: example_value
+        twitter:
+          type: object
+          properties:
+            handle:
+              type:
+              - string
+              - 'null'
+            id:
+              type:
+              - integer
+              - 'null'
+            bio:
+              type:
+              - string
+              - 'null'
+            followers:
+              type:
+              - integer
+              - 'null'
+            following:
+              type:
+              - integer
+              - 'null'
+            statuses:
+              type:
+              - integer
+              - 'null'
+            favorites:
+              type:
+              - integer
+              - 'null'
+            location:
+              type:
+              - string
+              - 'null'
+            site:
+              type:
+              - string
+              - 'null'
+            avatar:
+              type:
+              - string
+              - 'null'
+          example: example_value
+        linkedin:
+          type: object
+          properties:
+            handle:
+              type:
+              - string
+              - 'null'
+          example: example_value
+        fuzzy:
+          type: boolean
+          description: Whether the match was fuzzy.
+          example: true
+        emailProvider:
+          type:
+          - string
+          - 'null'
+          description: Email service provider.
+          example: user@example.com
+        indexedAt:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Date when the record was last indexed.
+          example: '2026-01-15'
+        phone:
+          type:
+          - string
+          - 'null'
+          description: Phone number.
+          example: example_value
+        activeAt:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Date when the person was last active.
+          example: '2026-01-15'
+        inactiveAt:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Date when the person became inactive.
+          example: '2026-01-15'
+    CompanyGeoLocation:
+      type: object
+      properties:
+        streetNumber:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        streetName:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        subPremise:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        streetAddress:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        city:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        postalCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        state:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        stateCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        country:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        countryCode:
+          type:
+          - string
+          - 'null'
+          example: example_value
+        lat:
+          type:
+          - number
+          - 'null'
+          example: example_value
+        lng:
+          type:
+          - number
+          - 'null'
+          example: example_value
   responses:
-    TooManyRequests:
-      description: Usage limit exceeded or rate limited.
+    Unauthorized:
+      description: Invalid or missing API key.
       content:
         application/json:
           schema:
@@ -751,8 +751,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Invalid or missing API key.
+    TooManyRequests:
+      description: Usage limit exceeded or rate limited.
       content:
         application/json:
           schema:

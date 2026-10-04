@@ -66,48 +66,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Error identifier code.
-              code:
-                type: integer
-                description: HTTP status code.
-              details:
-                type: string
-                description: Human-readable error message.
-          example: []
-    DiscoverResult:
-      type: object
-      properties:
-        domain:
-          type: string
-          description: Domain name of the discovered company.
-          example: example_value
-        organization:
-          type: string
-          description: Name of the organization.
-          example: example_value
-        emails_count:
-          type: object
-          properties:
-            personal:
-              type: integer
-              description: Number of personal emails found.
-            generic:
-              type: integer
-              description: Number of generic emails found.
-            total:
-              type: integer
-              description: Total emails found.
-          example: user@example.com
     DiscoverRequest:
       type: object
       properties:
@@ -236,9 +194,51 @@ components:
           type: integer
           description: Current offset position.
           example: 10
+    DiscoverResult:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain name of the discovered company.
+          example: example_value
+        organization:
+          type: string
+          description: Name of the organization.
+          example: example_value
+        emails_count:
+          type: object
+          properties:
+            personal:
+              type: integer
+              description: Number of personal emails found.
+            generic:
+              type: integer
+              description: Number of generic emails found.
+            total:
+              type: integer
+              description: Total emails found.
+          example: user@example.com
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Error identifier code.
+              code:
+                type: integer
+                description: HTTP status code.
+              details:
+                type: string
+                description: Human-readable error message.
+          example: []
   responses:
-    TooManyRequests:
-      description: Usage limit exceeded or rate limited.
+    Unauthorized:
+      description: Invalid or missing API key.
       content:
         application/json:
           schema:
@@ -249,8 +249,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Invalid or missing API key.
+    TooManyRequests:
+      description: Usage limit exceeded or rate limited.
       content:
         application/json:
           schema:

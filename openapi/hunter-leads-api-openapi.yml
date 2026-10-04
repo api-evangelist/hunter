@@ -253,25 +253,53 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid parameters or missing required fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Valid request but resource creation or update failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Usage limit exceeded or rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
+    PaginationMeta:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Error identifier code.
-              code:
-                type: integer
-                description: HTTP status code.
-              details:
-                type: string
-                description: Human-readable error message.
-          example: []
+        results:
+          type: integer
+          description: Total number of results available.
+          example: 10
+        limit:
+          type: integer
+          description: Number of results per page.
+          example: 10
+        offset:
+          type: integer
+          description: Current offset position.
+          example: 10
     Lead:
       type: object
       properties:
@@ -427,21 +455,24 @@ components:
           - null
           description: The verification status.
           example: valid
-    PaginationMeta:
+    Error:
       type: object
       properties:
-        results:
-          type: integer
-          description: Total number of results available.
-          example: 10
-        limit:
-          type: integer
-          description: Number of results per page.
-          example: 10
-        offset:
-          type: integer
-          description: Current offset position.
-          example: 10
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Error identifier code.
+              code:
+                type: integer
+                description: HTTP status code.
+              details:
+                type: string
+                description: Human-readable error message.
+          example: []
     LeadInput:
       type: object
       properties:
@@ -510,37 +541,6 @@ components:
           type: integer
           description: Identifier of the leads list to add the lead to.
           example: '500123'
-  responses:
-    TooManyRequests:
-      description: Usage limit exceeded or rate limited.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid parameters or missing required fields.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    UnprocessableEntity:
-      description: Valid request but resource creation or update failed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     LeadId:
       name: id

@@ -213,25 +213,50 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid parameters or missing required fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Valid request but resource creation or update failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
+    CampaignRecipient:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Error identifier code.
-              code:
-                type: integer
-                description: HTTP status code.
-              details:
-                type: string
-                description: Human-readable error message.
-          example: []
+        email:
+          type: string
+          format: email
+          description: Recipient email address.
+          example: user@example.com
+        lead_id:
+          type:
+          - integer
+          - 'null'
+          description: Associated lead identifier.
+          example: '500123'
+        sending_status:
+          type: string
+          description: Current sending status for this recipient.
+          example: example_value
     PaginationMeta:
       type: object
       properties:
@@ -289,49 +314,24 @@ components:
           format: date-time
           description: Timestamp when the campaign was created.
           example: '2026-01-15T10:30:00Z'
-    CampaignRecipient:
+    Error:
       type: object
       properties:
-        email:
-          type: string
-          format: email
-          description: Recipient email address.
-          example: user@example.com
-        lead_id:
-          type:
-          - integer
-          - 'null'
-          description: Associated lead identifier.
-          example: '500123'
-        sending_status:
-          type: string
-          description: Current sending status for this recipient.
-          example: example_value
-  responses:
-    BadRequest:
-      description: Invalid parameters or missing required fields.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    UnprocessableEntity:
-      description: Valid request but resource creation or update failed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Error identifier code.
+              code:
+                type: integer
+                description: HTTP status code.
+              details:
+                type: string
+                description: Human-readable error message.
+          example: []
   parameters:
     CampaignId:
       name: id

@@ -46,35 +46,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Error identifier code.
-              code:
-                type: integer
-                description: HTTP status code.
-              details:
-                type: string
-                description: Human-readable error message.
-          example: []
-    UsageCounter:
-      type: object
-      properties:
-        used:
-          type: integer
-          description: Number of requests used.
-          example: 10
-        available:
-          type: integer
-          description: Number of requests available.
-          example: 10
     AccountResult:
       type: object
       properties:
@@ -127,6 +98,35 @@ components:
             available:
               type: integer
           example: example_value
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Error identifier code.
+              code:
+                type: integer
+                description: HTTP status code.
+              details:
+                type: string
+                description: Human-readable error message.
+          example: []
+    UsageCounter:
+      type: object
+      properties:
+        used:
+          type: integer
+          description: Number of requests used.
+          example: 10
+        available:
+          type: integer
+          description: Number of requests available.
+          example: 10
   responses:
     Unauthorized:
       description: Invalid or missing API key.
