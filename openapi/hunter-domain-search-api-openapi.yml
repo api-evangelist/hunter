@@ -107,41 +107,83 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    Unauthorized:
-      description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid parameters or missing required fields.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Usage limit exceeded or rate limited.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    PaginationMeta:
+    Error:
       type: object
       properties:
-        results:
-          type: integer
-          description: Total number of results available.
-          example: 10
-        limit:
-          type: integer
-          description: Number of results per page.
-          example: 10
-        offset:
-          type: integer
-          description: Current offset position.
-          example: 10
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Error identifier code.
+              code:
+                type: integer
+                description: HTTP status code.
+              details:
+                type: string
+                description: Human-readable error message.
+          example: []
+    DomainSearchResult:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: The domain name searched.
+          example: example_value
+        disposable:
+          type: boolean
+          description: Whether the domain is a disposable email service.
+          example: true
+        webmail:
+          type: boolean
+          description: Whether the domain is a webmail provider.
+          example: true
+        accept_all:
+          type: boolean
+          description: Whether the mail server accepts all email addresses.
+          example: true
+        pattern:
+          type:
+          - string
+          - 'null'
+          description: The email address pattern detected for the domain.
+          example: example_value
+        organization:
+          type: string
+          description: The name of the organization associated with the domain.
+          example: example_value
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainEmail'
+          example: user@example.com
+    VerificationStatus:
+      type: object
+      properties:
+        date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Date the verification was performed.
+          example: '2026-01-15'
+        status:
+          type:
+          - string
+          - 'null'
+          enum:
+          - valid
+          - invalid
+          - accept_all
+          - webmail
+          - disposable
+          - unknown
+          - null
+          description: The verification status.
+          example: valid
     DomainEmail:
       type: object
       properties:
@@ -218,30 +260,21 @@ components:
           items:
             $ref: '#/components/schemas/Source'
           example: []
-    VerificationStatus:
+    PaginationMeta:
       type: object
       properties:
-        date:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: Date the verification was performed.
-          example: '2026-01-15'
-        status:
-          type:
-          - string
-          - 'null'
-          enum:
-          - valid
-          - invalid
-          - accept_all
-          - webmail
-          - disposable
-          - unknown
-          - null
-          description: The verification status.
-          example: valid
+        results:
+          type: integer
+          description: Total number of results available.
+          example: 10
+        limit:
+          type: integer
+          description: Number of results per page.
+          example: 10
+        offset:
+          type: integer
+          description: Current offset position.
+          example: 10
     Source:
       type: object
       properties:
@@ -268,58 +301,25 @@ components:
           type: boolean
           description: Whether the email is still present on the source page.
           example: true
-    DomainSearchResult:
-      type: object
-      properties:
-        domain:
-          type: string
-          description: The domain name searched.
-          example: example_value
-        disposable:
-          type: boolean
-          description: Whether the domain is a disposable email service.
-          example: true
-        webmail:
-          type: boolean
-          description: Whether the domain is a webmail provider.
-          example: true
-        accept_all:
-          type: boolean
-          description: Whether the mail server accepts all email addresses.
-          example: true
-        pattern:
-          type:
-          - string
-          - 'null'
-          description: The email address pattern detected for the domain.
-          example: example_value
-        organization:
-          type: string
-          description: The name of the organization associated with the domain.
-          example: example_value
-        emails:
-          type: array
-          items:
-            $ref: '#/components/schemas/DomainEmail'
-          example: user@example.com
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Error identifier code.
-              code:
-                type: integer
-                description: HTTP status code.
-              details:
-                type: string
-                description: Human-readable error message.
-          example: []
+  responses:
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Usage limit exceeded or rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid parameters or missing required fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyQuery:
       type: apiKey
