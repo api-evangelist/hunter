@@ -131,90 +131,6 @@ apis:
     url: https://hunter.io/api-documentation/v2#campaigns
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#logo
-- aid: hunter:hunter-combined-enrichment-api
-  name: Hunter Combined Enrichment API
-  description: Merge person and company enrichment for a single email address.
-  humanURL: https://hunter.io/api-documentation/v2#combined-enrichment
-  baseURL: https://api.hunter.io/v2
-  tags:
-  - Combined Enrichment
-  properties:
-  - type: OpenAPI
-    url: openapi/hunter-combined-enrichment-api-openapi.yml
-  - type: Overlay
-    url: overlays/hunter-combined-enrichment-api-overlay.yaml
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#domain-search
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-finder
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-verifier
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-count
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#account
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#discover
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#company-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#combined-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#leads
-  - type: JSONSchema
-    url: json-schema/hunter-lead-schema.json
-  - type: JSONLD
-    url: json-ld/hunter-context.jsonld
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#leads_lists
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#campaigns
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#logo
-- aid: hunter:hunter-company-enrichment-api
-  name: Hunter Company Enrichment API
-  description: Enrich company information linked to a domain name.
-  humanURL: https://hunter.io/api-documentation/v2#company-enrichment
-  baseURL: https://api.hunter.io/v2
-  tags:
-  - Company Enrichment
-  properties:
-  - type: OpenAPI
-    url: openapi/hunter-company-enrichment-api-openapi.yml
-  - type: Overlay
-    url: overlays/hunter-company-enrichment-api-overlay.yaml
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#domain-search
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-finder
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-verifier
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-count
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#account
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#discover
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#company-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#combined-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#leads
-  - type: JSONSchema
-    url: json-schema/hunter-lead-schema.json
-  - type: JSONLD
-    url: json-ld/hunter-context.jsonld
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#leads_lists
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#campaigns
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#logo
 - aid: hunter:hunter-discover-api
   name: Hunter Discover API
   description: Find companies matching criteria using natural language or filters.
@@ -227,216 +143,6 @@ apis:
     url: openapi/hunter-discover-api-openapi.yml
   - type: Overlay
     url: overlays/hunter-discover-api-overlay.yaml
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#domain-search
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-finder
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-verifier
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-count
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#account
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#discover
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#company-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#combined-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#leads
-  - type: JSONSchema
-    url: json-schema/hunter-lead-schema.json
-  - type: JSONLD
-    url: json-ld/hunter-context.jsonld
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#leads_lists
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#campaigns
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#logo
-- aid: hunter:hunter-domain-search-api
-  name: Hunter Domain Search API
-  description: Search for email addresses associated with a domain.
-  humanURL: https://hunter.io/api-documentation/v2#domain-search
-  baseURL: https://api.hunter.io/v2
-  tags:
-  - Domain Search
-  properties:
-  - type: OpenAPI
-    url: openapi/hunter-domain-search-api-openapi.yml
-  - type: Overlay
-    url: overlays/hunter-domain-search-api-overlay.yaml
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#domain-search
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-finder
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-verifier
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-count
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#account
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#discover
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#company-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#combined-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#leads
-  - type: JSONSchema
-    url: json-schema/hunter-lead-schema.json
-  - type: JSONLD
-    url: json-ld/hunter-context.jsonld
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#leads_lists
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#campaigns
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#logo
-- aid: hunter:hunter-email-count-api
-  name: Hunter Email Count API
-  description: Count email addresses found for a domain.
-  humanURL: https://hunter.io/api-documentation/v2#email-count
-  baseURL: https://api.hunter.io/v2
-  tags:
-  - Email Count
-  properties:
-  - type: OpenAPI
-    url: openapi/hunter-email-count-api-openapi.yml
-  - type: Overlay
-    url: overlays/hunter-email-count-api-overlay.yaml
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#domain-search
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-finder
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-verifier
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-count
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#account
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#discover
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#company-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#combined-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#leads
-  - type: JSONSchema
-    url: json-schema/hunter-lead-schema.json
-  - type: JSONLD
-    url: json-ld/hunter-context.jsonld
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#leads_lists
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#campaigns
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#logo
-- aid: hunter:hunter-email-enrichment-api
-  name: Hunter Email Enrichment API
-  description: Enrich personal information linked to an email or LinkedIn profile.
-  humanURL: https://hunter.io/api-documentation/v2#email-enrichment
-  baseURL: https://api.hunter.io/v2
-  tags:
-  - Email Enrichment
-  properties:
-  - type: OpenAPI
-    url: openapi/hunter-email-enrichment-api-openapi.yml
-  - type: Overlay
-    url: overlays/hunter-email-enrichment-api-overlay.yaml
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#domain-search
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-finder
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-verifier
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-count
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#account
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#discover
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#company-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#combined-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#leads
-  - type: JSONSchema
-    url: json-schema/hunter-lead-schema.json
-  - type: JSONLD
-    url: json-ld/hunter-context.jsonld
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#leads_lists
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#campaigns
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#logo
-- aid: hunter:hunter-email-finder-api
-  name: Hunter Email Finder API
-  description: Find the most likely email address for a person at a company.
-  humanURL: https://hunter.io/api-documentation/v2#email-finder
-  baseURL: https://api.hunter.io/v2
-  tags:
-  - Email Finder
-  properties:
-  - type: OpenAPI
-    url: openapi/hunter-email-finder-api-openapi.yml
-  - type: Overlay
-    url: overlays/hunter-email-finder-api-overlay.yaml
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#domain-search
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-finder
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-verifier
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-count
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#account
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#discover
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#email-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#company-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#combined-enrichment
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#leads
-  - type: JSONSchema
-    url: json-schema/hunter-lead-schema.json
-  - type: JSONLD
-    url: json-ld/hunter-context.jsonld
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#leads_lists
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#campaigns
-  - type: Documentation
-    url: https://hunter.io/api-documentation/v2#logo
-- aid: hunter:hunter-email-verifier-api
-  name: Hunter Email Verifier API
-  description: Verify the deliverability of an email address.
-  humanURL: https://hunter.io/api-documentation/v2#email-verifier
-  baseURL: https://api.hunter.io/v2
-  tags:
-  - Email Verifier
-  properties:
-  - type: OpenAPI
-    url: openapi/hunter-email-verifier-api-openapi.yml
-  - type: Overlay
-    url: overlays/hunter-email-verifier-api-overlay.yaml
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#domain-search
   - type: Documentation
@@ -509,18 +215,696 @@ apis:
     url: https://hunter.io/api-documentation/v2#campaigns
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#logo
-- aid: hunter:hunter-leads-lists-api
-  name: Hunter Leads Lists API
-  description: Manage leads list collections in Hunter.
-  humanURL: https://hunter.io/api-documentation/v2#leads_lists
+- aid: hunter:hunter-api-keys-api
+  name: Hunter API Keys API
+  description: The API Keys API from Hunter — 2 operation(s) for api keys.
+  humanURL: https://hunter.io/api-documentation/v2#account
   baseURL: https://api.hunter.io/v2
   tags:
-  - Leads Lists
+  - API Keys
   properties:
   - type: OpenAPI
-    url: openapi/hunter-leads-lists-api-openapi.yml
-  - type: Overlay
-    url: overlays/hunter-leads-lists-api-overlay.yaml
+    url: openapi/hunter-api-keys-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-companies-api
+  name: Hunter Companies API
+  description: The Companies API from Hunter — 8 operation(s) for companies.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Companies
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-companies-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-connected-apps-api
+  name: Hunter Connected Apps API
+  description: The Connected Apps API from Hunter — 3 operation(s) for connected apps.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Connected Apps
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-connected-apps-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-email-accounts-api
+  name: Hunter Email Accounts API
+  description: The Email Accounts API from Hunter — 7 operation(s) for email accounts.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Email Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-email-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-enrichment-api
+  name: Hunter Enrichment API
+  description: The Enrichment API from Hunter — 3 operation(s) for enrichment.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Enrichment
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-enrichment-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-feedback-api
+  name: Hunter Feedback API
+  description: The Feedback API from Hunter — 1 operation(s) for feedback.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Feedback
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-feedback-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-finder-api
+  name: Hunter Finder API
+  description: The Finder API from Hunter — 8 operation(s) for finder.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Finder
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-finder-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-lists-api
+  name: Hunter Lists API
+  description: The Lists API from Hunter — 20 operation(s) for lists.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Lists
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-lists-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-messages-api
+  name: Hunter Messages API
+  description: The Messages API from Hunter — 1 operation(s) for messages.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-messages-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-multi-domain-search-api
+  name: Hunter Multi-Domain Search API
+  description: The Multi-Domain Search API from Hunter — 1 operation(s) for multi-domain search.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Multi-Domain Search
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-multi-domain-search-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-sequences-api
+  name: Hunter Sequences API
+  description: The Sequences API from Hunter — 10 operation(s) for sequences.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Sequences
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-sequences-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-tags-api
+  name: Hunter Tags API
+  description: The Tags API from Hunter — 4 operation(s) for tags.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-tags-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-team-api
+  name: Hunter Team API
+  description: The Team API from Hunter — 1 operation(s) for team.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Team
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-team-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-templates-api
+  name: Hunter Templates API
+  description: The Templates API from Hunter — 2 operation(s) for templates.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-templates-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-usage-api
+  name: Hunter Usage API
+  description: The Usage API from Hunter — 2 operation(s) for usage.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Usage
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-usage-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-verifier-api
+  name: Hunter Verifier API
+  description: The Verifier API from Hunter — 2 operation(s) for verifier.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Verifier
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-verifier-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-views-api
+  name: Hunter Views API
+  description: The Views API from Hunter — 2 operation(s) for views.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Views
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-views-api-openapi.yml
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#domain-search
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-finder
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-verifier
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-count
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#account
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#discover
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#email-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#company-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#combined-enrichment
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads
+  - type: JSONSchema
+    url: json-schema/hunter-lead-schema.json
+  - type: JSONLD
+    url: json-ld/hunter-context.jsonld
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#leads_lists
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#campaigns
+  - type: Documentation
+    url: https://hunter.io/api-documentation/v2#logo
+- aid: hunter:hunter-webhooks-api
+  name: Hunter Webhooks API
+  description: The Webhooks API from Hunter — 2 operation(s) for webhooks.
+  humanURL: https://hunter.io/api-documentation/v2#account
+  baseURL: https://api.hunter.io/v2
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/hunter-webhooks-api-openapi.yml
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#domain-search
   - type: Documentation
@@ -552,6 +936,22 @@ apis:
   - type: Documentation
     url: https://hunter.io/api-documentation/v2#logo
 common:
+  - type: Overlay
+    url: overlays/hunter-combined-enrichment-api-overlay.yaml
+  - type: Overlay
+    url: overlays/hunter-company-enrichment-api-overlay.yaml
+  - type: Overlay
+    url: overlays/hunter-domain-search-api-overlay.yaml
+  - type: Overlay
+    url: overlays/hunter-email-count-api-overlay.yaml
+  - type: Overlay
+    url: overlays/hunter-email-enrichment-api-overlay.yaml
+  - type: Overlay
+    url: overlays/hunter-email-finder-api-overlay.yaml
+  - type: Overlay
+    url: overlays/hunter-email-verifier-api-overlay.yaml
+  - type: Overlay
+    url: overlays/hunter-leads-lists-api-overlay.yaml
   - type: CapabilityMap
     url: capabilities/hunter-capability-edges.yml
     name: Hunter Business Capability Map

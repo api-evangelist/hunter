@@ -1,0 +1,585 @@
+openapi: 3.2.0
+info:
+  title: Hunter Sequences API
+  version: 2.0.0
+  description: 'Find and verify professional email addresses and manage Hunter resources.
+
+    Hunter''s own MCP servers forward the calling AI client''s User-Agent in a reserved `X-MCP-USER-AGENT` request header. It is read only for usage attribution and to record which AI clients an account has connected from, and never changes a response. Per-request attribution resolves it to a fixed list of known clients; the first call from each new client also stores the User-Agent as sent, so a client Hunter does not yet recognise can be identified. There is nothing for an integration to send here.
+
+    Hunter''s MCP servers also identify themselves with `X-SOURCE: hunter-mcp` or `X-SOURCE: hunter-chatgpt`. These reserved markers attribute server-side actions to the MCP channel, separately from ordinary API and product usage. They do not replace API authentication. Ordinary API clients do not need to send these markers.'
+  contact:
+    name: Hunter Support
+    url: https://help.hunter.io
+servers:
+- url: https://api.hunter.io/v2
+  description: Production
+security:
+- apiKeyQuery: []
+- apiKeyHeader: []
+- bearerAuth: []
+tags:
+- name: Sequences
+paths:
+  /sequences:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    get:
+      operationId: listSequences
+      summary: List sequences
+      description: Each sequence carries `editable`. It is true when the API key's user owns the sequence or is a team admin or owner, and only then can that user add recipients to it.
+      tags:
+      - Sequences
+      responses:
+        '200':
+          description: List sequences.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      operationId: createSequence
+      summary: Create a sequence
+      description: 'Sender IDs must be available for outreach to the sequence owner. On the Free plan, extra or SMTP accounts retained only for a paid Inbox Protection period cannot be selected as senders. Submitting one returns 422 with error ID unknown_email_account_ids.
+
+        Enabling `ai_assistant_enabled` requires a plan that includes the AI writing assistant. A request that turns it on without that entitlement is rejected with `ai_assistant_requires_upgrade` (422).'
+      tags:
+      - Sequences
+      responses:
+        '201':
+          description: Create a sequence.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /sequences/{id}:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getSequence
+      summary: Get a sequence
+      description: 'The `ab_testing` object reports the A/B test state: `enabled`, the split in `variant_a_percentage` and `variant_b_percentage`, and `winner_variant` with `winner_selected_at`. When `enabled` is false, the other fields are null.'
+      tags:
+      - Sequences
+      responses:
+        '200':
+          description: Get a sequence.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      operationId: updateSequence
+      summary: Update a sequence
+      description: 'Sender IDs must be available for outreach to the sequence owner. On the Free plan, extra or SMTP accounts retained only for a paid Inbox Protection period cannot be selected as senders. Submitting one returns 422 with error ID unknown_email_account_ids.
+
+        Enabling `ai_assistant_enabled` requires a plan that includes the AI writing assistant. A request that turns it on without that entitlement is rejected with `ai_assistant_requires_upgrade` (422).'
+      tags:
+      - Sequences
+      responses:
+        '200':
+          description: Update a sequence.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    put:
+      operationId: replaceSequence
+      summary: Replace a sequence
+      description: 'Sender IDs must be available for outreach to the sequence owner. On the Free plan, extra or SMTP accounts retained only for a paid Inbox Protection period cannot be selected as senders. Submitting one returns 422 with error ID unknown_email_account_ids.
+
+        Enabling `ai_assistant_enabled` requires a plan that includes the AI writing assistant. A request that turns it on without that entitlement is rejected with `ai_assistant_requires_upgrade` (422).'
+      tags:
+      - Sequences
+      responses:
+        '200':
+          description: Replace a sequence.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    delete:
+      operationId: deleteSequence
+      summary: Delete a sequence
+      tags:
+      - Sequences
+      responses:
+        '204':
+          description: No content.
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /sequences/{id}/follow-ups:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: listSequenceFollowUps
+      summary: List sequence follow-up steps
+      tags:
+      - Sequences
+      responses:
+        '200':
+          description: List sequence follow-up steps.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      operationId: createSequenceFollowUp
+      summary: Add a sequence follow-up step
+      tags:
+      - Sequences
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/follow_up_create_request'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/follow_up_create_request'
+      responses:
+        '201':
+          description: Add a sequence follow-up step.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /sequences/{id}/follow-ups/{follow_up_id}:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: follow_up_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getSequenceFollowUp
+      summary: Get a sequence follow-up step
+      tags:
+      - Sequences
+      responses:
+        '200':
+          description: Get a sequence follow-up step.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      operationId: updateSequenceFollowUp
+      summary: Update a sequence follow-up step
+      description: 'A `body` in plain text or HTML keeps its line breaks and paragraphs. It is stored as the editor''s HTML (`
+
+        ` and `
+
+        `), also when `message_format` is `text`, so a read after the write can differ from the submitted body.'
+      tags:
+      - Sequences
+      responses:
+        '200':
+          description: Update a sequence follow-up step.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    put:
+      operationId: replaceSequenceFollowUp
+      summary: Replace a sequence follow-up step
+      description: 'A `body` in plain text or HTML keeps its line breaks and paragraphs. It is stored as the editor''s HTML (`
+
+        ` and `
+
+        `), also when `message_format` is `text`, so a read after the write can differ from the submitted body.'
+      tags:
+      - Sequences
+      responses:
+        '200':
+          description: Replace a sequence follow-up step.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    delete:
+      operationId: deleteSequenceFollowUp
+      summary: Delete a sequence follow-up step
+      tags:
+      - Sequences
+      responses:
+        '204':
+          description: No content.
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /sequences/{id}/stats:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getSequenceStats
+      summary: Get sequence performance stats
+      tags:
+      - Sequences
+      responses:
+        '200':
+          description: Get sequence performance stats.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /sequences/{id}/recipients:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: listSequenceRecipients
+      summary: List sequence recipients
+      description: When a recipient has asked Hunter to delete their address, with a claim or a California DROP request, their `email` is null (HUN-23599).
+      tags:
+      - Sequences
+      responses:
+        '200':
+          description: List sequence recipients.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      operationId: addSequenceRecipients
+      summary: Add sequence recipients
+      tags:
+      - Sequences
+      responses:
+        '201':
+          description: Add sequence recipients. `data.skipped_recipients` lists the addresses that this request did not add, from both `emails` and `lead_ids`, each with its `reason`. It is `null` when no address was skipped.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    delete:
+      operationId: removeSequenceRecipients
+      summary: Remove sequence recipients
+      tags:
+      - Sequences
+      responses:
+        '201':
+          description: 'Remove sequence recipients. On a draft sequence, the recipients are removed and listed in `data.recipients_removed`. On a started sequence, the recipients stay in the sequence and no more emails are sent to them: they are listed in `data.recipients_canceled`, with the count of canceled pending emails in `data.messages_canceled`. A recipient not contacted yet gets the canceled status, also when their emails are not created yet. A recipient already contacted keeps their status (sent, opened or clicked) and gets no new follow-up. `data.skipped_recipients` lists the addresses that this request did not change, each with its `reason`: `not_in_sequence`, or `no_pending_messages` when sending to the recipient already stopped (for example, they replied, or they were canceled before). It is `null` when no address was skipped.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /sequences/{id}/start:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: startSequence
+      summary: Start a sequence
+      tags:
+      - Sequences
+      responses:
+        '200':
+          description: Start a sequence.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /sequences/{sequence_id}/pause:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: sequence_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: pauseSequence
+      summary: Pause a sequence
+      tags:
+      - Sequences
+      responses:
+        '200':
+          description: Pause a sequence.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    delete:
+      operationId: resumeSequence
+      summary: Resume a paused sequence
+      tags:
+      - Sequences
+      responses:
+        '200':
+          description: Resume a paused sequence.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /sequences/{sequence_id}/archive:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: sequence_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: archiveSequence
+      summary: Archive a sequence
+      tags:
+      - Sequences
+      responses:
+        '200':
+          description: Archive a sequence.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /sequences/{sequence_id}/test:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: sequence_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: testSequence
+      summary: Send a test email for every step of a sequence
+      description: Queues one test message per follow-up of the sequence, in step order, to the supplied address. When A/B testing is enabled on a step, both variants are sent. Subjects are prefixed with [TEST]. Returns 422 when the sequence has no step, a step is missing its subject or body, the sequence has no email account, the account cannot send, or the recipient cannot be contacted. At most 30 test emails can be queued per 10 minutes.
+      tags:
+      - Sequences
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sequence_test_request'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/sequence_test_request'
+      responses:
+        '202':
+          description: One test message queued per follow-up of the sequence.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+components:
+  responses:
+    Error:
+      description: The request could not be completed. A 429 with the error id `restricted_account` means the account is blocked, suspended or delinquent; further requests with the same API key are then rejected before reaching the API for up to 10 minutes, while the account and usage endpoints stay available.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error_response'
+  schemas:
+    generic_resource_response:
+      type: object
+      additionalProperties: true
+      description: Generic envelope for V2 resource operations whose detailed schema is not yet in the contract.
+    error_response:
+      oneOf:
+      - $ref: '#/components/schemas/standard_error_response'
+      - $ref: '#/components/schemas/legacy_error_response'
+    follow_up_create_request:
+      type: object
+      additionalProperties: true
+      properties:
+        api_key:
+          type: string
+        step:
+          type: integer
+          minimum: 0
+          description: 'Step to create. Optional for a new step (the next step is used). Required with `variant`, where it names the existing step that gets a Variant B.
+
+            '
+        variant:
+          type: string
+          enum:
+          - B
+          description: 'Set to `B` to add Variant B to an existing `step`, which turns A/B testing on for the sequence. Omitted fields are copied from the step''s Variant A. A Variant B whose subject and body both match Variant A is refused.
+
+            '
+        wait_days:
+          type: integer
+          minimum: 0
+        subject:
+          type: string
+        body:
+          type: string
+          description: 'Plain text or HTML. Line breaks and blank lines in plain text, and `<p>` paragraphs in HTML, are kept. The body is stored as the editor''s HTML (`<div>` and `<br>`), also when `message_format` is `text`.
+
+            '
+        message_format:
+          type: string
+        message_template_id:
+          description: ID of a message template whose subject, body, and format fill omitted fields.
+    standard_error_response:
+      type: object
+      additionalProperties: false
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - id
+            - code
+            - details
+            properties:
+              id:
+                type: string
+              code:
+                type: integer
+              details:
+                type: string
+    sequence_test_request:
+      type: object
+      additionalProperties: false
+      required:
+      - email
+      properties:
+        api_key:
+          type: string
+        email:
+          type: string
+          format: email
+          description: The address the test messages are sent to.
+    legacy_error_response:
+      type: object
+      additionalProperties: false
+      required:
+      - error
+      properties:
+        error: {}
+  parameters:
+    ApiKey:
+      name: api_key
+      in: query
+      description: Hunter API key. Prefer the X-API-KEY header outside browser links.
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: api_key
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    bearerAuth:
+      type: http
+      scheme: bearer

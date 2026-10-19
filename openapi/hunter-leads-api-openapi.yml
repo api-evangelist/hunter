@@ -1,566 +1,753 @@
 openapi: 3.2.0
 info:
   title: Hunter Leads API
-  description: Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability. The API provides domain search, email finder, email verifier, email count, account information, leads management, leads lists, campaigns, discover, enrichment, and logo retrieval capabilities.
   version: 2.0.0
-  termsOfService: https://hunter.io/terms
+  description: 'Find and verify professional email addresses and manage Hunter resources.
+
+    Hunter''s own MCP servers forward the calling AI client''s User-Agent in a reserved `X-MCP-USER-AGENT` request header. It is read only for usage attribution and to record which AI clients an account has connected from, and never changes a response. Per-request attribution resolves it to a fixed list of known clients; the first call from each new client also stores the User-Agent as sent, so a client Hunter does not yet recognise can be identified. There is nothing for an integration to send here.
+
+    Hunter''s MCP servers also identify themselves with `X-SOURCE: hunter-mcp` or `X-SOURCE: hunter-chatgpt`. These reserved markers attribute server-side actions to the MCP channel, separately from ordinary API and product usage. They do not replace API authentication. Ordinary API clients do not need to send these markers.'
   contact:
     name: Hunter Support
-    url: https://hunter.io/contact
-    email: support@hunter.io
-  license:
-    name: Proprietary
-    url: https://hunter.io/terms
+    url: https://help.hunter.io
 servers:
 - url: https://api.hunter.io/v2
-  description: Hunter API v2 Production
+  description: Production
 security:
 - apiKeyQuery: []
 - apiKeyHeader: []
 - bearerAuth: []
 tags:
 - name: Leads
-  description: Manage leads stored in Hunter.
 paths:
   /leads:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
     get:
       operationId: listLeads
-      summary: Hunter List Leads
-      description: Returns all the leads saved in your account.
+      summary: List leads
+      description: 'Each lead carries `department` since HUN-23171. It was already a filter on this endpoint, but was never emitted, so a caller could filter on a field it could not read back.
+
+
+        When the person behind a lead has asked Hunter to delete their address, with a claim or a California DROP request, the lead is returned without it: `email`, `confidence_score`, `verification.date` and `verification.status` are null (HUN-23599).
+
+
+        A manually claimed phone number, or one covered by DROP, is returned as `phone_number: null`. The phone is also withheld when screening is unavailable; the lead and its other contact details remain.
+
+
+        Filter by sequence with `sequence_ids[]`. The former name `campaign_ids[]` is still accepted as an alias; when both are sent, `sequence_ids[]` is used (HUN-20893).'
       tags:
       - Leads
-      parameters:
-      - name: limit
-        in: query
-        description: Maximum number of leads to return. Default is 20, max is 100.
-        schema:
-          type: integer
-          default: 20
-          maximum: 100
-      - name: offset
-        in: query
-        description: Number of leads to skip for pagination.
-        schema:
-          type: integer
-          default: 0
-      - name: leads_list_id
-        in: query
-        description: Filter leads by list identifier.
-        schema:
-          type: integer
-      - name: first_name
-        in: query
-        description: Filter by first name.
-        schema:
-          type: string
-      - name: last_name
-        in: query
-        description: Filter by last name.
-        schema:
-          type: string
-      - name: email
-        in: query
-        description: Filter by email address.
-        schema:
-          type: string
-      - name: company
-        in: query
-        description: Filter by company name.
-        schema:
-          type: string
-      - name: phone_number
-        in: query
-        description: Filter by phone number.
-        schema:
-          type: string
-      - name: twitter
-        in: query
-        description: Filter by Twitter handle.
-        schema:
-          type: string
       responses:
         '200':
-          description: Successful leads list response.
+          description: List leads.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      leads:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/Lead'
-                  meta:
-                    $ref: '#/components/schemas/PaginationMeta'
+                $ref: '#/components/schemas/generic_resource_response'
         '401':
-          $ref: '#/components/responses/Unauthorized'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
     post:
       operationId: createLead
-      summary: Hunter Create Lead
-      description: Creates a new lead in your Hunter account.
+      summary: Create a lead
+      description: 'A manually claimed phone number, or one covered by DROP, is returned as `phone_number: null`. The phone is also withheld when screening is unavailable; the lead and its other contact details remain.
+
+
+        Creates a lead, or adds an existing lead to the requested lists. When an `email` matches a lead already on your team, the request is additive: it adds only the missing list memberships and returns 201 rather than an email duplicate error. When the matched lead belongs to a teammate, the request still adds it to your lists, and the teammate''s lead itself is only updated if you have permission to edit it. A request without an `email` is never matched by email — it does not reuse an existing email-less lead — though a lead with an identical name, company, and list is still rejected as a duplicate.
+
+
+        Accepts `department` since HUN-23171, normalized to its canonical key so a localized display label ("Sales") is stored as `sales`. Lead attributes are not modelled field-by-field in this contract yet — the response uses the generic resource envelope — so this note is where the accepted set is recorded.
+
+
+        When another request is creating leads for the team, returns 409 with `lead_creation_in_progress` and `Retry-After: 1`. Retry the request after one second.'
       tags:
       - Leads
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LeadInput'
       responses:
         '201':
-          description: Lead created successfully.
+          description: Create a lead.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    $ref: '#/components/schemas/Lead'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: '#/components/schemas/generic_resource_response'
         '401':
-          $ref: '#/components/responses/Unauthorized'
-        '422':
-          $ref: '#/components/responses/UnprocessableEntity'
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
+          $ref: '#/components/responses/Error'
+        '409':
+          description: Lead creation is busy for this team; retry after one second.
+          headers:
+            Retry-After:
+              schema:
+                type: string
+                pattern: ^[0-9]+$
+                example: '1'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        default:
+          $ref: '#/components/responses/Error'
     put:
-      operationId: upsertLead
-      summary: Hunter Create or Update Lead
-      description: Creates a new lead or updates an existing one if a lead with the same email address already exists in the specified list.
+      operationId: upsertLeads
+      summary: Upsert a lead
+      description: 'A manually claimed phone number, or one covered by DROP, is returned as `phone_number: null`. The phone is also withheld when screening is unavailable; the lead and its other contact details remain.
+
+
+        Accepts `department`, normalized to its canonical key so a localized display label ("Sales") is stored as `sales`. This operation keeps its own allowlist, separate from the one `createLead` uses, so the two can differ — it does not currently accept `company_type`, `lead_country_code`, `lead_city` or `lead_state`.
+
+
+        When creating a new lead while another request is creating leads for the team, returns 409 with `lead_creation_in_progress` and `Retry-After: 1`. Retry the request after one second. Existing leads can still be updated.'
       tags:
       - Leads
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LeadInput'
       responses:
         '200':
-          description: Lead updated successfully.
+          description: Upsert a lead.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    $ref: '#/components/schemas/Lead'
+                $ref: '#/components/schemas/generic_resource_response'
         '201':
-          description: Lead created successfully.
+          description: Upsert a lead.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    $ref: '#/components/schemas/Lead'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: '#/components/schemas/generic_resource_response'
         '401':
-          $ref: '#/components/responses/Unauthorized'
-        '422':
-          $ref: '#/components/responses/UnprocessableEntity'
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
+          $ref: '#/components/responses/Error'
+        '409':
+          description: Lead creation is busy for this team; retry after one second.
+          headers:
+            Retry-After:
+              schema:
+                type: string
+                pattern: ^[0-9]+$
+                example: '1'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        default:
+          $ref: '#/components/responses/Error'
   /leads/{id}:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
     get:
       operationId: getLead
-      summary: Hunter Get Lead
-      description: Retrieves a single lead by its identifier.
+      summary: Get a lead
+      description: 'Returns `department` since HUN-23171. It was filterable on the collection endpoint and settable by enrichment before that, but never emitted, so a caller could filter on a field it could not read back.
+
+
+        When the person behind a lead has asked Hunter to delete their address, with a claim or a California DROP request, the lead is returned without it: `email`, `confidence_score`, `verification.date` and `verification.status` are null (HUN-23599).
+
+
+        A manually claimed phone number, or one covered by DROP, is returned as `phone_number: null`. The phone is also withheld when screening is unavailable; the lead and its other contact details remain.'
       tags:
       - Leads
-      parameters:
-      - $ref: '#/components/parameters/LeadId'
       responses:
         '200':
-          description: Successful lead retrieval.
+          description: Get a lead.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    $ref: '#/components/schemas/Lead'
+                $ref: '#/components/schemas/generic_resource_response'
         '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
-    put:
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
       operationId: updateLead
-      summary: Hunter Update Lead
-      description: Updates an existing lead by its identifier.
+      summary: Update a lead
+      description: Accepts `department` since HUN-23171. The value is normalized to its canonical key, so a localized display label ("Sales") is stored as `sales`. Lead attributes are not modelled field-by-field in this contract yet — the response uses the generic resource envelope — so this note is where the accepted set is recorded.
       tags:
       - Leads
-      parameters:
-      - $ref: '#/components/parameters/LeadId'
+      responses:
+        '204':
+          description: No content.
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    put:
+      operationId: replaceLead
+      summary: Replace a lead
+      description: Accepts `department` since HUN-23171. The value is normalized to its canonical key, so a localized display label ("Sales") is stored as `sales`. Lead attributes are not modelled field-by-field in this contract yet — the response uses the generic resource envelope — so this note is where the accepted set is recorded.
+      tags:
+      - Leads
+      responses:
+        '204':
+          description: No content.
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    delete:
+      operationId: deleteLead
+      summary: Delete a lead
+      tags:
+      - Leads
+      responses:
+        '204':
+          description: No content.
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /leads/exist:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: email
+      in: query
+      description: Email address to look up.
+      schema:
+        type: string
+        format: email
+    get:
+      operationId: checkLeadExists
+      summary: Check whether a lead exists
+      tags:
+      - Leads
+      responses:
+        '200':
+          description: Check whether a lead exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /leads/bulk:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    put:
+      operationId: bulkUpsertLeads
+      summary: Upsert leads in bulk
+      description: 'Create or update up to 100 leads in one call. Each lead is matched on `email` and written in its own transaction, so one invalid lead does not cancel the others. The team''s lead limit is checked for each new lead using the current committed lead count. If an item would exceed that limit, earlier successful items remain saved and that item returns a `leads_limit_reached` error. If another request is creating leads for the team, the new lead''s item returns `status: failed` with error `lead_creation_in_progress` and code 409. Retry only those failed items after one second; other items still run normally. The response is always 200: read `status` and `errors` of each result to know what happened to each lead. The call is free and consumes no request.
+
+        When the person behind a lead has asked Hunter to delete their address, with a claim or a California DROP request, the lead is returned without it: `email`, `confidence_score`, `verification.date` and `verification.status` are null (HUN-23599).
+
+
+        A manually claimed phone number, or one covered by DROP, is returned as `phone_number: null`. The phone is also withheld when screening is unavailable; the lead and its other contact details remain.'
+      tags:
+      - Leads
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LeadInput'
+              $ref: '#/components/schemas/leads_bulk_upsert_request'
       responses:
         '200':
-          description: Lead updated successfully.
+          description: One result per submitted lead.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    $ref: '#/components/schemas/Lead'
+                $ref: '#/components/schemas/leads_bulk_upsert_response'
         '400':
-          $ref: '#/components/responses/BadRequest'
+          $ref: '#/components/responses/Error'
         '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '422':
-          $ref: '#/components/responses/UnprocessableEntity'
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
-    delete:
-      operationId: deleteLead
-      summary: Hunter Delete Lead
-      description: Deletes a lead by its identifier.
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /leads/bulk/exist:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: emails
+      in: query
+      description: 'Email addresses to look up in bulk. Send Rails-style bracket encoding (emails[]=a@example.com&emails[]=b@example.com): the comma-joined and repeated-key forms parse as a scalar and fail validation.'
+      schema:
+        type: array
+        items:
+          type: string
+          format: email
+    get:
+      operationId: checkLeadsBulkExist
+      summary: Check whether leads exist in bulk
       tags:
       - Leads
-      parameters:
-      - $ref: '#/components/parameters/LeadId'
+      responses:
+        '200':
+          description: Check whether leads exist in bulk.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /leads/bulk/move:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    post:
+      operationId: moveLeadsBulk
+      summary: Move leads to another list in bulk
+      tags:
+      - Leads
+      responses:
+        '202':
+          description: Accepted for background processing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /leads/bulk/delete:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    post:
+      operationId: deleteLeadsBulk
+      summary: Delete leads in bulk
+      tags:
+      - Leads
+      responses:
+        '200':
+          description: Delete leads in bulk.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '202':
+          description: Accepted for background processing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /leads/{id}/tags:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: tagLead
+      summary: Tag a lead
+      tags:
+      - Leads
+      responses:
+        '201':
+          description: Tag a lead.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /leads/{id}/tags/{tag_id}:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: tag_id
+      in: path
+      required: true
+      schema:
+        type: string
+    delete:
+      operationId: untagLead
+      summary: Remove a tag from a lead
+      tags:
+      - Leads
       responses:
         '204':
-          description: Lead deleted successfully.
+          description: No content.
         '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /leads/{id}/enrich:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: enrichLead
+      summary: Enrich a lead
+      description: 'A manually claimed phone number, or one covered by DROP, is returned as `phone_number: null`. The phone is also withheld when screening is unavailable; the lead and its other contact details remain.'
+      tags:
+      - Leads
+      responses:
+        '200':
+          description: Enrich a lead.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /leads_custom_attributes:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    get:
+      operationId: listLeadCustomAttributes
+      summary: List lead custom attributes
+      tags:
+      - Leads
+      responses:
+        '200':
+          description: List lead custom attributes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      operationId: createLeadCustomAttribute
+      summary: Create a lead custom attribute
+      tags:
+      - Leads
+      responses:
+        '201':
+          description: Create a lead custom attribute.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /leads_custom_attributes/{id}:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getLeadCustomAttribute
+      summary: Get a lead custom attribute
+      tags:
+      - Leads
+      responses:
+        '200':
+          description: Get a lead custom attribute.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      operationId: updateLeadCustomAttribute
+      summary: Update a lead custom attribute
+      tags:
+      - Leads
+      responses:
+        '204':
+          description: No content.
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    put:
+      operationId: replaceLeadCustomAttribute
+      summary: Replace a lead custom attribute
+      tags:
+      - Leads
+      responses:
+        '204':
+          description: No content.
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+    delete:
+      operationId: deleteLeadCustomAttribute
+      summary: Delete a lead custom attribute
+      tags:
+      - Leads
+      responses:
+        '204':
+          description: No content.
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
+  /leads-imports:
+    parameters:
+    - $ref: '#/components/parameters/ApiKey'
+    post:
+      operationId: createLeadsImport
+      summary: Create a leads import from CSV data
+      description: 'Creates a draft leads import and returns its id, the guessed column matching, and a configuration_url. This call does not import anything: a person must open that URL in a browser and complete the mapping step before any lead is created. It is intended for clients that can hand off to a browser session, not for unattended automation. csv_data must be sent in the request body; it is rejected in the query string, where it would reach access logs verbatim.'
+      tags:
+      - Leads
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/leads_import_request'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/leads_import_request'
+      responses:
+        '201':
+          description: Create a leads import from CSV data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_resource_response'
+        '401':
+          $ref: '#/components/responses/Error'
+        default:
+          $ref: '#/components/responses/Error'
 components:
   schemas:
-    Error:
+    leads_bulk_upsert_request:
       type: object
+      additionalProperties: true
+      required:
+      - leads
+      properties:
+        leads:
+          type: array
+          minItems: 1
+          maxItems: 100
+          description: 'The leads to upsert, at most 100 per request. Each entry is matched on `email` against the leads of your team: a match is updated, anything else is created.'
+          items:
+            $ref: '#/components/schemas/lead_upsert_item'
+    lead_upsert_item:
+      type: object
+      additionalProperties: true
+      required:
+      - email
+      description: One lead of a bulk upsert. Same fields as the single lead upsert.
+      properties:
+        email:
+          type: string
+          format: email
+          description: The email address that identifies the lead. Required.
+        first_name:
+          type: string
+        last_name:
+          type: string
+        position:
+          type: string
+        company:
+          type: string
+        company_industry:
+          type: string
+        confidence_score:
+          type: integer
+        website:
+          type: string
+        country_code:
+          type: string
+        company_size:
+          type: string
+        source:
+          type: string
+        department:
+          type: string
+        linkedin_url:
+          type: string
+        phone_number:
+          type: string
+        twitter:
+          type: string
+        sync_status:
+          type: string
+        notes:
+          type: string
+        leads_list_id:
+          type: integer
+          description: The list the lead must belong to. Cannot be combined with `leads_list_name`.
+        leads_list_ids:
+          type: array
+          maxItems: 50
+          items:
+            type: integer
+          description: The lists the lead must belong to. Cannot be combined with `leads_list_name`.
+        leads_list_name:
+          type: string
+          description: The name of a static list. The list is created when it does not exist yet. Cannot be combined with `leads_list_id` or `leads_list_ids`.
+        custom_attributes:
+          type: object
+          additionalProperties: true
+          description: Custom attribute values keyed by slug. Merged into the values the lead already has; a blank value clears that key.
+    generic_resource_response:
+      type: object
+      additionalProperties: true
+      description: Generic envelope for V2 resource operations whose detailed schema is not yet in the contract.
+    leads_bulk_upsert_response:
+      type: object
+      additionalProperties: false
+      required:
+      - data
+      - meta
+      properties:
+        data:
+          type: array
+          description: One result per submitted lead, in the order they were submitted.
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - index
+            - email
+            - status
+            - lead
+            - errors
+            properties:
+              index:
+                type: integer
+                description: Position of the lead in the submitted array.
+              email:
+                type:
+                - string
+                - 'null'
+              status:
+                type: string
+                enum:
+                - created
+                - updated
+                - failed
+              lead:
+                type:
+                - object
+                - 'null'
+                additionalProperties: true
+                description: The stored lead. Null when the item failed.
+              errors:
+                type: array
+                description: Empty when the item succeeded.
+                items:
+                  type: object
+                  additionalProperties: false
+                  required:
+                  - id
+                  - code
+                  - details
+                  properties:
+                    id:
+                      type: string
+                    code:
+                      type: integer
+                    details:
+                      type: string
+        meta:
+          type: object
+          additionalProperties: false
+          required:
+          - total
+          - created
+          - updated
+          - failed
+          properties:
+            total:
+              type: integer
+            created:
+              type: integer
+            updated:
+              type: integer
+            failed:
+              type: integer
+    error_response:
+      oneOf:
+      - $ref: '#/components/schemas/standard_error_response'
+      - $ref: '#/components/schemas/legacy_error_response'
+    leads_import_request:
+      type: object
+      additionalProperties: false
+      required:
+      - csv_data
+      properties:
+        api_key:
+          type: string
+        csv_data:
+          type: string
+          description: 'The CSV content. Comma and semicolon separators are both detected. The server rejects anything over 10 MB once encoded, which is a byte limit and so cannot be expressed as maxLength. Over 100,000 rows is rejected. Send a large CSV as JSON: percent encoding can treble a form-encoded body, which the proxy rejects at 25 MB before the endpoint sees it.'
+        leads_list_id:
+          type: integer
+          description: Identifier of the static list the leads should land in. Must belong to your team. Omit it to pick a destination on the configuration page.
+        file_name:
+          type: string
+          description: Name shown for this import in the imports history. A longer name is truncated rather than rejected, so no maxLength is declared.
+    standard_error_response:
+      type: object
+      additionalProperties: false
+      required:
+      - errors
       properties:
         errors:
           type: array
           items:
             type: object
+            additionalProperties: false
+            required:
+            - id
+            - code
+            - details
             properties:
               id:
                 type: string
-                description: Error identifier code.
               code:
                 type: integer
-                description: HTTP status code.
               details:
                 type: string
-                description: Human-readable error message.
-          example: []
-    VerificationStatus:
+    legacy_error_response:
       type: object
+      additionalProperties: false
+      required:
+      - error
       properties:
-        date:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: Date the verification was performed.
-          example: '2026-01-15'
-        status:
-          type:
-          - string
-          - 'null'
-          enum:
-          - valid
-          - invalid
-          - accept_all
-          - webmail
-          - disposable
-          - unknown
-          - null
-          description: The verification status.
-          example: valid
-    Lead:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier for the lead.
-          example: abc123
-        email:
-          type: string
-          format: email
-          description: Email address of the lead.
-          example: user@example.com
-        first_name:
-          type:
-          - string
-          - 'null'
-          description: First name of the lead.
-          example: example_value
-        last_name:
-          type:
-          - string
-          - 'null'
-          description: Last name of the lead.
-          example: example_value
-        position:
-          type:
-          - string
-          - 'null'
-          description: Job position or title.
-          example: example_value
-        company:
-          type:
-          - string
-          - 'null'
-          description: Company name.
-          example: example_value
-        company_industry:
-          type:
-          - string
-          - 'null'
-          description: Industry of the company.
-          example: example_value
-        company_size:
-          type:
-          - string
-          - 'null'
-          description: Size range of the company.
-          example: example_value
-        confidence_score:
-          type:
-          - integer
-          - 'null'
-          minimum: 0
-          maximum: 100
-          description: Confidence score for the lead email.
-          example: example_value
-        website:
-          type:
-          - string
-          - 'null'
-          description: Website URL associated with the lead.
-          example: example_value
-        country_code:
-          type:
-          - string
-          - 'null'
-          description: ISO 3166-1 alpha-2 country code.
-          example: example_value
-        linkedin_url:
-          type:
-          - string
-          - 'null'
-          description: LinkedIn profile URL.
-          example: https://www.example.com
-        phone_number:
-          type:
-          - string
-          - 'null'
-          description: Phone number.
-          example: example_value
-        twitter:
-          type:
-          - string
-          - 'null'
-          description: Twitter handle.
-          example: example_value
-        notes:
-          type:
-          - string
-          - 'null'
-          description: Free-text notes about the lead.
-          example: example_value
-        leads_list_id:
-          type:
-          - integer
-          - 'null'
-          description: Identifier of the leads list the lead belongs to.
-          example: '500123'
-        sync_status:
-          type:
-          - string
-          - 'null'
-          description: CRM synchronization status.
-          example: example_value
-        sending_status:
-          type:
-          - string
-          - 'null'
-          description: Email sending status.
-          example: example_value
-        verification:
-          $ref: '#/components/schemas/VerificationStatus'
-        last_activity_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Timestamp of the last activity for this lead.
-          example: '2026-01-15T10:30:00Z'
-        last_contacted_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Timestamp of the last contact with this lead.
-          example: '2026-01-15T10:30:00Z'
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp when the lead was created.
-          example: '2026-01-15T10:30:00Z'
-    PaginationMeta:
-      type: object
-      properties:
-        results:
-          type: integer
-          description: Total number of results available.
-          example: 10
-        limit:
-          type: integer
-          description: Number of results per page.
-          example: 10
-        offset:
-          type: integer
-          description: Current offset position.
-          example: 10
-    LeadInput:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-          description: Email address of the lead.
-          example: user@example.com
-        first_name:
-          type: string
-          description: First name of the lead.
-          example: example_value
-        last_name:
-          type: string
-          description: Last name of the lead.
-          example: example_value
-        position:
-          type: string
-          description: Job position or title.
-          example: example_value
-        company:
-          type: string
-          description: Company name.
-          example: example_value
-        company_industry:
-          type: string
-          description: Industry of the company.
-          example: example_value
-        company_size:
-          type: string
-          description: Size range of the company.
-          example: example_value
-        confidence_score:
-          type: integer
-          minimum: 0
-          maximum: 100
-          description: Confidence score for the lead email.
-          example: 10
-        website:
-          type: string
-          format: uri
-          description: Website URL associated with the lead.
-          example: https://www.example.com
-        country_code:
-          type: string
-          description: ISO 3166-1 alpha-2 country code.
-          example: example_value
-        linkedin_url:
-          type: string
-          format: uri
-          description: LinkedIn profile URL.
-          example: https://www.example.com
-        phone_number:
-          type: string
-          description: Phone number.
-          example: example_value
-        twitter:
-          type: string
-          description: Twitter handle.
-          example: example_value
-        notes:
-          type: string
-          description: Free-text notes about the lead.
-          example: example_value
-        leads_list_id:
-          type: integer
-          description: Identifier of the leads list to add the lead to.
-          example: '500123'
+        error: {}
   responses:
-    Unauthorized:
-      description: Invalid or missing API key.
+    Error:
+      description: The request could not be completed. A 429 with the error id `restricted_account` means the account is blocked, suspended or delinquent; further requests with the same API key are then rejected before reaching the API for up to 10 minutes, while the account and usage endpoints stay available.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
-    UnprocessableEntity:
-      description: Valid request but resource creation or update failed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Usage limit exceeded or rate limited.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid parameters or missing required fields.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/error_response'
   parameters:
-    LeadId:
-      name: id
-      in: path
-      required: true
-      description: The unique identifier of the lead.
+    ApiKey:
+      name: api_key
+      in: query
+      description: Hunter API key. Prefer the X-API-KEY header outside browser links.
       schema:
-        type: integer
+        type: string
   securitySchemes:
     apiKeyQuery:
       type: apiKey
       in: query
       name: api_key
-      description: API key passed as a query parameter.
     apiKeyHeader:
       type: apiKey
       in: header
       name: X-API-KEY
-      description: API key passed via the X-API-KEY header.
     bearerAuth:
       type: http
       scheme: bearer
-      description: API key passed as a Bearer token in the Authorization header.
