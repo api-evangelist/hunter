@@ -93,6 +93,38 @@ edges:
     builder: Pipedream repo (component)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: Agent Skills (own GitHub org)
+  partner: null
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: Agent Skills package
+  evidence: https://github.com/hunter-io/claude-plugin
+  channel: provider-built
+  relationship: compatible
+  shape: agent-skills
+  evidence_kind: own-repo
+  degree: skill-repo
+  report_only: true
+  agent_skills:
+    org: hunter-io
+    current: true
+    repos:
+    - repo: hunter-io/claude-plugin
+      archived: false
+      lapsed: false
+      pushed: '2026-10-19'
+  contract_reference:
+    register: 'provider''s own GitHub org (GitHub REST API: repo + git tree holds SKILL.md)'
+    spec_file: null
+    standard: Agent Skills (agentskills.io)
+    role: agent-skills-repo
+    matched_org: hunter-io
+    matched_by: org-profile-domain:hunter.io
+    detected_by: sweep-agent-skills.py
+    detected: '2026-10-20'
+  detected_by: sweep-agent-skills.py
+  first_seen: '2026-10-20'
 method: searched
 checked:
 - google-workspace/integrations/google-workspace-integration-edges.yml
@@ -101,6 +133,12 @@ checked:
 - https://github.com/n8n-io/n8n/tree/860f1273ebd73fabbd668cbec2c49ed9b48a286d/packages/nodes-base/nodes/
 - https://github.com/n8n-io/n8n/tree/f73dc337f8dc61a4fd44aebe41c55faafe4f53a4/packages/nodes-base/nodes/
 - https://zapier.com/api/v4/apps/
+- https://api.github.com
+- https://claude-plugins.dev/sitemap.xml
+- https://github.com/VoltAgent/awesome-agent-skills
+- https://officialskills.sh/sitemap.xml
+- https://skillsmp.com/sitemap.xml
+- https://www.skills.sh/sitemap.xml
 source:
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
 - https://github.com/n8n-io/n8n/tree/860f1273ebd73fabbd668cbec2c49ed9b48a286d/packages/nodes-base/nodes/
