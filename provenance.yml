@@ -7,41 +7,44 @@ artifacts:
     method: generated
     evidence: declared in the artifact
   arazzo/hunter-account-guarded-domain-search-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/hunter-combined-enrich-upsert-lead-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/hunter-create-list-add-lead-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/hunter-discover-search-count-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/hunter-domain-search-build-list-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/hunter-domain-search-find-verify-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/hunter-enrich-verify-create-lead-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/hunter-find-verify-add-recipient-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/hunter-find-verify-create-lead-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/hunter-verify-add-to-campaign-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   asyncapi/hunter-webhooks.yml:
     method: searched
     evidence: declared in the artifact
   authentication/hunter-authentication.yml:
     method: searched
     evidence: declared in the artifact
+  capabilities/hunter-capability-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
   changelog/hunter-changelog.yml:
     method: searched
     evidence: declared in the artifact
@@ -52,11 +55,11 @@ artifacts:
     method: derived
     evidence: openapi/hunter-account-api
   collections/hunter-api.opencollection.json:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: openapi/hunter-api
   collections/hunter-api.postman_collection.json:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: openapi/hunter-api
   collections/hunter-campaigns-api.opencollection.json:
     method: derived
     evidence: openapi/hunter-campaigns-api
@@ -64,17 +67,17 @@ artifacts:
     method: derived
     evidence: openapi/hunter-campaigns-api
   collections/hunter-combined-enrichment-api.opencollection.json:
-    method: derived
-    evidence: openapi/hunter-combined-enrichment-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-combined-enrichment-api.postman_collection.json:
-    method: derived
-    evidence: openapi/hunter-combined-enrichment-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-company-enrichment-api.opencollection.json:
-    method: derived
-    evidence: openapi/hunter-company-enrichment-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-company-enrichment-api.postman_collection.json:
-    method: derived
-    evidence: openapi/hunter-company-enrichment-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-discover-api.opencollection.json:
     method: derived
     evidence: openapi/hunter-discover-api
@@ -82,35 +85,35 @@ artifacts:
     method: derived
     evidence: openapi/hunter-discover-api
   collections/hunter-domain-search-api.opencollection.json:
-    method: derived
-    evidence: openapi/hunter-domain-search-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-domain-search-api.postman_collection.json:
-    method: derived
-    evidence: openapi/hunter-domain-search-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-email-count-api.opencollection.json:
-    method: derived
-    evidence: openapi/hunter-email-count-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-email-count-api.postman_collection.json:
-    method: derived
-    evidence: openapi/hunter-email-count-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-email-enrichment-api.opencollection.json:
-    method: derived
-    evidence: openapi/hunter-email-enrichment-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-email-enrichment-api.postman_collection.json:
-    method: derived
-    evidence: openapi/hunter-email-enrichment-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-email-finder-api.opencollection.json:
-    method: derived
-    evidence: openapi/hunter-email-finder-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-email-finder-api.postman_collection.json:
-    method: derived
-    evidence: openapi/hunter-email-finder-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-email-verifier-api.opencollection.json:
-    method: derived
-    evidence: openapi/hunter-email-verifier-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-email-verifier-api.postman_collection.json:
-    method: derived
-    evidence: openapi/hunter-email-verifier-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-leads-api.opencollection.json:
     method: derived
     evidence: openapi/hunter-leads-api
@@ -118,11 +121,11 @@ artifacts:
     method: derived
     evidence: openapi/hunter-leads-api
   collections/hunter-leads-lists-api.opencollection.json:
-    method: derived
-    evidence: openapi/hunter-leads-lists-api
+    method: unknown
+    evidence: no authorship recorded
   collections/hunter-leads-lists-api.postman_collection.json:
-    method: derived
-    evidence: openapi/hunter-leads-lists-api
+    method: unknown
+    evidence: no authorship recorded
   conformance/hunter-conformance.yml:
     method: searched
     evidence: declared in the artifact
@@ -208,6 +211,12 @@ artifacts:
     method: generated
     evidence: declared in the artifact
   front-door-ai/2026-09-17.yml:
+    method: unknown
+    evidence: no authorship recorded
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/hunter-integration-edges.yml:
     method: unknown
     evidence: no authorship recorded
   json-ld/hunter-context.jsonld:
@@ -408,127 +417,7 @@ artifacts:
   json-structure/hunter-verification-status-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -612,6 +501,21 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/hunter-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -627,83 +531,148 @@ artifacts:
   mcp/hunter-tool-crosswalk.yml:
     method: derived
     evidence: declared in the artifact
-  openapi/_original/hunter-api-openapi.yml:
+  openapi/_original/hunter-openapi.json:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
+    evidence: byte-identical to https://hunter.io/openapi.json (sha256 c629f9813e6f, fetched 2026-10-19)
   openapi/hunter-account-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/hunter-api-keys-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/hunter-campaigns-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/hunter-combined-enrichment-api-openapi.yml:
+  openapi/hunter-companies-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/hunter-company-enrichment-api-openapi.yml:
+  openapi/hunter-connected-apps-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/hunter-discover-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/hunter-domain-search-api-openapi.yml:
+  openapi/hunter-email-accounts-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/hunter-email-count-api-openapi.yml:
+  openapi/hunter-enrichment-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/hunter-email-enrichment-api-openapi.yml:
+  openapi/hunter-feedback-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/hunter-email-finder-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/hunter-email-verifier-api-openapi.yml:
+  openapi/hunter-finder-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/hunter-leads-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/hunter-leads-lists-api-openapi.yml:
+  openapi/hunter-lists-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/hunter-messages-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/hunter-multi-domain-search-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/hunter-sequences-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/hunter-tags-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/hunter-team-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/hunter-templates-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/hunter-usage-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/hunter-verifier-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/hunter-views-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/hunter-webhooks-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   overlays/hunter-account-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/hunter-account-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/hunter-campaigns-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/hunter-campaigns-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/hunter-combined-enrichment-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/hunter-combined-enrichment-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/hunter-company-enrichment-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/hunter-company-enrichment-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/hunter-discover-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/hunter-discover-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/hunter-domain-search-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/hunter-domain-search-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/hunter-email-count-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/hunter-email-count-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/hunter-email-enrichment-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/hunter-email-enrichment-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/hunter-email-finder-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/hunter-email-finder-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/hunter-email-verifier-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/hunter-email-verifier-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/hunter-full-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/hunter-leads-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/hunter-leads-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/hunter-leads-lists-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/hunter-leads-lists-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   packages/hunter-packages.yml:
@@ -713,8 +682,8 @@ artifacts:
     method: searched
     evidence: declared in the artifact
   postman/hunter-api.postman_collection.json:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: openapi/hunter-api
   rate-limits/hunter-rate-limits.yml:
     method: searched
     evidence: declared in the artifact
