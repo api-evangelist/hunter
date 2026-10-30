@@ -1,4 +1,4 @@
-# Hunter (hunter)
+# Hunter
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,336 +64,323 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Hunter is an email finding and verification service that helps find professional email addresses associated with a domain and verify email deliverability.
-
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/hunter/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/hunter/refs/heads/main/apis.yml)
-
-## Scope
-
-- **Type:** Index
-- **Access:** 3rd-Party
-
-## Tags
-
-- Contact Discovery
-- Email
-- Email Verification
-- Lead Generation
-- Prospecting
-- Sales Intelligence
-
-## Timestamps
-
-- **Created:** 2024-01-01
-- **Modified:** 2026-05-19
-
-## APIs
-
-### Hunter Domain Search API
-
-Returns all the email addresses found using a given domain name, with sources.
-
-- **Human URL:** [https://hunter.io/api/domain-search](https://hunter.io/api/domain-search)
-- **Base URL:** `https://api.hunter.io/v2`
-
-#### Tags
-
-- Contact Discovery
-- Domain
-- Email
-- Search
-
-#### Properties
-
-- [Documentation](https://hunter.io/api-documentation/v2#domain-search)
-- [OpenAPI](openapi/hunter-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/hunter-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/hunter-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Hunter Email Finder API
-
-Generates the most likely email address from a domain name, a first name and a last name.
-
-- **Human URL:** [https://hunter.io/api/email-finder](https://hunter.io/api/email-finder)
-- **Base URL:** `https://api.hunter.io/v2`
-
-#### Tags
-
-- Contact Discovery
-- Email
-- Finder
-- Lead Generation
-
-#### Properties
-
-- [Documentation](https://hunter.io/api-documentation/v2#email-finder)
-- [OpenAPI](openapi/hunter-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/hunter-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/hunter-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Hunter Email Verifier API
-
-Verifies the deliverability of a given email address.
-
-- **Human URL:** [https://hunter.io/api/email-verifier](https://hunter.io/api/email-verifier)
-- **Base URL:** `https://api.hunter.io/v2`
-
-#### Tags
-
-- Data Quality
-- Email
-- Validation
-- Verification
-
-#### Properties
-
-- [Documentation](https://hunter.io/api-documentation/v2#email-verifier)
-- [OpenAPI](openapi/hunter-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/hunter-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/hunter-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Hunter Email Count API
-
-Returns the number of email addresses found for a given domain.
-
-- **Human URL:** [https://hunter.io](https://hunter.io)
-- **Base URL:** `https://api.hunter.io/v2`
-
-#### Tags
-
-- Analytics
-- Count
-- Email
-
-#### Properties
-
-- [Documentation](https://hunter.io/api-documentation/v2#email-count)
-- [OpenAPI](openapi/hunter-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/hunter-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/hunter-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Hunter Account API
-
-Returns information about the account associated with the API key.
-
-- **Human URL:** [https://hunter.io](https://hunter.io)
-- **Base URL:** `https://api.hunter.io/v2`
-
-#### Tags
-
-- Account
-- Management
-- Usage
-
-#### Properties
-
-- [Documentation](https://hunter.io/api-documentation/v2#account)
-- [OpenAPI](openapi/hunter-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/hunter-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/hunter-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Hunter Discover API
-
-Returns companies matching a set of criteria using natural language queries or robust filters to find companies aligned with your ideal customer profile.
-
-- **Human URL:** [https://hunter.io/api/discover](https://hunter.io/api/discover)
-- **Base URL:** `https://api.hunter.io/v2`
-
-#### Tags
-
-- Companies
-- Discover
-- Lead Generation
-- Prospecting
-
-#### Properties
-
-- [Documentation](https://hunter.io/api-documentation/v2#discover)
-- [OpenAPI](openapi/hunter-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/hunter-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/hunter-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Hunter Email Enrichment API
-
-Returns comprehensive personal information linked to an email address or LinkedIn profile, providing enriched data points about the person.
-
-- **Human URL:** [https://hunter.io/api/lead-enrichment](https://hunter.io/api/lead-enrichment)
-- **Base URL:** `https://api.hunter.io/v2`
-
-#### Tags
-
-- Data
-- Email
-- Enrichment
-- People
-
-#### Properties
-
-- [Documentation](https://hunter.io/api-documentation/v2#email-enrichment)
-- [OpenAPI](openapi/hunter-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/hunter-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/hunter-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Hunter Company Enrichment API
-
-Returns detailed organizational data associated with a domain name, including company size, industry, location, and other firmographic information.
-
-- **Human URL:** [https://hunter.io/api/company-enrichment](https://hunter.io/api/company-enrichment)
-- **Base URL:** `https://api.hunter.io/v2`
-
-#### Tags
-
-- Company
-- Data
-- Enrichment
-- Firmographic
-
-#### Properties
-
-- [Documentation](https://hunter.io/api-documentation/v2#company-enrichment)
-- [OpenAPI](openapi/hunter-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/hunter-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/hunter-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Hunter Combined Enrichment API
-
-Merges person and company information for a single email address, returning enriched records combining both datasets.
-
-- **Human URL:** [https://hunter.io/api/combined-enrichment](https://hunter.io/api/combined-enrichment)
-- **Base URL:** `https://api.hunter.io/v2`
-
-#### Tags
-
-- Combined
-- Company
-- Enrichment
-- People
-
-#### Properties
-
-- [Documentation](https://hunter.io/api-documentation/v2#combined-enrichment)
-- [OpenAPI](openapi/hunter-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/hunter-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/hunter-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Hunter Leads API
-
-Allows you to manage the leads stored in Hunter, including listing, creating, updating, upserting, and deleting leads.
-
-- **Human URL:** [https://hunter.io/api/leads](https://hunter.io/api/leads)
-- **Base URL:** `https://api.hunter.io/v2`
-
-#### Tags
-
-- Contacts
-- CRM
-- Leads
-- Management
-
-#### Properties
-
-- [Documentation](https://hunter.io/api-documentation/v2#leads)
-- [OpenAPI](openapi/hunter-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/hunter-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/hunter-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/hunter-lead-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/hunter-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-
-### Hunter Leads Lists API
-
-Allows you to manage leads lists in Hunter, including listing, creating, updating, and deleting lead collection groups.
-
-- **Human URL:** [https://hunter.io/api/leads](https://hunter.io/api/leads)
-- **Base URL:** `https://api.hunter.io/v2`
-
-#### Tags
-
-- Leads
-- Lists
-- Management
-- Organization
-
-#### Properties
-
-- [Documentation](https://hunter.io/api-documentation/v2#leads_lists)
-- [OpenAPI](openapi/hunter-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/hunter-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/hunter-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/hunter-lead-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/hunter-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-
-### Hunter Campaigns API
-
-Allows you to manage email sequences including listing campaigns, managing recipients, and starting sequences for automated email outreach.
-
-- **Human URL:** [https://hunter.io/api/campaigns](https://hunter.io/api/campaigns)
-- **Base URL:** `https://api.hunter.io/v2`
-
-#### Tags
-
-- Automation
-- Campaigns
-- Email Outreach
-- Sequences
-
-#### Properties
-
-- [Documentation](https://hunter.io/api-documentation/v2#campaigns)
-- [OpenAPI](openapi/hunter-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/hunter-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/hunter-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Hunter Logo API
-
-Retrieves any company logo using a domain name. Free to use with no authentication required, just a backlink from your site to hunter.io.
-
-- **Human URL:** [https://hunter.io/api/logo](https://hunter.io/api/logo)
-- **Base URL:** `https://logos.hunter.io`
-
-#### Tags
-
-- Branding
-- Company
-- Images
-- Logo
-
-#### Properties
-
-- [Documentation](https://hunter.io/api-documentation/v2#logo)
-- [OpenAPI](openapi/hunter-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/hunter-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/hunter-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [Arazzo Workflows](arazzo/) — [Arazzo Specification](https://spec.openapis.org/arazzo/latest.html)
-- [LinkedIn](https://www.linkedin.com/company/hunterny)
-- [Portal](https://hunter.io/api)
+Hunter is an email finding, verification and B2B prospecting platform. Its v2 API finds the professional email addresses associated with a company domain, predicts an address for a named person, verifies deliverability, enriches people and companies, discovers target accounts by natural-language query or structured filter, and manages the leads, lead lists and outreach sequences built from those results. Hunter also operates a first-party remote MCP server at https://mcp.hunter.io/mcp exposing roughly 100 tools, and publishes its own packaged Agent Skills, making it one of the few providers whose agent surface is wider than its documented REST contract.
+
+**Areas:** Contact Discovery · Email · Email Verification · Lead Generation · Prospecting · Sales Intelligence
+
+## Hunter on APIs.io
+
+Everything profiled for Hunter is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/hunter/](https://apis.io/providers/hunter/)** — or go straight to one of the APIs or properties below.
+
+### APIs (12)
+
+- [Hunter Account API](https://apis.io/apis/hunter/hunter-account-api/) — Retrieve account information and usage statistics.
+- [Hunter Campaigns API](https://apis.io/apis/hunter/hunter-campaigns-api/) — Manage email sequences and recipients.
+- [Hunter Combined Enrichment API](https://apis.io/apis/hunter/hunter-combined-enrichment-api/) — Merge person and company enrichment for a single email address.
+- [Hunter Company Enrichment API](https://apis.io/apis/hunter/hunter-company-enrichment-api/) — Enrich company information linked to a domain name.
+- [Hunter Discover API](https://apis.io/apis/hunter/hunter-discover-api/) — Find companies matching criteria using natural language or filters.
+- [Hunter Domain Search API](https://apis.io/apis/hunter/hunter-domain-search-api/) — Search for email addresses associated with a domain.
+- [Hunter Email Count API](https://apis.io/apis/hunter/hunter-email-count-api/) — Count email addresses found for a domain.
+- [Hunter Email Enrichment API](https://apis.io/apis/hunter/hunter-email-enrichment-api/) — Enrich personal information linked to an email or LinkedIn profile.
+- [Hunter Email Finder API](https://apis.io/apis/hunter/hunter-email-finder-api/) — Find the most likely email address for a person at a company.
+- [Hunter Email Verifier API](https://apis.io/apis/hunter/hunter-email-verifier-api/) — Verify the deliverability of an email address.
+- [Hunter Leads API](https://apis.io/apis/hunter/hunter-leads-api/) — Manage leads stored in Hunter.
+- [Hunter Leads Lists API](https://apis.io/apis/hunter/hunter-leads-lists-api/) — Manage leads list collections in Hunter.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Arazzo workflows (10)
+
+Multi-step workflows that chain operations into a business task.
+
+- [Hunter Account-Guarded Domain Search](https://apis.io/arazzos/hunter/hunter-account-guarded-domain-search-workflow/)
+- [Hunter Combined Enrich and Upsert Lead](https://apis.io/arazzos/hunter/hunter-combined-enrich-upsert-lead-workflow/)
+- [Hunter Create List and Add Lead](https://apis.io/arazzos/hunter/hunter-create-list-add-lead-workflow/)
+- [Hunter Discover, Search, and Count](https://apis.io/arazzos/hunter/hunter-discover-search-count-workflow/)
+- [Hunter Domain Search to Build a Verified List](https://apis.io/arazzos/hunter/hunter-domain-search-build-list-workflow/)
+- [Hunter Domain Search, Find, and Verify](https://apis.io/arazzos/hunter/hunter-domain-search-find-verify-workflow/)
+- [Hunter Enrich, Verify, and Create Lead](https://apis.io/arazzos/hunter/hunter-enrich-verify-create-lead-workflow/)
+- [Hunter Find, Verify, and Add Campaign Recipient](https://apis.io/arazzos/hunter/hunter-find-verify-add-recipient-workflow/)
+- [Hunter Find, Verify, and Create Lead](https://apis.io/arazzos/hunter/hunter-find-verify-create-lead-workflow/)
+- [Hunter Verify and Add to Campaign](https://apis.io/arazzos/hunter/hunter-verify-add-to-campaign-workflow/)
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Hunter Webhooks](https://apis.io/asyncapis/hunter/hunter-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [hunter](https://apis.io/servers/hunter/hunter/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Hunter Agentic Access](https://apis.io/agentic-access/hunter/hunter-agentic-access/)
+
+#### JSON Schema (41)
+
+The data models the API reads and writes.
+
+- [AccountResult](https://apis.io/schemas/hunter/hunter-account-result/)
+- [AccountResult](https://apis.io/schemas/hunter/hunter-accountresult/)
+- [Campaign](https://apis.io/schemas/hunter/hunter-campaign/)
+- [CampaignRecipient](https://apis.io/schemas/hunter/hunter-campaign-recipient/)
+- [CampaignRecipient](https://apis.io/schemas/hunter/hunter-campaignrecipient/)
+- [CompanyEnrichment](https://apis.io/schemas/hunter/hunter-company-enrichment/)
+- [CompanyGeoLocation](https://apis.io/schemas/hunter/hunter-company-geo-location/)
+- [CompanyEnrichment](https://apis.io/schemas/hunter/hunter-companyenrichment/)
+- [CompanyGeoLocation](https://apis.io/schemas/hunter/hunter-companygeolocation/)
+- [DiscoverRequest](https://apis.io/schemas/hunter/hunter-discover-request/)
+- [DiscoverResult](https://apis.io/schemas/hunter/hunter-discover-result/)
+- [DiscoverRequest](https://apis.io/schemas/hunter/hunter-discoverrequest/)
+- [DiscoverResult](https://apis.io/schemas/hunter/hunter-discoverresult/)
+- [DomainEmail](https://apis.io/schemas/hunter/hunter-domain-email/)
+- [DomainSearchResult](https://apis.io/schemas/hunter/hunter-domain-search-result/)
+- [DomainEmail](https://apis.io/schemas/hunter/hunter-domainemail/)
+- [DomainSearchResult](https://apis.io/schemas/hunter/hunter-domainsearchresult/)
+- [EmailCountResult](https://apis.io/schemas/hunter/hunter-email-count-result/)
+- [EmailFinderResult](https://apis.io/schemas/hunter/hunter-email-finder-result/)
+- [EmailVerifierResult](https://apis.io/schemas/hunter/hunter-email-verifier-result/)
+- [EmailCountResult](https://apis.io/schemas/hunter/hunter-emailcountresult/)
+- [EmailFinderResult](https://apis.io/schemas/hunter/hunter-emailfinderresult/)
+- [EmailVerifierResult](https://apis.io/schemas/hunter/hunter-emailverifierresult/)
+- [Error](https://apis.io/schemas/hunter/hunter-error/)
+- [GeoLocation](https://apis.io/schemas/hunter/hunter-geo-location/)
+- …and 16 more published on APIs.io
+
+#### JSON Structure (24)
+
+Data models expressed in JSON Structure.
+
+- [Hunter Account Result Structure](https://apis.io/json-structure/hunter/hunter-account-result-structure/)
+- [Hunter Campaign Recipient Structure](https://apis.io/json-structure/hunter/hunter-campaign-recipient-structure/)
+- [Hunter Campaign Structure](https://apis.io/json-structure/hunter/hunter-campaign-structure/)
+- [Hunter Company Enrichment Structure](https://apis.io/json-structure/hunter/hunter-company-enrichment-structure/)
+- [Hunter Company Geo Location Structure](https://apis.io/json-structure/hunter/hunter-company-geo-location-structure/)
+- [Hunter Discover Request Structure](https://apis.io/json-structure/hunter/hunter-discover-request-structure/)
+- [Hunter Discover Result Structure](https://apis.io/json-structure/hunter/hunter-discover-result-structure/)
+- [Hunter Domain Email Structure](https://apis.io/json-structure/hunter/hunter-domain-email-structure/)
+- [Hunter Domain Search Result Structure](https://apis.io/json-structure/hunter/hunter-domain-search-result-structure/)
+- [Hunter Email Count Result Structure](https://apis.io/json-structure/hunter/hunter-email-count-result-structure/)
+- [Hunter Email Finder Result Structure](https://apis.io/json-structure/hunter/hunter-email-finder-result-structure/)
+- [Hunter Email Verifier Result Structure](https://apis.io/json-structure/hunter/hunter-email-verifier-result-structure/)
+- [Hunter Error Structure](https://apis.io/json-structure/hunter/hunter-error-structure/)
+- [Hunter Geo Location Structure](https://apis.io/json-structure/hunter/hunter-geo-location-structure/)
+- [Hunter Lead Input Structure](https://apis.io/json-structure/hunter/hunter-lead-input-structure/)
+- [Hunter Lead Structure](https://apis.io/json-structure/hunter/hunter-lead-structure/)
+- [Hunter Leads List Structure](https://apis.io/json-structure/hunter/hunter-leads-list-structure/)
+- [Hunter Meta Structure](https://apis.io/json-structure/hunter/hunter-meta-structure/)
+- [Hunter Pagination Meta Structure](https://apis.io/json-structure/hunter/hunter-pagination-meta-structure/)
+- [Hunter Person Enrichment Structure](https://apis.io/json-structure/hunter/hunter-person-enrichment-structure/)
+- [Hunter Source Structure](https://apis.io/json-structure/hunter/hunter-source-structure/)
+- [Hunter Structure](https://apis.io/json-structure/hunter/hunter-structure/)
+- [Hunter Usage Counter Structure](https://apis.io/json-structure/hunter/hunter-usage-counter-structure/)
+- [Hunter Verification Status Structure](https://apis.io/json-structure/hunter/hunter-verification-status-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Hunter Context](https://apis.io/jsonld/hunter/hunter-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Hunter Domain Vocabulary](https://apis.io/vocabularies/hunter/hunter-vocabulary/)
+
+#### Examples (23)
+
+Example requests and responses.
+
+- [Hunter Account Result Example](https://apis.io/examples/hunter/hunter-account-result-example/)
+- [Hunter Campaign Example](https://apis.io/examples/hunter/hunter-campaign-example/)
+- [Hunter Campaign Recipient Example](https://apis.io/examples/hunter/hunter-campaign-recipient-example/)
+- [Hunter Company Enrichment Example](https://apis.io/examples/hunter/hunter-company-enrichment-example/)
+- [Hunter Company Geo Location Example](https://apis.io/examples/hunter/hunter-company-geo-location-example/)
+- [Hunter Discover Request Example](https://apis.io/examples/hunter/hunter-discover-request-example/)
+- [Hunter Discover Result Example](https://apis.io/examples/hunter/hunter-discover-result-example/)
+- [Hunter Domain Email Example](https://apis.io/examples/hunter/hunter-domain-email-example/)
+- [Hunter Domain Search Result Example](https://apis.io/examples/hunter/hunter-domain-search-result-example/)
+- [Hunter Email Count Result Example](https://apis.io/examples/hunter/hunter-email-count-result-example/)
+- [Hunter Email Finder Result Example](https://apis.io/examples/hunter/hunter-email-finder-result-example/)
+- [Hunter Email Verifier Result Example](https://apis.io/examples/hunter/hunter-email-verifier-result-example/)
+- [Hunter Error Example](https://apis.io/examples/hunter/hunter-error-example/)
+- [Hunter Geo Location Example](https://apis.io/examples/hunter/hunter-geo-location-example/)
+- [Hunter Lead Example](https://apis.io/examples/hunter/hunter-lead-example/)
+- [Hunter Lead Input Example](https://apis.io/examples/hunter/hunter-lead-input-example/)
+- [Hunter Leads List Example](https://apis.io/examples/hunter/hunter-leads-list-example/)
+- [Hunter Meta Example](https://apis.io/examples/hunter/hunter-meta-example/)
+- [Hunter Pagination Meta Example](https://apis.io/examples/hunter/hunter-pagination-meta-example/)
+- [Hunter Person Enrichment Example](https://apis.io/examples/hunter/hunter-person-enrichment-example/)
+- [Hunter Source Example](https://apis.io/examples/hunter/hunter-source-example/)
+- [Hunter Usage Counter Example](https://apis.io/examples/hunter/hunter-usage-counter-example/)
+- [Hunter Verification Status Example](https://apis.io/examples/hunter/hunter-verification-status-example/)
+
+#### Collections (14)
+
+Postman and Open Collection request collections.
+
+- [Hunter Account API](https://apis.io/collections/hunter/open-hunter-account-api/)
+- [Hunter API](https://apis.io/collections/hunter/open-hunter-api/)
+- [Hunter Account Campaigns API](https://apis.io/collections/hunter/open-hunter-campaigns-api/)
+- [Hunter Account Combined Enrichment API](https://apis.io/collections/hunter/open-hunter-combined-enrichment-api/)
+- [Hunter Account Company Enrichment API](https://apis.io/collections/hunter/open-hunter-company-enrichment-api/)
+- [Hunter Account Discover API](https://apis.io/collections/hunter/open-hunter-discover-api/)
+- [Hunter Account Domain Search API](https://apis.io/collections/hunter/open-hunter-domain-search-api/)
+- [Hunter Account Email Count API](https://apis.io/collections/hunter/open-hunter-email-count-api/)
+- [Hunter Account Email Enrichment API](https://apis.io/collections/hunter/open-hunter-email-enrichment-api/)
+- [Hunter Account Email Finder API](https://apis.io/collections/hunter/open-hunter-email-finder-api/)
+- [Hunter Account Email Verifier API](https://apis.io/collections/hunter/open-hunter-email-verifier-api/)
+- [Hunter Account Leads API](https://apis.io/collections/hunter/open-hunter-leads-api/)
+- [Hunter Account Leads Lists API](https://apis.io/collections/hunter/open-hunter-leads-lists-api/)
+- [Hunter API](https://apis.io/collections/hunter/postman-hunter-api/)
+
+#### Overlays (25)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Hunter Account Api Overlay](https://apis.io/overlays/hunter/hunter-account-api-overlay/)
+- [Hunter Account Api Phrasing Overlay](https://apis.io/overlays/hunter/hunter-account-api-phrasing-overlay/)
+- [Hunter Campaigns Api Overlay](https://apis.io/overlays/hunter/hunter-campaigns-api-overlay/)
+- [Hunter Campaigns Api Phrasing Overlay](https://apis.io/overlays/hunter/hunter-campaigns-api-phrasing-overlay/)
+- [Hunter Combined Enrichment Api Overlay](https://apis.io/overlays/hunter/hunter-combined-enrichment-api-overlay/)
+- [Hunter Combined Enrichment Api Phrasing Overlay](https://apis.io/overlays/hunter/hunter-combined-enrichment-api-phrasing-overlay/)
+- [Hunter Company Enrichment Api Overlay](https://apis.io/overlays/hunter/hunter-company-enrichment-api-overlay/)
+- [Hunter Company Enrichment Api Phrasing Overlay](https://apis.io/overlays/hunter/hunter-company-enrichment-api-phrasing-overlay/)
+- [Hunter Discover Api Overlay](https://apis.io/overlays/hunter/hunter-discover-api-overlay/)
+- [Hunter Discover Api Phrasing Overlay](https://apis.io/overlays/hunter/hunter-discover-api-phrasing-overlay/)
+- [Hunter Domain Search Api Overlay](https://apis.io/overlays/hunter/hunter-domain-search-api-overlay/)
+- [Hunter Domain Search Api Phrasing Overlay](https://apis.io/overlays/hunter/hunter-domain-search-api-phrasing-overlay/)
+- [Hunter Email Count Api Overlay](https://apis.io/overlays/hunter/hunter-email-count-api-overlay/)
+- [Hunter Email Count Api Phrasing Overlay](https://apis.io/overlays/hunter/hunter-email-count-api-phrasing-overlay/)
+- [Hunter Email Enrichment Api Overlay](https://apis.io/overlays/hunter/hunter-email-enrichment-api-overlay/)
+- [Hunter Email Enrichment Api Phrasing Overlay](https://apis.io/overlays/hunter/hunter-email-enrichment-api-phrasing-overlay/)
+- [Hunter Email Finder Api Overlay](https://apis.io/overlays/hunter/hunter-email-finder-api-overlay/)
+- [Hunter Email Finder Api Phrasing Overlay](https://apis.io/overlays/hunter/hunter-email-finder-api-phrasing-overlay/)
+- [Hunter Email Verifier Api Overlay](https://apis.io/overlays/hunter/hunter-email-verifier-api-overlay/)
+- [Hunter Email Verifier Api Phrasing Overlay](https://apis.io/overlays/hunter/hunter-email-verifier-api-phrasing-overlay/)
+- [Hunter Full Overlay](https://apis.io/overlays/hunter/hunter-full-overlay/)
+- [Hunter Leads Api Overlay](https://apis.io/overlays/hunter/hunter-leads-api-overlay/)
+- [Hunter Leads Api Phrasing Overlay](https://apis.io/overlays/hunter/hunter-leads-api-phrasing-overlay/)
+- [Hunter Leads Lists Api Overlay](https://apis.io/overlays/hunter/hunter-leads-lists-api-overlay/)
+- [Hunter Leads Lists Api Phrasing Overlay](https://apis.io/overlays/hunter/hunter-leads-lists-api-phrasing-overlay/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Hunter — jsonschema rules](https://apis.io/rules/hunter/hunter-jsonschema-spectral-rules/)
+- [Hunter API Rules](https://apis.io/rules/hunter/hunter-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Hunter Authentication](https://apis.io/security/hunter/hunter-authentication/)
+- [Hunter Domain Security](https://apis.io/security/hunter/hunter-domain-security/)
+- [Hunter Vulnerability Disclosure](https://apis.io/security/hunter/hunter-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Hunter Scopes](https://apis.io/scopes/hunter/hunter-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Hunter Plans Pricing](https://apis.io/plans/hunter/hunter-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Hunter Rate Limits](https://apis.io/rate-limits/hunter/hunter-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Hunter Finops](https://apis.io/finops/hunter/hunter-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.hunter.io/)
 - [Documentation](https://hunter.io/api-documentation/v2)
-- [OpenAPI](openapi/hunter-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [JSON Schema](json-schema/hunter-lead-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/hunter-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Authentication](https://hunter.io/api-documentation/v2#authentication)
-- [Rate Limits](https://hunter.io/api-documentation/v2#rate-limiting)
+- [API reference](https://hunter.io/api-documentation/v2)
 - [Pricing](https://hunter.io/pricing)
-- [Terms of Service](https://hunter.io/terms)
-- [Privacy Policy](https://hunter.io/privacy-policy)
-- [Status Page](https://status.hunter.io)
-- [Blog](https://hunter.io/blog)
-- [Login](https://hunter.io/users/sign_in)
-- [Sign Up](https://hunter.io/users/sign_up)
-- [Changelog](https://hunter.io/changelog)
-- [Integrations](https://hunter.io/integrations)
-- [GitHub Organization](https://github.com/hunter-io)
-- [Contact](https://hunter.io/contact)
 - [Support](https://help.hunter.io)
-- [Features](undefined)
-- [Use Cases](undefined)
-- [Integrations](undefined)
-- [M C P Server](https://github.com/hunter-io/hunter-mcp)
+- [Changelog](https://hunter.io/changelog)
+- [Blog](https://hunter.io/blog)
+- [Security](https://hunter.io/security-policy)
+- [Compliance](https://help.hunter.io/en/articles/1890029-gdpr-compliance)
+- [Terms of service](https://hunter.io/terms)
+- [Privacy policy](https://hunter.io/privacy-policy)
+- [GitHub](https://github.com/hunter-io)
+- [Status](https://status.hunter.io)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
-**URL:** https://apievangelist.com
+**Kin Score 69.1** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 63.7 |
+| Contract governance | 45.5 |
+| Operational transparency | 76.3 |
+| Developer ergonomics | 60.7 |
+| Access clarity | 67.1 |
+
+**Agent readiness 61.0** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | verified |
+| Event Surface Described | yes |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 41.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/hunter/](https://apis.io/providers/hunter/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Hunter: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/hunter/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
