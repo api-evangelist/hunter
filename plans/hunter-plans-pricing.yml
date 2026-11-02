@@ -1,0 +1,166 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://hunter.io/pricing
+sources:
+- https://hunter.io/pricing
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T120612
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: tiered-subscription
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+published: true
+note: Yearly discounted prices also shown ($34, $104, $209 /month billed monthly equivalents). Credits
+  power API, web app, extension equally.
+plan_count: 9
+currency: USD
+plans:
+- name: Free
+  price_text: $0
+  price: 0
+  currency: USD
+  period: month
+  unit: plan
+  included_quota: 50 credits per month
+- name: Starter
+  price_text: $49 /month
+  price: 49
+  currency: USD
+  period: month
+  unit: plan
+  included_quota: 2,000 credits per month; 24,000 credits per year
+  overage: Extra credit packs
+- name: Growth
+  price_text: $149 /month
+  price: 149
+  currency: USD
+  period: month
+  unit: plan
+  included_quota: 10,000 credits per month; 120,000 credits per year
+  overage: Extra credit packs
+- name: Scale
+  price_text: $299 /month
+  price: 299
+  currency: USD
+  period: month
+  unit: plan
+  included_quota: 25,000 credits per month; 300,000 credits per year
+  overage: Extra credit packs
+- name: Enterprise
+  price_text: Custom
+  period: none
+  included_quota: Custom number of credits
+- name: Data Platform bulk credits purchase
+  price_text: $6,500.00
+  price: 6500
+  currency: USD
+  period: one-time
+  unit: credit bundle
+  included_quota: 1,000 Search credits, 200,000 Verification credits; usable up to 12 months from purchase
+- name: Additional email accounts add-on
+  price_text: From $10/mo per email account
+  price: 10
+  currency: USD
+  period: month
+  unit: email account
+- name: Buy custom domains & email accounts
+  price_text: From $6.00/mo per email account
+  price: 6
+  currency: USD
+  period: month
+  unit: email account
+- name: Inbox Protection
+  price_text: From $7.50/mo per email account
+  price: 7.5
+  currency: USD
+  period: month
+  unit: email account
+rate_limit_statements:
+- Recipients per sequence 500 2,500 5,000 15,000 Custom
+- Each repeated search or verification is counted once per calendar month.
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - free
+  - hybrid
+  units:
+  - credit
+  - message
+  plans:
+  - name: Free
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Starter
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Growth
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Scale
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Data Platform bulk credits purchase
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - credit
+    periods:
+    - one-time
+  - name: Additional email accounts add-on
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - message
+    periods:
+    - month
+  - name: Buy custom domains & email accounts
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - message
+    periods:
+    - month
+  - name: Inbox Protection
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - message
+    periods:
+    - month
