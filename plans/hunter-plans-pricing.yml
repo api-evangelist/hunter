@@ -84,7 +84,7 @@ rate_limit_statements:
 - Recipients per sequence 500 2,500 5,000 15,000 Custom
 - Each repeated search or verification is counted once per calendar month.
 x-canonical:
-  generated: '2026-11-02'
+  generated: '2026-11-06'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - free
